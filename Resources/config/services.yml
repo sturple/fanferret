@@ -1,0 +1,4 @@
+services:
+#    fan_ferret_question.example:
+#        class: FanFerret\QuestionBundle\Example
+#        arguments: ["@service_id", "plain_value", %parameter%]

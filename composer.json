@@ -1,0 +1,24 @@
+{
+    "name": "sturple/fanferret-questionbundle",
+    "description": "Question Bundle",
+    "type": "symfony-bundle",
+    "keywords": ["survey", "hotel", "symfony"],
+    "homepage": "https://github.com/sturple/fanferret-questionbundle",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Shawn Turple",
+            "email": "shawn@turple.ca"
+        }
+    ],
+    "require": {
+
+    },
+    "minimum-stability": "dev",
+    "target-dir": "FanFerret/Bundle/QuestionBundle",
+    "autoload" : {
+        "psr-0" : {"FanFerret\\Bundle\\QuestionBundle" : ""}
+    }
+
+
+}
