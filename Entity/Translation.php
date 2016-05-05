@@ -7,7 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * Translation
  *
- * @ORM\Table(name="translation",uniqueConstraints={@ORM\UniqueConstraint(name="translation_language_idx",columns={"id","language"})})
+ * @ORM\Table(name="translation")
  * @ORM\Entity(repositoryClass="QuestionBundle\Repository\TranslationRepository")
  */
 class Translation
@@ -25,6 +25,8 @@ class Translation
      * @var string
      *
      * @ORM\Column(name="language", type="string", length=255)
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="NONE")
      */
     private $language;
 
