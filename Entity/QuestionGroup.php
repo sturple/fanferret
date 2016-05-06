@@ -32,6 +32,11 @@ class QuestionGroup
      * @ORM\Column(type="integer")
      */
     private $order;
+    
+    /**
+     * @ORM\OneToMany(targetEntity="Question",mappedBy="questionGroup")
+     */
+    private $questions;
     /**
      * Constructor
      */
@@ -130,5 +135,39 @@ class QuestionGroup
     public function getTranslations()
     {
         return $this->translations;
+    }
+
+    /**
+     * Add question
+     *
+     * @param \QuestionBundle\Entity\Question $question
+     *
+     * @return QuestionGroup
+     */
+    public function addQuestion(\QuestionBundle\Entity\Question $question)
+    {
+        $this->questions[] = $question;
+
+        return $this;
+    }
+
+    /**
+     * Remove question
+     *
+     * @param \QuestionBundle\Entity\Question $question
+     */
+    public function removeQuestion(\QuestionBundle\Entity\Question $question)
+    {
+        $this->questions->removeElement($question);
+    }
+
+    /**
+     * Get questions
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getQuestions()
+    {
+        return $this->questions;
     }
 }
