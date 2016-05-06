@@ -32,9 +32,15 @@ class Survey
      * @ORM\Column(type="string",length=255)
      */
     private $slug;
+    
     /**
      * @ORM\OneToMany(targetEntity="QuestionGroup",mappedBy="survey")
      */
     private $questionGroups;
+    
+    /**
+     * @ORM\OneToMany(targetEntity="SurveySession",mappedBy="survey")
+     */
+    private $surveySessions;
     
 }
