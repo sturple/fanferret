@@ -43,4 +43,173 @@ class Survey
      */
     private $surveySessions;
     
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->translations = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->questionGroups = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->surveySessions = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+
+    /**
+     * Get id
+     *
+     * @return integer
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    /**
+     * Set companyId
+     *
+     * @param integer $companyId
+     *
+     * @return Survey
+     */
+    public function setCompanyId($companyId)
+    {
+        $this->companyId = $companyId;
+
+        return $this;
+    }
+
+    /**
+     * Get companyId
+     *
+     * @return integer
+     */
+    public function getCompanyId()
+    {
+        return $this->companyId;
+    }
+
+    /**
+     * Set slug
+     *
+     * @param string $slug
+     *
+     * @return Survey
+     */
+    public function setSlug($slug)
+    {
+        $this->slug = $slug;
+
+        return $this;
+    }
+
+    /**
+     * Get slug
+     *
+     * @return string
+     */
+    public function getSlug()
+    {
+        return $this->slug;
+    }
+
+    /**
+     * Add translation
+     *
+     * @param \QuestionBundle\Entity\SurveyTranslation $translation
+     *
+     * @return Survey
+     */
+    public function addTranslation(\QuestionBundle\Entity\SurveyTranslation $translation)
+    {
+        $this->translations[] = $translation;
+
+        return $this;
+    }
+
+    /**
+     * Remove translation
+     *
+     * @param \QuestionBundle\Entity\SurveyTranslation $translation
+     */
+    public function removeTranslation(\QuestionBundle\Entity\SurveyTranslation $translation)
+    {
+        $this->translations->removeElement($translation);
+    }
+
+    /**
+     * Get translations
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getTranslations()
+    {
+        return $this->translations;
+    }
+
+    /**
+     * Add questionGroup
+     *
+     * @param \QuestionBundle\Entity\QuestionGroup $questionGroup
+     *
+     * @return Survey
+     */
+    public function addQuestionGroup(\QuestionBundle\Entity\QuestionGroup $questionGroup)
+    {
+        $this->questionGroups[] = $questionGroup;
+
+        return $this;
+    }
+
+    /**
+     * Remove questionGroup
+     *
+     * @param \QuestionBundle\Entity\QuestionGroup $questionGroup
+     */
+    public function removeQuestionGroup(\QuestionBundle\Entity\QuestionGroup $questionGroup)
+    {
+        $this->questionGroups->removeElement($questionGroup);
+    }
+
+    /**
+     * Get questionGroups
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getQuestionGroups()
+    {
+        return $this->questionGroups;
+    }
+
+    /**
+     * Add surveySession
+     *
+     * @param \QuestionBundle\Entity\SurveySession $surveySession
+     *
+     * @return Survey
+     */
+    public function addSurveySession(\QuestionBundle\Entity\SurveySession $surveySession)
+    {
+        $this->surveySessions[] = $surveySession;
+
+        return $this;
+    }
+
+    /**
+     * Remove surveySession
+     *
+     * @param \QuestionBundle\Entity\SurveySession $surveySession
+     */
+    public function removeSurveySession(\QuestionBundle\Entity\SurveySession $surveySession)
+    {
+        $this->surveySessions->removeElement($surveySession);
+    }
+
+    /**
+     * Get surveySessions
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getSurveySessions()
+    {
+        return $this->surveySessions;
+    }
 }

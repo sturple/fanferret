@@ -28,4 +28,62 @@ class SurveyNotification
 	 */
 	private $when;
     
+
+    /**
+     * Get id
+     *
+     * @return integer
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    /**
+     * Set when
+     *
+     * @param \DateTime $when
+     *
+     * @return SurveyNotification
+     */
+    public function setWhen($when)
+    {
+        $this->when = $when;
+
+        return $this;
+    }
+
+    /**
+     * Get when
+     *
+     * @return \DateTime
+     */
+    public function getWhen()
+    {
+        return $this->when;
+    }
+
+    /**
+     * Set surveySession
+     *
+     * @param \QuestionBundle\Entity\SurveySession $surveySession
+     *
+     * @return SurveyNotification
+     */
+    public function setSurveySession(\QuestionBundle\Entity\SurveySession $surveySession = null)
+    {
+        $this->surveySession = $surveySession;
+
+        return $this;
+    }
+
+    /**
+     * Get surveySession
+     *
+     * @return \QuestionBundle\Entity\SurveySession
+     */
+    public function getSurveySession()
+    {
+        return $this->surveySession;
+    }
 }

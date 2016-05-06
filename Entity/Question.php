@@ -43,4 +43,162 @@ class Question
      */
     private $questionAnswers;
 	
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->rules = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->questionAnswers = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+
+    /**
+     * Get id
+     *
+     * @return integer
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    /**
+     * Set order
+     *
+     * @param integer $order
+     *
+     * @return Question
+     */
+    public function setOrder($order)
+    {
+        $this->order = $order;
+
+        return $this;
+    }
+
+    /**
+     * Get order
+     *
+     * @return integer
+     */
+    public function getOrder()
+    {
+        return $this->order;
+    }
+
+    /**
+     * Set params
+     *
+     * @param string $params
+     *
+     * @return Question
+     */
+    public function setParams($params)
+    {
+        $this->params = $params;
+
+        return $this;
+    }
+
+    /**
+     * Get params
+     *
+     * @return string
+     */
+    public function getParams()
+    {
+        return $this->params;
+    }
+
+    /**
+     * Set questionGroup
+     *
+     * @param \QuestionBundle\Entity\QuestionGroup $questionGroup
+     *
+     * @return Question
+     */
+    public function setQuestionGroup(\QuestionBundle\Entity\QuestionGroup $questionGroup = null)
+    {
+        $this->questionGroup = $questionGroup;
+
+        return $this;
+    }
+
+    /**
+     * Get questionGroup
+     *
+     * @return \QuestionBundle\Entity\QuestionGroup
+     */
+    public function getQuestionGroup()
+    {
+        return $this->questionGroup;
+    }
+
+    /**
+     * Add rule
+     *
+     * @param \QuestionBundle\Entity\Rule $rule
+     *
+     * @return Question
+     */
+    public function addRule(\QuestionBundle\Entity\Rule $rule)
+    {
+        $this->rules[] = $rule;
+
+        return $this;
+    }
+
+    /**
+     * Remove rule
+     *
+     * @param \QuestionBundle\Entity\Rule $rule
+     */
+    public function removeRule(\QuestionBundle\Entity\Rule $rule)
+    {
+        $this->rules->removeElement($rule);
+    }
+
+    /**
+     * Get rules
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getRules()
+    {
+        return $this->rules;
+    }
+
+    /**
+     * Add questionAnswer
+     *
+     * @param \QuestionBundle\Entity\QuestionAnswer $questionAnswer
+     *
+     * @return Question
+     */
+    public function addQuestionAnswer(\QuestionBundle\Entity\QuestionAnswer $questionAnswer)
+    {
+        $this->questionAnswers[] = $questionAnswer;
+
+        return $this;
+    }
+
+    /**
+     * Remove questionAnswer
+     *
+     * @param \QuestionBundle\Entity\QuestionAnswer $questionAnswer
+     */
+    public function removeQuestionAnswer(\QuestionBundle\Entity\QuestionAnswer $questionAnswer)
+    {
+        $this->questionAnswers->removeElement($questionAnswer);
+    }
+
+    /**
+     * Get questionAnswers
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getQuestionAnswers()
+    {
+        return $this->questionAnswers;
+    }
 }

@@ -53,4 +53,210 @@ class SurveySession
      */
     private $surveyNotifications;
     
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->questionAnswers = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->surveyNotifications = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+
+    /**
+     * Get id
+     *
+     * @return integer
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    /**
+     * Set guestId
+     *
+     * @param integer $guestId
+     *
+     * @return SurveySession
+     */
+    public function setGuestId($guestId)
+    {
+        $this->guestId = $guestId;
+
+        return $this;
+    }
+
+    /**
+     * Get guestId
+     *
+     * @return integer
+     */
+    public function getGuestId()
+    {
+        return $this->guestId;
+    }
+
+    /**
+     * Set key
+     *
+     * @param string $key
+     *
+     * @return SurveySession
+     */
+    public function setKey($key)
+    {
+        $this->key = $key;
+
+        return $this;
+    }
+
+    /**
+     * Get key
+     *
+     * @return string
+     */
+    public function getKey()
+    {
+        return $this->key;
+    }
+
+    /**
+     * Set created
+     *
+     * @param \DateTime $created
+     *
+     * @return SurveySession
+     */
+    public function setCreated($created)
+    {
+        $this->created = $created;
+
+        return $this;
+    }
+
+    /**
+     * Get created
+     *
+     * @return \DateTime
+     */
+    public function getCreated()
+    {
+        return $this->created;
+    }
+
+    /**
+     * Set completed
+     *
+     * @param \DateTime $completed
+     *
+     * @return SurveySession
+     */
+    public function setCompleted($completed)
+    {
+        $this->completed = $completed;
+
+        return $this;
+    }
+
+    /**
+     * Get completed
+     *
+     * @return \DateTime
+     */
+    public function getCompleted()
+    {
+        return $this->completed;
+    }
+
+    /**
+     * Set survey
+     *
+     * @param \QuestionBundle\Entity\Survey $survey
+     *
+     * @return SurveySession
+     */
+    public function setSurvey(\QuestionBundle\Entity\Survey $survey = null)
+    {
+        $this->survey = $survey;
+
+        return $this;
+    }
+
+    /**
+     * Get survey
+     *
+     * @return \QuestionBundle\Entity\Survey
+     */
+    public function getSurvey()
+    {
+        return $this->survey;
+    }
+
+    /**
+     * Add questionAnswer
+     *
+     * @param \QuestionBundle\Entity\QuestionAnswer $questionAnswer
+     *
+     * @return SurveySession
+     */
+    public function addQuestionAnswer(\QuestionBundle\Entity\QuestionAnswer $questionAnswer)
+    {
+        $this->questionAnswers[] = $questionAnswer;
+
+        return $this;
+    }
+
+    /**
+     * Remove questionAnswer
+     *
+     * @param \QuestionBundle\Entity\QuestionAnswer $questionAnswer
+     */
+    public function removeQuestionAnswer(\QuestionBundle\Entity\QuestionAnswer $questionAnswer)
+    {
+        $this->questionAnswers->removeElement($questionAnswer);
+    }
+
+    /**
+     * Get questionAnswers
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getQuestionAnswers()
+    {
+        return $this->questionAnswers;
+    }
+
+    /**
+     * Add surveyNotification
+     *
+     * @param \QuestionBundle\Entity\SurveyNotification $surveyNotification
+     *
+     * @return SurveySession
+     */
+    public function addSurveyNotification(\QuestionBundle\Entity\SurveyNotification $surveyNotification)
+    {
+        $this->surveyNotifications[] = $surveyNotification;
+
+        return $this;
+    }
+
+    /**
+     * Remove surveyNotification
+     *
+     * @param \QuestionBundle\Entity\SurveyNotification $surveyNotification
+     */
+    public function removeSurveyNotification(\QuestionBundle\Entity\SurveyNotification $surveyNotification)
+    {
+        $this->surveyNotifications->removeElement($surveyNotification);
+    }
+
+    /**
+     * Get surveyNotifications
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getSurveyNotifications()
+    {
+        return $this->surveyNotifications;
+    }
 }

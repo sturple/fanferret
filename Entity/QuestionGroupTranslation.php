@@ -33,4 +33,86 @@ class QuestionGroupTranslation
      */
     private $text;
     
+
+    /**
+     * Get id
+     *
+     * @return integer
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    /**
+     * Set language
+     *
+     * @param string $language
+     *
+     * @return QuestionGroupTranslation
+     */
+    public function setLanguage($language)
+    {
+        $this->language = $language;
+
+        return $this;
+    }
+
+    /**
+     * Get language
+     *
+     * @return string
+     */
+    public function getLanguage()
+    {
+        return $this->language;
+    }
+
+    /**
+     * Set text
+     *
+     * @param string $text
+     *
+     * @return QuestionGroupTranslation
+     */
+    public function setText($text)
+    {
+        $this->text = $text;
+
+        return $this;
+    }
+
+    /**
+     * Get text
+     *
+     * @return string
+     */
+    public function getText()
+    {
+        return $this->text;
+    }
+
+    /**
+     * Set questionGroup
+     *
+     * @param \QuestionBundle\Entity\QuestionGroup $questionGroup
+     *
+     * @return QuestionGroupTranslation
+     */
+    public function setQuestionGroup(\QuestionBundle\Entity\QuestionGroup $questionGroup = null)
+    {
+        $this->questionGroup = $questionGroup;
+
+        return $this;
+    }
+
+    /**
+     * Get questionGroup
+     *
+     * @return \QuestionBundle\Entity\QuestionGroup
+     */
+    public function getQuestionGroup()
+    {
+        return $this->questionGroup;
+    }
 }

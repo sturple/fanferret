@@ -33,4 +33,86 @@ class SurveyTranslation
      */
     private $text;
     
+
+    /**
+     * Get id
+     *
+     * @return integer
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    /**
+     * Set language
+     *
+     * @param string $language
+     *
+     * @return SurveyTranslation
+     */
+    public function setLanguage($language)
+    {
+        $this->language = $language;
+
+        return $this;
+    }
+
+    /**
+     * Get language
+     *
+     * @return string
+     */
+    public function getLanguage()
+    {
+        return $this->language;
+    }
+
+    /**
+     * Set text
+     *
+     * @param string $text
+     *
+     * @return SurveyTranslation
+     */
+    public function setText($text)
+    {
+        $this->text = $text;
+
+        return $this;
+    }
+
+    /**
+     * Get text
+     *
+     * @return string
+     */
+    public function getText()
+    {
+        return $this->text;
+    }
+
+    /**
+     * Set survey
+     *
+     * @param \QuestionBundle\Entity\Survey $survey
+     *
+     * @return SurveyTranslation
+     */
+    public function setSurvey(\QuestionBundle\Entity\Survey $survey = null)
+    {
+        $this->survey = $survey;
+
+        return $this;
+    }
+
+    /**
+     * Get survey
+     *
+     * @return \QuestionBundle\Entity\Survey
+     */
+    public function getSurvey()
+    {
+        return $this->survey;
+    }
 }
