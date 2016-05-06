@@ -32,6 +32,10 @@ class Survey
      * @ORM\Column(type="string",length=255)
      */
     private $slug;
+    /**
+     * @ORM\OneToMany(targetEntity="QuestionGroup",mappedBy="survey")
+     */
+    private $questionGroups;
     
     /**
      * Constructor
@@ -131,5 +135,39 @@ class Survey
     public function getTranslations()
     {
         return $this->translations;
+    }
+
+    /**
+     * Add questionGroup
+     *
+     * @param \QuestionBundle\Entity\QuestionGroup $questionGroup
+     *
+     * @return Survey
+     */
+    public function addQuestionGroup(\QuestionBundle\Entity\QuestionGroup $questionGroup)
+    {
+        $this->questionGroups[] = $questionGroup;
+
+        return $this;
+    }
+
+    /**
+     * Remove questionGroup
+     *
+     * @param \QuestionBundle\Entity\QuestionGroup $questionGroup
+     */
+    public function removeQuestionGroup(\QuestionBundle\Entity\QuestionGroup $questionGroup)
+    {
+        $this->questionGroups->removeElement($questionGroup);
+    }
+
+    /**
+     * Get questionGroups
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getQuestionGroups()
+    {
+        return $this->questionGroups;
     }
 }
