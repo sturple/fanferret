@@ -48,4 +48,9 @@ class SurveySession
      */
     private $questionAnswers;
     
+    /**
+     * @ORM\OneToMany(targetEntity="SurveyNotification",inversedBy="surveySession")
+     */
+    private $surveyNotifications;
+    
 }
