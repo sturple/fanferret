@@ -33,4 +33,9 @@ class Question
 	 */
 	private $params;
 	
+	/**
+	 * @ManyToMany(targetEntity="Rule",mappedBy="questions")
+	 */
+	private $rules;
+	
 }
