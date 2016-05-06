@@ -6,7 +6,7 @@ use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @ORM\Entity(repositoryClass="QuestionBundle\Repository\SurveySessionRepository")
- * @ORM\Table(name="survey_session",uniqueConstraints={@ORM\UniqueConstraint(name="key_idx",column={"key"})})
+ * @ORM\Table(name="survey_session",uniqueConstraints={@ORM\UniqueConstraint(name="key_idx",columns={"key"})})
  */
 class SurveySession
 {
@@ -44,12 +44,12 @@ class SurveySession
     private $completed;
     
     /**
-     * @ORM\OneToMany(targetEntity="QuestionAnswer",inversedBy="surveySession")
+     * @ORM\OneToMany(targetEntity="QuestionAnswer",mappedBy="surveySession")
      */
     private $questionAnswers;
     
     /**
-     * @ORM\OneToMany(targetEntity="SurveyNotification",inversedBy="surveySession")
+     * @ORM\OneToMany(targetEntity="SurveyNotification",mappedBy="surveySession")
      */
     private $surveyNotifications;
     

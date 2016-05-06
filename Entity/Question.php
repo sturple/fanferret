@@ -34,12 +34,12 @@ class Question
 	private $params;
 	
 	/**
-	 * @ManyToMany(targetEntity="Rule",mappedBy="questions")
+	 * @ORM\ManyToMany(targetEntity="Rule",mappedBy="questions")
 	 */
 	private $rules;
 	
     /**
-     * @ORM\OneToMany(targetEntity="QuestionAnswer",inversedBy="question")
+     * @ORM\OneToMany(targetEntity="QuestionAnswer",mappedBy="question")
      */
     private $questionAnswers;
 	

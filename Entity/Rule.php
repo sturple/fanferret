@@ -19,8 +19,8 @@ class Rule
     private $id;
     
     /**
-     * @ManyToMany(targetEntity="Question",inversedBy="rules")
-     * @JoinTable(name="questions_rules")
+     * @ORM\ManyToMany(targetEntity="Question",inversedBy="rules")
+     * @ORM\JoinTable(name="questions_rules")
      */
     private $questions;
 	
