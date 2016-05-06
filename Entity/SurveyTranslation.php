@@ -24,6 +24,11 @@ class SurveyTranslation
     private $survey;
     
     /**
+     * @ORM\Column(type="string",length=255)
+     */
+    private $language;
+    
+    /**
      * @ORM\Column(type="text")
      */
     private $text;
@@ -86,5 +91,29 @@ class SurveyTranslation
     public function getText()
     {
         return $this->text;
+    }
+
+    /**
+     * Set language
+     *
+     * @param string $language
+     *
+     * @return SurveyTranslation
+     */
+    public function setLanguage($language)
+    {
+        $this->language = $language;
+
+        return $this;
+    }
+
+    /**
+     * Get language
+     *
+     * @return string
+     */
+    public function getLanguage()
+    {
+        return $this->language;
     }
 }
