@@ -38,4 +38,9 @@ class Question
 	 */
 	private $rules;
 	
+    /**
+     * @ORM\OneToMany(targetEntity="QuestionAnswer",inversedBy="question")
+     */
+    private $questionAnswers;
+	
 }

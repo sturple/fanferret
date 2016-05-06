@@ -43,4 +43,9 @@ class SurveySession
      */
     private $completed;
     
+    /**
+     * @ORM\OneToMany(targetEntity="QuestionAnswer",inversedBy="surveySession")
+     */
+    private $questionAnswers;
+    
 }
