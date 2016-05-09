@@ -3,6 +3,7 @@
 namespace FanFerret\QuestionBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use FanFerret\QuestionBundle\Utility\Json as Json;
 
 /**
  * @ORM\Entity(repositoryClass="QuestionBundle\Repository\RuleRepository")
@@ -50,13 +51,14 @@ class Rule
     /**
      * Set params
      *
-     * @param string $params
+     * @param object $params
      *
      * @return Rule
      */
     public function setParams($params)
     {
-        $this->params = $params;
+        if (!is_object($params)) throw new \InvalidArgumentException('$params not object');
+        $this->params=Json::encode($params);
 
         return $this;
     }
@@ -64,11 +66,13 @@ class Rule
     /**
      * Get params
      *
-     * @return string
+     * @return object
      */
     public function getParams()
     {
-        return $this->params;
+        $retr=Json::decode($this->params);
+        if (!is_object($retr)) throw new \LogicException('$params not JSON object');
+        return $retr;
     }
 
     /**

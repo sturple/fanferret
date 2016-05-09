@@ -3,6 +3,7 @@
 namespace FanFerret\QuestionBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use FanFerret\QuestionBundle\Utility\Json as Json;
 
 /**
  * @ORM\Entity(repositoryClass="QuestionBundle\Repository\QuestionRepository")
@@ -42,15 +43,6 @@ class Question
      * @ORM\OneToMany(targetEntity="QuestionAnswer",mappedBy="question")
      */
     private $questionAnswers;
-    
-    private static function jsonErrorCheck()
-    {
-        $c=json_last_error();
-        if ($c===JSON_ERROR_NONE) return;
-        $msg=json_last_error_msg();
-        if (!is_string($msg)) $msg='';
-        throw new \RuntimeException($msg,$c);
-    }
 	
     /**
      * Constructor
@@ -105,9 +97,7 @@ class Question
     public function setParams($params)
     {
         if (!is_object($params)) throw new \InvalidArgumentException('$params not string');
-        $str=json_encode($params,JSON_PRESERVE_ZERO_FRACTION);
-        self::jsonErrorCheck();
-        $this->params=$str;
+        $this->params=Json::encode($params);
 
         return $this;
     }
@@ -119,8 +109,7 @@ class Question
      */
     public function getParams()
     {
-        $retr=json_decode($this->params);
-        self::jsonErrorCheck();
+        $retr=Json::decode($this->params);
         if (!is_object($retr)) throw new \LogicException('$params not JSON object');
         return $retr;
     }
