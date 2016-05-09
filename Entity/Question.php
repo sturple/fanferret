@@ -96,7 +96,7 @@ class Question
      */
     public function setParams($params)
     {
-        if (!is_object($params)) throw new \InvalidArgumentException('$params not string');
+        if (!is_object($params)) throw new \InvalidArgumentException('$params not object');
         $this->params=Json::encode($params);
 
         return $this;
