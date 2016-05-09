@@ -1,6 +1,6 @@
 <?php
 
-namespace QuestionBundle;
+namespace FanFerret\QuestionBundle;
 
 use Symfony\Component\HttpKernel\Bundle\Bundle;
 

@@ -1,6 +1,6 @@
 <?php
 
-namespace QuestionBundle\Entity;
+namespace FanFerret\QuestionBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 
