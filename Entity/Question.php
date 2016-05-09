@@ -42,6 +42,15 @@ class Question
      * @ORM\OneToMany(targetEntity="QuestionAnswer",mappedBy="question")
      */
     private $questionAnswers;
+    
+    private static function jsonErrorCheck()
+    {
+        $c=json_last_error();
+        if ($c===JSON_ERROR_NONE) return;
+        $msg=json_last_error_msg();
+        if (!is_string($msg)) $msg='';
+        throw new \RuntimeException($msg,$c);
+    }
 	
     /**
      * Constructor
@@ -89,13 +98,16 @@ class Question
     /**
      * Set params
      *
-     * @param string $params
+     * @param object $params
      *
      * @return Question
      */
     public function setParams($params)
     {
-        $this->params = $params;
+        if (!is_object($params)) throw new \InvalidArgumentException('$params not string');
+        $str=json_encode($params,JSON_PRESERVE_ZERO_FRACTION);
+        self::jsonErrorCheck();
+        $this->params=$str;
 
         return $this;
     }
@@ -103,11 +115,14 @@ class Question
     /**
      * Get params
      *
-     * @return string
+     * @return object
      */
     public function getParams()
     {
-        return $this->params;
+        $retr=json_decode($this->params);
+        self::jsonErrorCheck();
+        if (!is_object($retr)) throw new \LogicException('$params not JSON object');
+        return $retr;
     }
 
     /**
