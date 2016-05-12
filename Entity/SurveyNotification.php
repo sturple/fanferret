@@ -66,11 +66,11 @@ class SurveyNotification
     /**
      * Set surveySession
      *
-     * @param \QuestionBundle\Entity\SurveySession $surveySession
+     * @param \FanFerret\QuestionBundle\Entity\SurveySession $surveySession
      *
      * @return SurveyNotification
      */
-    public function setSurveySession(\QuestionBundle\Entity\SurveySession $surveySession = null)
+    public function setSurveySession(\FanFerret\QuestionBundle\Entity\SurveySession $surveySession = null)
     {
         $this->surveySession = $surveySession;
 
@@ -80,7 +80,7 @@ class SurveyNotification
     /**
      * Get surveySession
      *
-     * @return \QuestionBundle\Entity\SurveySession
+     * @return \FanFerret\QuestionBundle\Entity\SurveySession
      */
     public function getSurveySession()
     {

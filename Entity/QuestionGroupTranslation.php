@@ -95,11 +95,11 @@ class QuestionGroupTranslation
     /**
      * Set questionGroup
      *
-     * @param \QuestionBundle\Entity\QuestionGroup $questionGroup
+     * @param \FanFerret\QuestionBundle\Entity\QuestionGroup $questionGroup
      *
      * @return QuestionGroupTranslation
      */
-    public function setQuestionGroup(\QuestionBundle\Entity\QuestionGroup $questionGroup = null)
+    public function setQuestionGroup(\FanFerret\QuestionBundle\Entity\QuestionGroup $questionGroup = null)
     {
         $this->questionGroup = $questionGroup;
 
@@ -109,7 +109,7 @@ class QuestionGroupTranslation
     /**
      * Get questionGroup
      *
-     * @return \QuestionBundle\Entity\QuestionGroup
+     * @return \FanFerret\QuestionBundle\Entity\QuestionGroup
      */
     public function getQuestionGroup()
     {

@@ -171,11 +171,11 @@ class SurveySession
     /**
      * Set survey
      *
-     * @param \QuestionBundle\Entity\Survey $survey
+     * @param \FanFerret\QuestionBundle\Entity\Survey $survey
      *
      * @return SurveySession
      */
-    public function setSurvey(\QuestionBundle\Entity\Survey $survey = null)
+    public function setSurvey(\FanFerret\QuestionBundle\Entity\Survey $survey = null)
     {
         $this->survey = $survey;
 
@@ -185,7 +185,7 @@ class SurveySession
     /**
      * Get survey
      *
-     * @return \QuestionBundle\Entity\Survey
+     * @return \FanFerret\QuestionBundle\Entity\Survey
      */
     public function getSurvey()
     {
@@ -195,11 +195,11 @@ class SurveySession
     /**
      * Add questionAnswer
      *
-     * @param \QuestionBundle\Entity\QuestionAnswer $questionAnswer
+     * @param \FanFerret\QuestionBundle\Entity\QuestionAnswer $questionAnswer
      *
      * @return SurveySession
      */
-    public function addQuestionAnswer(\QuestionBundle\Entity\QuestionAnswer $questionAnswer)
+    public function addQuestionAnswer(\FanFerret\QuestionBundle\Entity\QuestionAnswer $questionAnswer)
     {
         $this->questionAnswers[] = $questionAnswer;
 
@@ -209,9 +209,9 @@ class SurveySession
     /**
      * Remove questionAnswer
      *
-     * @param \QuestionBundle\Entity\QuestionAnswer $questionAnswer
+     * @param \FanFerret\QuestionBundle\Entity\QuestionAnswer $questionAnswer
      */
-    public function removeQuestionAnswer(\QuestionBundle\Entity\QuestionAnswer $questionAnswer)
+    public function removeQuestionAnswer(\FanFerret\QuestionBundle\Entity\QuestionAnswer $questionAnswer)
     {
         $this->questionAnswers->removeElement($questionAnswer);
     }
@@ -229,11 +229,11 @@ class SurveySession
     /**
      * Add surveyNotification
      *
-     * @param \QuestionBundle\Entity\SurveyNotification $surveyNotification
+     * @param \FanFerret\QuestionBundle\Entity\SurveyNotification $surveyNotification
      *
      * @return SurveySession
      */
-    public function addSurveyNotification(\QuestionBundle\Entity\SurveyNotification $surveyNotification)
+    public function addSurveyNotification(\FanFerret\QuestionBundle\Entity\SurveyNotification $surveyNotification)
     {
         $this->surveyNotifications[] = $surveyNotification;
 
@@ -243,9 +243,9 @@ class SurveySession
     /**
      * Remove surveyNotification
      *
-     * @param \QuestionBundle\Entity\SurveyNotification $surveyNotification
+     * @param \FanFerret\QuestionBundle\Entity\SurveyNotification $surveyNotification
      */
-    public function removeSurveyNotification(\QuestionBundle\Entity\SurveyNotification $surveyNotification)
+    public function removeSurveyNotification(\FanFerret\QuestionBundle\Entity\SurveyNotification $surveyNotification)
     {
         $this->surveyNotifications->removeElement($surveyNotification);
     }

@@ -95,11 +95,11 @@ class SurveyTranslation
     /**
      * Set survey
      *
-     * @param \QuestionBundle\Entity\Survey $survey
+     * @param \FanFerret\QuestionBundle\Entity\Survey $survey
      *
      * @return SurveyTranslation
      */
-    public function setSurvey(\QuestionBundle\Entity\Survey $survey = null)
+    public function setSurvey(\FanFerret\QuestionBundle\Entity\Survey $survey = null)
     {
         $this->survey = $survey;
 
@@ -109,7 +109,7 @@ class SurveyTranslation
     /**
      * Get survey
      *
-     * @return \QuestionBundle\Entity\Survey
+     * @return \FanFerret\QuestionBundle\Entity\Survey
      */
     public function getSurvey()
     {

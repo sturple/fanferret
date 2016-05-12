@@ -114,11 +114,11 @@ class Survey
     /**
      * Add translation
      *
-     * @param \QuestionBundle\Entity\SurveyTranslation $translation
+     * @param \FanFerret\QuestionBundle\Entity\SurveyTranslation $translation
      *
      * @return Survey
      */
-    public function addTranslation(\QuestionBundle\Entity\SurveyTranslation $translation)
+    public function addTranslation(\FanFerret\QuestionBundle\Entity\SurveyTranslation $translation)
     {
         $this->translations[] = $translation;
 
@@ -128,9 +128,9 @@ class Survey
     /**
      * Remove translation
      *
-     * @param \QuestionBundle\Entity\SurveyTranslation $translation
+     * @param \FanFerret\QuestionBundle\Entity\SurveyTranslation $translation
      */
-    public function removeTranslation(\QuestionBundle\Entity\SurveyTranslation $translation)
+    public function removeTranslation(\FanFerret\QuestionBundle\Entity\SurveyTranslation $translation)
     {
         $this->translations->removeElement($translation);
     }
@@ -148,11 +148,11 @@ class Survey
     /**
      * Add questionGroup
      *
-     * @param \QuestionBundle\Entity\QuestionGroup $questionGroup
+     * @param \FanFerret\QuestionBundle\Entity\QuestionGroup $questionGroup
      *
      * @return Survey
      */
-    public function addQuestionGroup(\QuestionBundle\Entity\QuestionGroup $questionGroup)
+    public function addQuestionGroup(\FanFerret\QuestionBundle\Entity\QuestionGroup $questionGroup)
     {
         $this->questionGroups[] = $questionGroup;
 
@@ -162,9 +162,9 @@ class Survey
     /**
      * Remove questionGroup
      *
-     * @param \QuestionBundle\Entity\QuestionGroup $questionGroup
+     * @param \FanFerret\QuestionBundle\Entity\QuestionGroup $questionGroup
      */
-    public function removeQuestionGroup(\QuestionBundle\Entity\QuestionGroup $questionGroup)
+    public function removeQuestionGroup(\FanFerret\QuestionBundle\Entity\QuestionGroup $questionGroup)
     {
         $this->questionGroups->removeElement($questionGroup);
     }
@@ -182,11 +182,11 @@ class Survey
     /**
      * Add surveySession
      *
-     * @param \QuestionBundle\Entity\SurveySession $surveySession
+     * @param \FanFerret\QuestionBundle\Entity\SurveySession $surveySession
      *
      * @return Survey
      */
-    public function addSurveySession(\QuestionBundle\Entity\SurveySession $surveySession)
+    public function addSurveySession(\FanFerret\QuestionBundle\Entity\SurveySession $surveySession)
     {
         $this->surveySessions[] = $surveySession;
 
@@ -196,9 +196,9 @@ class Survey
     /**
      * Remove surveySession
      *
-     * @param \QuestionBundle\Entity\SurveySession $surveySession
+     * @param \FanFerret\QuestionBundle\Entity\SurveySession $surveySession
      */
-    public function removeSurveySession(\QuestionBundle\Entity\SurveySession $surveySession)
+    public function removeSurveySession(\FanFerret\QuestionBundle\Entity\SurveySession $surveySession)
     {
         $this->surveySessions->removeElement($surveySession);
     }

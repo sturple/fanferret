@@ -84,11 +84,11 @@ class QuestionGroup
     /**
      * Set survey
      *
-     * @param \QuestionBundle\Entity\Survey $survey
+     * @param \FanFerret\QuestionBundle\Entity\Survey $survey
      *
      * @return QuestionGroup
      */
-    public function setSurvey(\QuestionBundle\Entity\Survey $survey = null)
+    public function setSurvey(\FanFerret\QuestionBundle\Entity\Survey $survey = null)
     {
         $this->survey = $survey;
 
@@ -98,7 +98,7 @@ class QuestionGroup
     /**
      * Get survey
      *
-     * @return \QuestionBundle\Entity\Survey
+     * @return \FanFerret\QuestionBundle\Entity\Survey
      */
     public function getSurvey()
     {
@@ -108,11 +108,11 @@ class QuestionGroup
     /**
      * Add translation
      *
-     * @param \QuestionBundle\Entity\QuestionGroupTranslation $translation
+     * @param \FanFerret\QuestionBundle\Entity\QuestionGroupTranslation $translation
      *
      * @return QuestionGroup
      */
-    public function addTranslation(\QuestionBundle\Entity\QuestionGroupTranslation $translation)
+    public function addTranslation(\FanFerret\QuestionBundle\Entity\QuestionGroupTranslation $translation)
     {
         $this->translations[] = $translation;
 
@@ -122,9 +122,9 @@ class QuestionGroup
     /**
      * Remove translation
      *
-     * @param \QuestionBundle\Entity\QuestionGroupTranslation $translation
+     * @param \FanFerret\QuestionBundle\Entity\QuestionGroupTranslation $translation
      */
-    public function removeTranslation(\QuestionBundle\Entity\QuestionGroupTranslation $translation)
+    public function removeTranslation(\FanFerret\QuestionBundle\Entity\QuestionGroupTranslation $translation)
     {
         $this->translations->removeElement($translation);
     }
@@ -142,11 +142,11 @@ class QuestionGroup
     /**
      * Add question
      *
-     * @param \QuestionBundle\Entity\Question $question
+     * @param \FanFerret\QuestionBundle\Entity\Question $question
      *
      * @return QuestionGroup
      */
-    public function addQuestion(\QuestionBundle\Entity\Question $question)
+    public function addQuestion(\FanFerret\QuestionBundle\Entity\Question $question)
     {
         $this->questions[] = $question;
 
@@ -156,9 +156,9 @@ class QuestionGroup
     /**
      * Remove question
      *
-     * @param \QuestionBundle\Entity\Question $question
+     * @param \FanFerret\QuestionBundle\Entity\Question $question
      */
-    public function removeQuestion(\QuestionBundle\Entity\Question $question)
+    public function removeQuestion(\FanFerret\QuestionBundle\Entity\Question $question)
     {
         $this->questions->removeElement($question);
     }

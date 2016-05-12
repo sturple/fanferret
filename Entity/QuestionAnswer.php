@@ -71,11 +71,11 @@ class QuestionAnswer
     /**
      * Set surveySession
      *
-     * @param \QuestionBundle\Entity\SurveySession $surveySession
+     * @param \FanFerret\QuestionBundle\Entity\SurveySession $surveySession
      *
      * @return QuestionAnswer
      */
-    public function setSurveySession(\QuestionBundle\Entity\SurveySession $surveySession = null)
+    public function setSurveySession(\FanFerret\QuestionBundle\Entity\SurveySession $surveySession = null)
     {
         $this->surveySession = $surveySession;
 
@@ -85,7 +85,7 @@ class QuestionAnswer
     /**
      * Get surveySession
      *
-     * @return \QuestionBundle\Entity\SurveySession
+     * @return \FanFerret\QuestionBundle\Entity\SurveySession
      */
     public function getSurveySession()
     {
@@ -95,11 +95,11 @@ class QuestionAnswer
     /**
      * Set question
      *
-     * @param \QuestionBundle\Entity\Question $question
+     * @param \FanFerret\QuestionBundle\Entity\Question $question
      *
      * @return QuestionAnswer
      */
-    public function setQuestion(\QuestionBundle\Entity\Question $question = null)
+    public function setQuestion(\FanFerret\QuestionBundle\Entity\Question $question = null)
     {
         $this->question = $question;
 
@@ -109,7 +109,7 @@ class QuestionAnswer
     /**
      * Get question
      *
-     * @return \QuestionBundle\Entity\Question
+     * @return \FanFerret\QuestionBundle\Entity\Question
      */
     public function getQuestion()
     {

@@ -117,11 +117,11 @@ class Question
     /**
      * Set questionGroup
      *
-     * @param \QuestionBundle\Entity\QuestionGroup $questionGroup
+     * @param \FanFerret\QuestionBundle\Entity\QuestionGroup $questionGroup
      *
      * @return Question
      */
-    public function setQuestionGroup(\QuestionBundle\Entity\QuestionGroup $questionGroup = null)
+    public function setQuestionGroup(\FanFerret\QuestionBundle\Entity\QuestionGroup $questionGroup = null)
     {
         $this->questionGroup = $questionGroup;
 
@@ -131,7 +131,7 @@ class Question
     /**
      * Get questionGroup
      *
-     * @return \QuestionBundle\Entity\QuestionGroup
+     * @return \FanFerret\QuestionBundle\Entity\QuestionGroup
      */
     public function getQuestionGroup()
     {
@@ -141,11 +141,11 @@ class Question
     /**
      * Add rule
      *
-     * @param \QuestionBundle\Entity\Rule $rule
+     * @param \FanFerret\QuestionBundle\Entity\Rule $rule
      *
      * @return Question
      */
-    public function addRule(\QuestionBundle\Entity\Rule $rule)
+    public function addRule(\FanFerret\QuestionBundle\Entity\Rule $rule)
     {
         $this->rules[] = $rule;
 
@@ -155,9 +155,9 @@ class Question
     /**
      * Remove rule
      *
-     * @param \QuestionBundle\Entity\Rule $rule
+     * @param \FanFerret\QuestionBundle\Entity\Rule $rule
      */
-    public function removeRule(\QuestionBundle\Entity\Rule $rule)
+    public function removeRule(\FanFerret\QuestionBundle\Entity\Rule $rule)
     {
         $this->rules->removeElement($rule);
     }
@@ -175,11 +175,11 @@ class Question
     /**
      * Add questionAnswer
      *
-     * @param \QuestionBundle\Entity\QuestionAnswer $questionAnswer
+     * @param \FanFerret\QuestionBundle\Entity\QuestionAnswer $questionAnswer
      *
      * @return Question
      */
-    public function addQuestionAnswer(\QuestionBundle\Entity\QuestionAnswer $questionAnswer)
+    public function addQuestionAnswer(\FanFerret\QuestionBundle\Entity\QuestionAnswer $questionAnswer)
     {
         $this->questionAnswers[] = $questionAnswer;
 
@@ -189,9 +189,9 @@ class Question
     /**
      * Remove questionAnswer
      *
-     * @param \QuestionBundle\Entity\QuestionAnswer $questionAnswer
+     * @param \FanFerret\QuestionBundle\Entity\QuestionAnswer $questionAnswer
      */
-    public function removeQuestionAnswer(\QuestionBundle\Entity\QuestionAnswer $questionAnswer)
+    public function removeQuestionAnswer(\FanFerret\QuestionBundle\Entity\QuestionAnswer $questionAnswer)
     {
         $this->questionAnswers->removeElement($questionAnswer);
     }

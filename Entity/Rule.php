@@ -78,11 +78,11 @@ class Rule
     /**
      * Add question
      *
-     * @param \QuestionBundle\Entity\Question $question
+     * @param \FanFerret\QuestionBundle\Entity\Question $question
      *
      * @return Rule
      */
-    public function addQuestion(\QuestionBundle\Entity\Question $question)
+    public function addQuestion(\FanFerret\QuestionBundle\Entity\Question $question)
     {
         $this->questions[] = $question;
 
@@ -92,9 +92,9 @@ class Rule
     /**
      * Remove question
      *
-     * @param \QuestionBundle\Entity\Question $question
+     * @param \FanFerret\QuestionBundle\Entity\Question $question
      */
-    public function removeQuestion(\QuestionBundle\Entity\Question $question)
+    public function removeQuestion(\FanFerret\QuestionBundle\Entity\Question $question)
     {
         $this->questions->removeElement($question);
     }
