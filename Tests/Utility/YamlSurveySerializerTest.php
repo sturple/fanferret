@@ -36,15 +36,18 @@ class YamlQuestionSerializerTest extends \PHPUnit_Framework_TestCase
                         'type' => 'polar'
                     ],
                     [
-                        'type' => 'rating'
+                        'type' => 'rating',
+                        'order' => 1
                     ]
                 ],
                 'bar' => [
                     [
                         'type' => 'rating',
+                        'order' => 16
                     ],
                     [
-                        'type' => 'polar'
+                        'type' => 'polar',
+                        'order' => 2
                     ]
                 ]
             ]
@@ -149,7 +152,7 @@ class YamlQuestionSerializerTest extends \PHPUnit_Framework_TestCase
         $this->assertSame($foo,$q->getQuestionGroup());
         $ps=$q->getParams();
         $this->assertTrue(isset($ps->type));
-        $this->assertSame('polar',$ps->type);
+        $this->assertSame('rating',$ps->type);
         $this->assertSame(0,count($q->getRules()));
         $this->assertSame(0,count($q->getQuestionAnswers()));
         $q=$qs[1];
@@ -157,7 +160,7 @@ class YamlQuestionSerializerTest extends \PHPUnit_Framework_TestCase
         $this->assertSame($foo,$q->getQuestionGroup());
         $ps=$q->getParams();
         $this->assertTrue(isset($ps->type));
-        $this->assertSame('rating',$ps->type);
+        $this->assertSame('polar',$ps->type);
         $this->assertSame(0,count($q->getRules()));
         $this->assertSame(0,count($q->getQuestionAnswers()));
         $qs=$bar->getQuestions();
@@ -167,7 +170,7 @@ class YamlQuestionSerializerTest extends \PHPUnit_Framework_TestCase
         $this->assertSame($bar,$q->getQuestionGroup());
         $ps=$q->getParams();
         $this->assertTrue(isset($ps->type));
-        $this->assertSame('rating',$ps->type);
+        $this->assertSame('polar',$ps->type);
         $this->assertSame(0,count($q->getRules()));
         $this->assertSame(0,count($q->getQuestionAnswers()));
         $q=$qs[1];
@@ -175,7 +178,7 @@ class YamlQuestionSerializerTest extends \PHPUnit_Framework_TestCase
         $this->assertSame($bar,$q->getQuestionGroup());
         $ps=$q->getParams();
         $this->assertTrue(isset($ps->type));
-        $this->assertSame('polar',$ps->type);
+        $this->assertSame('rating',$ps->type);
         $this->assertSame(0,count($q->getRules()));
         $this->assertSame(0,count($q->getQuestionAnswers()));
     }

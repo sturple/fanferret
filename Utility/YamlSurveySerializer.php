@@ -62,6 +62,27 @@ class YamlSurveySerializer implements SurveySerializer
         return $this->extractArray($arr,'questions');
     }
     
+    private function fetchOrder(array $arr)
+    {
+        if (!isset($arr['order'])) return null;
+        $o=$arr['order'];
+        if (!is_int($o)) $this->raise('Expected "order" to be integer, got %s',gettype($o));
+        return $o;
+    }
+    
+    private function sort(array &$arr)
+    {
+        Sort::stable($arr,function ($a, $b) {
+            $this->checkArray($a);
+            $this->checkArray($b);
+            $a=$this->fetchOrder($a);
+            $b=$this->fetchOrder($b);
+            if (is_null($a)) return is_null($b) ? 0 : 1;
+            if (is_null($b)) return -1;
+            return $a-$b;
+        });
+    }
+    
     private function parseYaml($str)
     {
         $yaml=\Symfony\Component\Yaml\Yaml::parse($str);
@@ -82,10 +103,10 @@ class YamlSurveySerializer implements SurveySerializer
     
     private function getQuestions($name, array $qs)
     {
-        //  TODO: Do order properly once we have a stable
-        //  sort
+        $arr=$this->extractArray($qs,$name);
+        $this->sort($arr);
         $i=0;
-        foreach ($this->extractArray($qs,$name) as $q)
+        foreach ($arr as $q)
         {
             $this->checkArray($q);
             $type=$this->extractString($q,'type');
@@ -123,8 +144,7 @@ class YamlSurveySerializer implements SurveySerializer
         if (in_array($name,$seen,true)) $this->raise('Cycle on "%s"',$name);
         $seen[]=$name;
         $arr=$this->extractArray($qs,$name);
-        //  TODO: Sort for order (needs stable sort for
-        //  sane behaviour where there's no order)
+        $this->sort($arr);
         foreach ($arr as $q)
         {
             $this->checkArray($q);
@@ -157,8 +177,6 @@ class YamlSurveySerializer implements SurveySerializer
     
     private function getQuestionGroups($name, array $qs)
     {
-        //  TODO: Eliminate this once order is set
-        //  by all code paths
         $i=0;
         foreach ($this->getQuestionGroupsImpl($name,$qs,[]) as $qg)
         {
