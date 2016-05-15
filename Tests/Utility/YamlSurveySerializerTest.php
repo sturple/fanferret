@@ -33,11 +33,20 @@ class YamlQuestionSerializerTest extends \PHPUnit_Framework_TestCase
                 ],
                 'foo' => [
                     [
-                        'type' => 'polar'
+                        'type' => 'polar',
+                        'email' => ['quux' => 'corge']
                     ],
                     [
                         'type' => 'rating',
-                        'order' => 1
+                        'order' => 1,
+                        'rules' => [
+                            [
+                                'type' => 'email'
+                            ],
+                            [
+                                'type' => 'bar'
+                            ]
+                        ]
                     ]
                 ],
                 'bar' => [
@@ -153,7 +162,24 @@ class YamlQuestionSerializerTest extends \PHPUnit_Framework_TestCase
         $ps=$q->getParams();
         $this->assertTrue(isset($ps->type));
         $this->assertSame('rating',$ps->type);
-        $this->assertSame(0,count($q->getRules()));
+        $rs=$q->getRules();
+        $this->assertSame(2,count($rs));
+        $r=$rs[0];
+        $rp=$r->getParams();
+        $this->assertTrue(isset($rp->type));
+        $this->assertSame('email',$rp->type);
+        $this->assertSame(1,count(get_object_vars($rp)));
+        $rqs=$r->getQuestions();
+        $this->assertSame(1,count($rqs));
+        $this->assertSame($q,$rqs[0]);
+        $r=$rs[1];
+        $rp=$r->getParams();
+        $this->assertTrue(isset($rp->type));
+        $this->assertSame('bar',$rp->type);
+        $this->assertSame(1,count(get_object_vars($rp)));
+        $rqs=$r->getQuestions();
+        $this->assertSame(1,count($rqs));
+        $this->assertSame($q,$rqs[0]);
         $this->assertSame(0,count($q->getQuestionAnswers()));
         $q=$qs[1];
         $this->assertSame(2,$q->getOrder());
@@ -161,7 +187,18 @@ class YamlQuestionSerializerTest extends \PHPUnit_Framework_TestCase
         $ps=$q->getParams();
         $this->assertTrue(isset($ps->type));
         $this->assertSame('polar',$ps->type);
-        $this->assertSame(0,count($q->getRules()));
+        $rs=$q->getRules();
+        $this->assertSame(1,count($rs));
+        $r=$rs[0];
+        $rp=$r->getParams();
+        $this->assertTrue(isset($rp->type));
+        $this->assertSame('email',$rp->type);
+        $this->assertTrue(isset($rp->quux));
+        $this->assertSame('corge',$rp->quux);
+        $this->assertSame(2,count(get_object_vars($rp)));
+        $rqs=$r->getQuestions();
+        $this->assertSame(1,count($rqs));
+        $this->assertSame($q,$rqs[0]);
         $this->assertSame(0,count($q->getQuestionAnswers()));
         $qs=$bar->getQuestions();
         $this->assertSame(2,count($qs));

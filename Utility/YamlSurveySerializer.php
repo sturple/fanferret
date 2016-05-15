@@ -95,10 +95,59 @@ class YamlSurveySerializer implements SurveySerializer
         if (!is_array($obj)) $this->raise('Expected an array, got %s',gettype($obj));
     }
     
+    private function getRulesCollection(array $col)
+    {
+        foreach ($col as $r)
+        {
+            $this->checkArray($r);
+            $retr=new \FanFerret\QuestionBundle\Entity\Rule();
+            $retr->setParams((object)$r);
+            yield $retr;
+        }
+    }
+    
+    private function getRulesEmail(array $em)
+    {
+        $em['type']='email';
+        $retr=new \FanFerret\QuestionBundle\Entity\Rule();
+        $retr->setParams((object)$em);
+        yield $retr;
+    }
+    
+    private function getRules(array &$q)
+    {
+        $col=isset($q['rules']);
+        $email=isset($q['email']);
+        if ($col && $email) $this->raise('Both "rules" collection and "email"');
+        if (!($col || $email)) return [];
+        if ($col)
+        {
+            $rs=$q['rules'];
+            unset($q['rules']);
+            $this->checkArray($rs);
+            return $this->getRulesCollection($rs);
+        }
+        $em=$q['email'];
+        unset($q['email']);
+        $this->checkArray($em);
+        return $this->getRulesEmail($em);
+    }
+    
     private function getQuestion(array $q)
     {
-        //  TODO: Do a better job of this
-        return (object)$q;
+        if ($this->extractString($q,'type')==='group') $this->raise('Unexpected group question');
+        unset($q['order']); //  Handled elsewhere
+        unset($q['field']); //  Don't know what this is for, disregard
+        unset($q['status']);    //  Don't know what this is for, disregard
+        unset($q['trigger']);   //  Don't know what this is for, disregard
+        $retr=new \FanFerret\QuestionBundle\Entity\Question();
+        foreach ($this->getRules($q) as $r)
+        {
+            $retr->addRule($r);
+            $r->addQuestion($retr);
+        }
+        $retr->setParams((object)$q);
+        return $retr;
     }
     
     private function getQuestions($name, array $qs)
@@ -109,10 +158,8 @@ class YamlSurveySerializer implements SurveySerializer
         foreach ($arr as $q)
         {
             $this->checkArray($q);
-            $type=$this->extractString($q,'type');
-            if ($type==='group') $this->raise('Unexpected group question among non-groups');
-            $retr=new \FanFerret\QuestionBundle\Entity\Question();
-            $retr->setOrder(++$i)->setParams($this->getQuestion($q));
+            $retr=$this->getQuestion($q);
+            $retr->setOrder(++$i);
             yield $retr;
         }
     }
