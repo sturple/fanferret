@@ -177,12 +177,21 @@ class YamlSurveySerializer implements SurveySerializer
     {
         $retr=new \FanFerret\QuestionBundle\Entity\QuestionGroup();
         $retr->setOrder(1);
+        $retr->setParams(new \stdClass());
         foreach ($this->getQuestions($name,$qs) as $q)
         {
             $retr->addQuestion($q);
             $q->setQuestionGroup($retr);
         }
         yield $retr;
+    }
+    
+    private function getParams(array $arr)
+    {
+        if (!isset($arr['params'])) return new \stdClass();
+        $ps=$arr['params'];
+        if (!is_array($ps)) $this->raise('"params" is not an array');
+        return (object)$ps;
     }
     
     private function getMultipleQuestionGroups($name, array $qs, array $seen)
@@ -203,6 +212,7 @@ class YamlSurveySerializer implements SurveySerializer
             }
             //  Actually build a question group
             $retr=new \FanFerret\QuestionBundle\Entity\QuestionGroup();
+            $retr->setParams($this->getParams($q));
             $t=new \FanFerret\QuestionBundle\Entity\QuestionGroupTranslation();
             $t->setLanguage($this->defaultLanguage)->setText($this->extractString($q,'title'))->setQuestionGroup($retr);
             $retr->addTranslation($t);
@@ -235,6 +245,7 @@ class YamlSurveySerializer implements SurveySerializer
     {
         $retr=new \FanFerret\QuestionBundle\Entity\Survey();
         $retr->setSlug($this->extractString($g,'slug'));
+        $retr->setParams($this->getParams($g));
         $t=new \FanFerret\QuestionBundle\Entity\SurveyTranslation();
         $t->setLanguage($this->defaultLanguage)->setText($this->extractString($g,'title'))->setSurvey($retr);
         $retr->addTranslation($t);

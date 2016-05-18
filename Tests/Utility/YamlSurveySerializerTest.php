@@ -15,7 +15,10 @@ class YamlQuestionSerializerTest extends \PHPUnit_Framework_TestCase
                 [
                     'id' => 'test',
                     'slug' => 'test',
-                    'title' => 'Test'
+                    'title' => 'Test',
+                    'params' => [
+                        'quux' => 'corge'
+                    ]
                 ]
             ],
             'questions' => [
@@ -28,7 +31,10 @@ class YamlQuestionSerializerTest extends \PHPUnit_Framework_TestCase
                     [
                         'type' => 'group',
                         'set' => 'bar',
-                        'title' => 'Bar'
+                        'title' => 'Bar',
+                        'params' => [
+                            'baz' => 'bar'
+                        ]
                     ]
                 ],
                 'foo' => [
@@ -125,6 +131,10 @@ class YamlQuestionSerializerTest extends \PHPUnit_Framework_TestCase
         $this->assertSame('test',$s->getSlug());
         $this->assertNull($s->getCompanyId());  //  Should this change?
         $this->assertSame(0,count($s->getSurveySessions()));
+        $params=$s->getParams();
+        $this->assertTrue(isset($params->quux));
+        $this->assertSame('corge',$params->quux);
+        $this->assertSame(1,count(get_object_vars($params)));
         //  Check translations
         $ts=$s->getTranslations();
         $this->assertSame(1,count($ts));
@@ -136,6 +146,8 @@ class YamlQuestionSerializerTest extends \PHPUnit_Framework_TestCase
         $gs=$s->getQuestionGroups();
         $this->assertSame(2,count($gs));
         $foo=$gs[0];
+        $params=$foo->getParams();
+        $this->assertSame(0,count(get_object_vars($params)));
         $ts=$foo->getTranslations();
         $this->assertSame(1,count($ts));
         $t=$ts[0];
@@ -145,6 +157,10 @@ class YamlQuestionSerializerTest extends \PHPUnit_Framework_TestCase
         $this->assertSame(1,$foo->getOrder());
         $this->assertSame($s,$foo->getSurvey());
         $bar=$gs[1];
+        $params=$bar->getParams();
+        $this->assertTrue(isset($params->baz));
+        $this->assertSame('bar',$params->baz);
+        $this->assertSame(1,count(get_object_vars($params)));
         $ts=$bar->getTranslations();
         $this->assertSame(1,count($ts));
         $t=$ts[0];
