@@ -3,6 +3,7 @@
 namespace FanFerret\QuestionBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use FanFerret\QuestionBundle\Utility\Json as Json;
 
 /**
  * @ORM\Entity(repositoryClass="QuestionBundle\Repository\SurveyRepository")
@@ -42,6 +43,11 @@ class Survey
      * @ORM\OneToMany(targetEntity="SurveySession",mappedBy="survey")
      */
     private $surveySessions;
+    
+    /**
+     * @ORM\Column(type="text")
+     */
+    private $params;
     
     /**
      * Constructor
@@ -211,5 +217,32 @@ class Survey
     public function getSurveySessions()
     {
         return $this->surveySessions;
+    }
+    
+    /**
+     * Set params
+     *
+     * @param object $params
+     *
+     * @return Survey
+     */
+    public function setParams($params)
+    {
+        if (!is_object($params)) throw new \InvalidArgumentException('$params not object');
+        $this->params=Json::encode($params);
+
+        return $this;
+    }
+
+    /**
+     * Get params
+     *
+     * @return object
+     */
+    public function getParams()
+    {
+        $retr=Json::decode($this->params);
+        if (!is_object($retr)) throw new \LogicException('$params not JSON object');
+        return $retr;
     }
 }
