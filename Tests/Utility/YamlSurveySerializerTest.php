@@ -9,7 +9,7 @@ class YamlQuestionSerializerTest extends \PHPUnit_Framework_TestCase
     
     protected function setUp()
     {
-		$this->se=new \FanFerret\QuestionBundle\Utility\YamlSurveySerializer();
+        $this->se=new \FanFerret\QuestionBundle\Utility\YamlSurveySerializer();
         $this->ex=[
             'questionGroup' => [
                 [
