@@ -137,9 +137,8 @@ class YamlSurveySerializer implements SurveySerializer
     {
         if ($this->extractString($q,'type')==='group') $this->raise('Unexpected group question');
         unset($q['order']); //  Handled elsewhere
-        unset($q['field']); //  Don't know what this is for, disregard
-        unset($q['status']);    //  Don't know what this is for, disregard
-        unset($q['trigger']);   //  Don't know what this is for, disregard
+        unset($q['field']); //  Legacy database interop, no longer needed as per discussion with Shawn 17/05/2016
+        unset($q['status']);    //  May add support for this in the future, not now, as per discussion with Shawn 17/05/2016
         $retr=new \FanFerret\QuestionBundle\Entity\Question();
         foreach ($this->getRules($q) as $r)
         {
