@@ -10,4 +10,23 @@ namespace FanFerret\QuestionBundle\Repository;
  */
 class SurveySessionRepository extends \Doctrine\ORM\EntityRepository
 {
+    /**
+     * Attempts to retrieve the SurveySession
+     * which has a particular token.
+     *
+     * @param string $token
+     *
+     * @return SurveySession
+     */
+    public function getByToken($token)
+    {
+        $qb = $this->createQueryBuilder('ss')
+            ->andWhere('ss.token = :token')
+            ->setParameter('token',$token)
+            ->setMaxResults(1);
+        $q = $qb->getQuery();
+        $arr = $q->getResult();
+        if (count($arr) !== 1) return null;
+        return $arr[0];
+    }
 }
