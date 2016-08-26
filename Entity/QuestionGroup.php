@@ -36,6 +36,7 @@ class QuestionGroup
     
     /**
      * @ORM\OneToMany(targetEntity="Question",mappedBy="questionGroup")
+     * @ORM\OrderBy({"order"="ASC"})
      */
     private $questions;
     
