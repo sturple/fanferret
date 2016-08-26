@@ -32,6 +32,11 @@ class QuestionAnswer
      * @ORM\Column(type="text")
      */
     private $value;
+
+    /**
+     * @ORM\OneToOne(targetEntity="Testimonial",mappedBy="questionAnswer")
+     */
+    private $testimonial;
     
 
     /**
@@ -114,5 +119,29 @@ class QuestionAnswer
     public function getQuestion()
     {
         return $this->question;
+    }
+
+    /**
+     * Set testimonial
+     *
+     * @param \FanFerret\QuestionBundle\Entity\Testimonial $testimonial
+     *
+     * @return QuestionAnswer
+     */
+    public function setTestimonial(\FanFerret\QuestionBundle\Entity\Testimonial $testimonial = null)
+    {
+        $this->testimonial = $testimonial;
+
+        return $this;
+    }
+
+    /**
+     * Get testimonial
+     *
+     * @return \FanFerret\QuestionBundle\Entity\Testimonial
+     */
+    public function getTestimonial()
+    {
+        return $this->testimonial;
     }
 }
