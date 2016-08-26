@@ -6,7 +6,7 @@ use Doctrine\ORM\Mapping as ORM;
 use FanFerret\QuestionBundle\Utility\Json as Json;
 
 /**
- * @ORM\Entity(repositoryClass="QuestionBundle\Repository\RuleRepository")
+ * @ORM\Entity(repositoryClass="FanFerret\QuestionBundle\Repository\RuleRepository")
  * @ORM\Table(name="rule")
  */
 class Rule

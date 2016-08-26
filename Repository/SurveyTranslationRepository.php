@@ -1,6 +1,6 @@
 <?php
 
-namespace QuestionBundle\Repository;
+namespace FanFerret\QuestionBundle\Repository;
 
 /**
  * SurveyTranslationRepository

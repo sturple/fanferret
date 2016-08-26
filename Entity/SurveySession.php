@@ -5,7 +5,7 @@ namespace FanFerret\QuestionBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @ORM\Entity(repositoryClass="QuestionBundle\Repository\SurveySessionRepository")
+ * @ORM\Entity(repositoryClass="FanFerret\QuestionBundle\Repository\SurveySessionRepository")
  * @ORM\Table(name="survey_session",uniqueConstraints={@ORM\UniqueConstraint(name="key_idx",columns={"key"})})
  */
 class SurveySession

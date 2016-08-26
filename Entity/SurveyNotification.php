@@ -5,7 +5,7 @@ namespace FanFerret\QuestionBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @ORM\Entity(repositoryClass="QuestionBundle\Repository\SurveyNotificationRepository")
+ * @ORM\Entity(repositoryClass="FanFerret\QuestionBundle\Repository\SurveyNotificationRepository")
  * @ORM\Table(name="survey_notification")
  */
 class SurveyNotification
