@@ -6,7 +6,7 @@ use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @ORM\Entity(repositoryClass="FanFerret\QuestionBundle\Repository\SurveySessionRepository")
- * @ORM\Table(name="survey_session",uniqueConstraints={@ORM\UniqueConstraint(name="key_idx",columns={"key"})})
+ * @ORM\Table(name="survey_session",uniqueConstraints={@ORM\UniqueConstraint(name="token_idx",columns={"token"})})
  */
 class SurveySession
 {
@@ -29,9 +29,9 @@ class SurveySession
     private $guestId;
     
     /**
-     * @ORM\Column(type="string",length=32)
+     * @ORM\Column(type="string",length=128)
      */
-    private $key;
+    private $token;
     
     /**
      * @ORM\Column(type="datetime")
@@ -94,30 +94,6 @@ class SurveySession
     public function getGuestId()
     {
         return $this->guestId;
-    }
-
-    /**
-     * Set key
-     *
-     * @param string $key
-     *
-     * @return SurveySession
-     */
-    public function setKey($key)
-    {
-        $this->key = $key;
-
-        return $this;
-    }
-
-    /**
-     * Get key
-     *
-     * @return string
-     */
-    public function getKey()
-    {
-        return $this->key;
     }
 
     /**
@@ -258,5 +234,29 @@ class SurveySession
     public function getSurveyNotifications()
     {
         return $this->surveyNotifications;
+    }
+
+    /**
+     * Set token
+     *
+     * @param string $token
+     *
+     * @return SurveySession
+     */
+    public function setToken($token)
+    {
+        $this->token = $token;
+
+        return $this;
+    }
+
+    /**
+     * Get token
+     *
+     * @return string
+     */
+    public function getToken()
+    {
+        return $this->token;
     }
 }
