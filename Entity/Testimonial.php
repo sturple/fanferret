@@ -6,7 +6,7 @@ use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @ORM\Entity(repositoryClass="FanFerret\QuestionBundle\Repository\TestimonialRepository")
- * @ORM\Table(name="testimonial")
+ * @ORM\Table(name="testimonial",uniqueConstraints={@ORM\UniqueConstraint(name="token_idx",columns={"token"})})
  */
 class Testimonial
 {
@@ -24,7 +24,7 @@ class Testimonial
 	private $questionAnswer;
 
 	/**
-	 * @ORM\Column(type="string",length=128,nullable=true)
+	 * @ORM\Column(type="string",length=128)
 	 */
 	private $token;
 
