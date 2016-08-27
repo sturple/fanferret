@@ -1,0 +1,3 @@
+fgms_question_survey:
+    path: /survey/{token}/
+    defaults: { _controller: FanFerretQuestionBundle:Default:survey }
