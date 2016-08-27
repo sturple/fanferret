@@ -20,6 +20,7 @@ class DefaultController extends Controller
     {
         $type = $this->getQuestionType($q);
         if ($type === 'open') return new \FanFerret\QuestionBundle\Question\OpenQuestion($q);
+        if ($type === 'polar') return new \FanFerret\QuestionBundle\Question\PolarQuestion($q);
         throw new \LogicException(
             sprintf(
                 'Unrecognized question type "%s"',
