@@ -36,4 +36,12 @@ interface QuestionInterface
      *  A QuestionAnswer entity.
      */
     public function getAnswer(array $data);
+
+    /**
+     * Renders the HTML for the question.
+     *
+     * @return string
+     *  A string containing the raw HTML for the question.
+     */
+    public function render();
 }

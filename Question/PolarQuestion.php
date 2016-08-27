@@ -8,11 +8,13 @@ namespace FanFerret\QuestionBundle\Question;
 class PolarQuestion extends Question
 {
 	private $negative;
+	private $twig;
 
-	public function __construct(\FanFerret\QuestionBundle\Entity\Question $q)
+	public function __construct(\FanFerret\QuestionBundle\Entity\Question $q, \Twig_Environment $twig)
 	{
 		parent::__construct($q);
 		$this->negative = $this->getBoolean('negative');
+		$this->twig = $twig;
 	}
 
 	public function addToFormBuilder(\Symfony\Component\Form\FormBuilderInterface $fb)
@@ -29,5 +31,11 @@ class PolarQuestion extends Question
 		$retr->setQuestion($this->getEntity());
 		$retr->setValue($data[$this->getName()] ? 'true' : 'false');
 		return $retr;
+	}
+
+	public function render()
+	{
+		//	TODO: Setup context
+		return $this->twig->render('FanFerretQuestionBundle:Question:polar.html.twig',[]);
 	}
 }

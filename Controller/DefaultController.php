@@ -19,8 +19,9 @@ class DefaultController extends Controller
     private function getQuestion(\FanFerret\QuestionBundle\Entity\Question $q)
     {
         $type = $this->getQuestionType($q);
-        if ($type === 'open') return new \FanFerret\QuestionBundle\Question\OpenQuestion($q);
-        if ($type === 'polar') return new \FanFerret\QuestionBundle\Question\PolarQuestion($q);
+        $twig = $this->get('twig');
+        if ($type === 'open') return new \FanFerret\QuestionBundle\Question\OpenQuestion($q,$twig);
+        if ($type === 'polar') return new \FanFerret\QuestionBundle\Question\PolarQuestion($q,$twig);
         throw new \LogicException(
             sprintf(
                 'Unrecognized question type "%s"',
@@ -31,13 +32,27 @@ class DefaultController extends Controller
 
     private function getQuestions(\FanFerret\QuestionBundle\Entity\Survey $s)
     {
-        $retr = [];
+        $gs = [];
         foreach ($s->getQuestionGroups() as $qg) {
+            $qs = [];
             foreach ($qg->getQuestions() as $q) {
-                $retr[] = $this->getQuestion($q);
+                $qs[] = $this->getQuestion($q);
+            }
+            $gs[] = (object)[
+                'group' => $qg,
+                'questions' => $qs
+            ];
+        }
+        return $gs;
+    }
+
+    private function traverseQuestions(array $gs)
+    {
+        foreach ($gs as $g) {
+            foreach ($g->questions as $q) {
+                yield $q;
             }
         }
-        return $retr;
     }
 
     public function surveyAction(\Symfony\Component\HttpFoundation\Request $request, $token)
@@ -62,9 +77,9 @@ class DefaultController extends Controller
         );
         //  Create form
         $survey = $session->getSurvey();
-        $qs = $this->getQuestions($survey);
+        $gs = $this->getQuestions($survey);
         $fb = $this->createFormBuilder();
-        foreach ($qs as $q) $q->addToFormBuilder($fb);
+        foreach ($this->traverseQuestions($gs) as $q) $q->addToFormBuilder($fb);
         $form = $fb->getForm();
         //  Handle form submission
         $form->handleRequest($request);
@@ -73,7 +88,7 @@ class DefaultController extends Controller
             $em = $doctrine->getManager();
             $em->persist($session);
             $data = $form->getData();
-            foreach ($qs as $q) {
+            foreach ($this->traverseQuestions($gs) as $q) {
                 $ans = $q->getAnswer($data);
                 $em->persist($ans);
                 $t = $ans->getTestimonial();
@@ -82,6 +97,12 @@ class DefaultController extends Controller
             }
             $em->flush();
         }
-        return $this->render('FanFerretQuestionBundle:Default:form.html.twig',['form' => $form->createView()]);
+        //  Setup template context
+        $ctx = [
+            'groups' => $gs,
+            'form' => $form->createView()
+        ];
+        //  Render
+        return $this->render('FanFerretQuestionBundle:Default:form.html.twig',$ctx);
     }
 }

@@ -8,11 +8,13 @@ namespace FanFerret\QuestionBundle\Question;
 class OpenQuestion extends Question
 {
     private $testimonial;
+    private $twig;
 
-    public function __construct(\FanFerret\QuestionBundle\Entity\Question $q)
+    public function __construct(\FanFerret\QuestionBundle\Entity\Question $q, \Twig_Environment $twig)
     {
         parent::__construct($q);
         $this->testimonial = $this->getBoolean('testimonial');
+        $this->twig = $twig;
     }
 
     public function addToFormBuilder(\Symfony\Component\Form\FormBuilderInterface $fb)
@@ -46,5 +48,11 @@ class OpenQuestion extends Question
             $retr->setTestimonial($t);
         }
         return $retr;
+    }
+
+    public function render()
+    {
+        //  TODO: Setup context
+        return $this->twig->render('FanFerretQuestionBundle:Question:open.html.twig',[]);
     }
 }
