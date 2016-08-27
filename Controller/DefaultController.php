@@ -7,61 +7,36 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 
 class DefaultController extends Controller
 {
-    private function getQuestionName(\FanFerret\QuestionBundle\Entity\Question $q)
+    private function getQuestionType(\FanFerret\QuestionBundle\Entity\Question $q)
     {
-        //  The name is obtained by concatenating
-        //  the ID of the QuestionGroup with the
-        //  ID of the Question separated by an
-        //  underscore
-        return sprintf(
-            '%d_%d',
-            $q->getQuestionGroup()->getId(),
-            $q->getId()
+        $params = $q->getParams();
+        if (!isset($params->type)) throw new \InvalidArgumentException('Question parameter "type" missing');
+        $val = $params->type;
+        if (!is_string($val)) throw new \InvalidArgumentException('Question parameter "type" not string');
+        return $val;
+    }
+
+    private function getQuestion(\FanFerret\QuestionBundle\Entity\Question $q)
+    {
+        $type = $this->getQuestionType($q);
+        if ($type === 'open') return new \FanFerret\QuestionBundle\Question\OpenQuestion($q);
+        throw new \LogicException(
+            sprintf(
+                'Unrecognized question type "%s"',
+                $type
+            )
         );
     }
 
-    private function createSurveyForm(\FanFerret\QuestionBundle\Entity\Survey $s)
+    private function getQuestions(\FanFerret\QuestionBundle\Entity\Survey $s)
     {
-        $fb = $this->createFormBuilder();
+        $retr = [];
         foreach ($s->getQuestionGroups() as $qg) {
             foreach ($qg->getQuestions() as $q) {
-                $fb->add(
-                    $this->getQuestionName($q),
-                    \Symfony\Component\Form\Extension\Core\Type\HiddenType::class
-                );
+                $retr[] = $this->getQuestion($q);
             }
         }
-        return $fb->getForm();
-    }
-
-    private function getQuestionType($obj)
-    {
-        if (!isset($obj->type)) throw new \LogicException('Question parameters "type" property missing');
-        if (!is_string($obj->type)) throw new \LogicException('Question parameters "type" property is not a string');
-        return $obj->type;
-    }
-
-    private function getQuestionAnswer(\FanFerret\QuestionBundle\Entity\Question $q, $data)
-    {
-        $params = $q->getParams();
-        $type = $this->getQuestionType($params);
-        //  TODO: Actually implement question logic
-        $ans = new \FanFerret\QuestionBundle\Entity\QuestionAnswer();
-        $ans->setQuestion($q);
-        //  TODO: Actually set a real value
-        $ans->setValue('');
-        return $ans;
-    }
-
-    private function getQuestionAnswers(\FanFerret\QuestionBundle\Entity\Survey $s, array $data)
-    {
-        foreach ($s->getQuestionGroups() as $qg) {
-            foreach ($qg->getQuestions() as $q) {
-                $name = $this->getQuestionName($q);
-                $item = $data[$name];
-                yield $this->getQuestionAnswer($q,$item);
-            }
-        }
+        return $retr;
     }
 
     public function surveyAction(\Symfony\Component\HttpFoundation\Request $request, $token)
@@ -84,19 +59,23 @@ class DefaultController extends Controller
                 $token
             )
         );
-        //  Handle form creation and submission
+        //  Create form
         $survey = $session->getSurvey();
-        $form = $this->createSurveyForm($survey);
+        $qs = $this->getQuestions($survey);
+        $fb = $this->createFormBuilder();
+        foreach ($qs as $q) $q->addToFormBuilder($fb);
+        $form = $fb->getForm();
+        //  Handle form submission
         $form->handleRequest($request);
         if ($form->isValid()) {
             $session->setCompleted(new \DateTime());
             $em = $doctrine->getManager();
             $em->persist($session);
             $data = $form->getData();
-            foreach ($this->getQuestionAnswers($survey,$data) as $qa) {
-                $qa->setSurveySession($session);
-                $em->persist($qa);
-                $t = $qa->getTestimonial();
+            foreach ($qs as $q) {
+                $ans = $q->getAnswer($data);
+                $em->persist($ans);
+                $t = $ans->getTestimonial();
                 //  TODO: Other handling of testimonials
                 if (!is_null($t)) $em->persist($t);
             }
