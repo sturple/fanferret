@@ -52,7 +52,11 @@ class OpenQuestion extends Question
 
     public function render()
     {
-        //  TODO: Setup context
-        return $this->twig->render('FanFerretQuestionBundle:Question:open.html.twig',[]);
+        $ctx = [
+            'name' => $this->getName(),
+            'testimonial' => $this->testimonial,
+            'title' => $this->getString('title')
+        ];
+        return $this->twig->render('FanFerretQuestionBundle:Question:open.html.twig',$ctx);
     }
 }
