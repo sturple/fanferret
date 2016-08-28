@@ -1,0 +1,35 @@
+<div class="fanferret-checklist fanferret-question {% if hasOther %}fanferret-other{% endif %}" id="{{name|escape('html_attr')}}">
+	<h3 class="fanferret-question-title">{{title}}</h3>
+	<div class="fanferret-question-input">
+		<ul class="fanferret-checklist-options">
+			{% for option in options %}
+			<li class="fanferret-checklist-option">
+				<div class="fanferret-checklist-option-radio">
+					<input type="radio" name="{{name|escape('html_attr')}}_group" value="{{loop.index0|escape('html_attr')}}">
+				</div>
+				<div class="fanferret-checklist-option-label">
+					{{option}}
+				</div>
+			</li>
+			{% endfor %}
+			{% if hasOther %}
+			<li class="fanferret-checklist-option fanferret-checklist-option-other">
+				<div class="fanferret-checklist-option-radio fanferret-checklist-option-other-radio">
+					<input type="radio" name="{{name|escape('html_attr')}}_group" value="other">
+				</div>
+				<div class="fanferret-checklist-option-label fanferret-checklist-option-other-label">
+					Other
+				</div>
+				<div class="fanferret-checklist-option-other-text">
+					<input type="text">
+				</div>
+			</li>
+			{% endif %}
+		</ul>
+	</div>
+</div>
+<script type="text/javascript">
+	require(['question/checklist'],function (c) {
+		var q = new c({{name|json_encode()|raw}},document);
+	});
+</script>

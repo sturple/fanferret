@@ -22,6 +22,7 @@ class DefaultController extends Controller
         $twig = $this->get('twig');
         if ($type === 'open') return new \FanFerret\QuestionBundle\Question\OpenQuestion($q,$twig);
         if ($type === 'polar') return new \FanFerret\QuestionBundle\Question\PolarQuestion($q,$twig);
+        if ($type === 'checklist') return new \FanFerret\QuestionBundle\Question\ChecklistQuestion($q,$twig);
         throw new \LogicException(
             sprintf(
                 'Unrecognized question type "%s"',

@@ -77,4 +77,28 @@ abstract class Question implements QuestionInterface
         );
         return $val;
     }
+
+    protected function getArray($property, $obj = null)
+    {
+        $val = $this->getProperty($property,$obj);
+        if (!is_array($val)) throw new \InvalidArgumentException(
+            sprintf(
+                'Property "%s" not array',
+                $property
+            )
+        );
+        return $val;
+    }
+
+    protected function getStringArray($property, $obj = null)
+    {
+        $val = $this->getArray($property,$obj);
+        foreach ($val as $str) if (!is_string($str)) throw new \InvalidArgumentException(
+            sprintf(
+                'Property "%s" is not string array',
+                $property
+            )
+        );
+        return $val;
+    }
 }
