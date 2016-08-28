@@ -8,10 +8,10 @@ class ChecklistQuestion extends Question
     private $hasOther;
     private $twig;
 
-    public function __construct(\FanFerret\QuestionBundle\Entity\Question $q, \Twig_Environment $twig)
+    public function __construct(\FanFerret\QuestionBundle\Entity\Question $q, \FanFerret\QuestionBundle\Internationalization\TranslatorInterface $t, \Twig_Environment $twig)
     {
-        parent::__construct($q);
-        $this->options = $this->getStringArray('options');
+        parent::__construct($q,$t);
+        $this->options = $this->getTranslatableStringArray('options');
         $this->hasOther = $this->getBoolean('hasOther');
         $this->twig = $twig;
     }
@@ -84,7 +84,7 @@ class ChecklistQuestion extends Question
         $ctx = [
             'options' => $this->options,
             'hasOther' => $this->hasOther,
-            'title' => $this->getString('title'),
+            'title' => $this->getTranslatableString('title'),
             'name' => $this->getName()
         ];
         return $this->twig->render('FanFerretQuestionBundle:Question:checklist.html.twig',$ctx);

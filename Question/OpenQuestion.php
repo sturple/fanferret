@@ -10,9 +10,9 @@ class OpenQuestion extends Question
     private $testimonial;
     private $twig;
 
-    public function __construct(\FanFerret\QuestionBundle\Entity\Question $q, \Twig_Environment $twig)
+    public function __construct(\FanFerret\QuestionBundle\Entity\Question $q, \FanFerret\QuestionBundle\Internationalization\TranslatorInterface $t, \Twig_Environment $twig)
     {
-        parent::__construct($q);
+        parent::__construct($q,$t);
         $this->testimonial = $this->getBoolean('testimonial');
         $this->twig = $twig;
     }
@@ -55,7 +55,7 @@ class OpenQuestion extends Question
         $ctx = [
             'name' => $this->getName(),
             'testimonial' => $this->testimonial,
-            'title' => $this->getString('title')
+            'title' => $this->getTranslatableString('title')
         ];
         return $this->twig->render('FanFerretQuestionBundle:Question:open.html.twig',$ctx);
     }

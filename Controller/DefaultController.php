@@ -16,13 +16,13 @@ class DefaultController extends Controller
         return $val;
     }
 
-    private function getQuestion(\FanFerret\QuestionBundle\Entity\Question $q)
+    private function getQuestion(\FanFerret\QuestionBundle\Entity\Question $q, \FanFerret\QuestionBundle\Internationalization\TranslatorInterface $t)
     {
         $type = $this->getQuestionType($q);
         $twig = $this->get('twig');
-        if ($type === 'open') return new \FanFerret\QuestionBundle\Question\OpenQuestion($q,$twig);
-        if ($type === 'polar') return new \FanFerret\QuestionBundle\Question\PolarQuestion($q,$twig);
-        if ($type === 'checklist') return new \FanFerret\QuestionBundle\Question\ChecklistQuestion($q,$twig);
+        if ($type === 'open') return new \FanFerret\QuestionBundle\Question\OpenQuestion($q,$t,$twig);
+        if ($type === 'polar') return new \FanFerret\QuestionBundle\Question\PolarQuestion($q,$t,$twig);
+        if ($type === 'checklist') return new \FanFerret\QuestionBundle\Question\ChecklistQuestion($q,$t,$twig);
         throw new \LogicException(
             sprintf(
                 'Unrecognized question type "%s"',
@@ -31,13 +31,13 @@ class DefaultController extends Controller
         );
     }
 
-    private function getQuestions(\FanFerret\QuestionBundle\Entity\Survey $s)
+    private function getQuestions(\FanFerret\QuestionBundle\Entity\Survey $s, \FanFerret\QuestionBundle\Internationalization\TranslatorInterface $t)
     {
         $gs = [];
         foreach ($s->getQuestionGroups() as $qg) {
             $qs = [];
             foreach ($qg->getQuestions() as $q) {
-                $qs[] = $this->getQuestion($q);
+                $qs[] = $this->getQuestion($q,$t);
             }
             $gs[] = (object)[
                 'group' => $qg,
@@ -78,7 +78,9 @@ class DefaultController extends Controller
         );
         //  Create form
         $survey = $session->getSurvey();
-        $gs = $this->getQuestions($survey);
+        //  TODO: Decide on language somehow
+        $translator = new \FanFerret\QuestionBundle\Internationalization\Translator('en-CA');
+        $gs = $this->getQuestions($survey,$translator);
         $fb = $this->createFormBuilder();
         foreach ($this->traverseQuestions($gs) as $q) $q->addToFormBuilder($fb);
         $form = $fb->getForm();

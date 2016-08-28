@@ -8,6 +8,7 @@ namespace FanFerret\QuestionBundle\Question;
 abstract class Question implements QuestionInterface
 {
     private $q;
+    private $t;
 
     /**
      * Creates a Question object.
@@ -15,10 +16,14 @@ abstract class Question implements QuestionInterface
      * @param $question
      *  The Question entity which the newly-created
      *  object shall represent.
+     * @param $translator
+     *  A TranslatorInterface object which the newly-created
+     *  object my use to obtain localized strings.
      */
-    public function __construct(\FanFerret\QuestionBundle\Entity\Question $question)
+    public function __construct(\FanFerret\QuestionBundle\Entity\Question $question, \FanFerret\QuestionBundle\Internationalization\TranslatorInterface $translator)
     {
         $this->q=$question;
+        $this->t=$translator;
     }
 
     public function getEntity()
@@ -66,6 +71,12 @@ abstract class Question implements QuestionInterface
         return $val;
     }
 
+    protected function getTranslatableString($property, $obj = null)
+    {
+        $val = $this->getProperty($property,$obj);
+        return $this->t->translate($val);
+    }
+
     protected function getBoolean($property, $obj = null)
     {
         $val = $this->getProperty($property,$obj);
@@ -100,5 +111,11 @@ abstract class Question implements QuestionInterface
             )
         );
         return $val;
+    }
+
+    protected function getTranslatableStringArray($property, $obj = null)
+    {
+        $val = $this->getArray($property,$obj);
+        return array_map(function ($obj) {  return $this->t->translate($obj);   },$val);
     }
 }

@@ -10,9 +10,9 @@ class PolarQuestion extends Question
 	private $negative;
 	private $twig;
 
-	public function __construct(\FanFerret\QuestionBundle\Entity\Question $q, \Twig_Environment $twig)
+	public function __construct(\FanFerret\QuestionBundle\Entity\Question $q, \FanFerret\QuestionBundle\Internationalization\TranslatorInterface $t, \Twig_Environment $twig)
 	{
-		parent::__construct($q);
+		parent::__construct($q,$t);
 		$this->negative = $this->getBoolean('negative');
 		$this->twig = $twig;
 	}
@@ -36,7 +36,7 @@ class PolarQuestion extends Question
 	public function render()
 	{
 		$ctx = [
-			'title' => $this->getString('title'),
+			'title' => $this->getTranslatableString('title'),
 			'negative' => $this->negative,
 			'name' => $this->getName()
 		];
