@@ -1,1 +1,11 @@
-<em>POLAR</em>
+<div class="fanferret-polar fanferret-question" id="{{name|escape('html_attr')}}">
+	<h3 class="fanferret-question-title">{{title}}</h3>
+	<div class="fanferret-question-input">
+		<input type="checkbox">
+	</div>
+</div>
+<script type="text/javascript">
+	require(['question/polar'],function (p) {
+		var q = new p({{name|json_encode()|raw}},document);
+	});
+</script>

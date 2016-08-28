@@ -35,7 +35,11 @@ class PolarQuestion extends Question
 
 	public function render()
 	{
-		//	TODO: Setup context
-		return $this->twig->render('FanFerretQuestionBundle:Question:polar.html.twig',[]);
+		$ctx = [
+			'title' => $this->getString('title'),
+			'negative' => $this->negative,
+			'name' => $this->getName()
+		];
+		return $this->twig->render('FanFerretQuestionBundle:Question:polar.html.twig',$ctx);
 	}
 }
