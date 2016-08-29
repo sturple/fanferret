@@ -20,7 +20,7 @@ class DefaultController extends Controller
     {
         $type = $this->getQuestionType($q);
         $twig = $this->get('twig');
-        if ($type === 'open') return new \FanFerret\QuestionBundle\Question\OpenQuestion($q,$t,$twig);
+        if ($type === 'open') return new \FanFerret\QuestionBundle\Question\OpenQuestion($q,$t,$twig,$this->get('fan_ferret_question.token_generator'));
         if ($type === 'polar') return new \FanFerret\QuestionBundle\Question\PolarQuestion($q,$t,$twig);
         if ($type === 'checklist') return new \FanFerret\QuestionBundle\Question\ChecklistQuestion($q,$t,$twig);
         if ($type === 'rating') return new \FanFerret\QuestionBundle\Question\RatingQuestion($q,$t,$twig);

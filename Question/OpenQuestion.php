@@ -9,12 +9,14 @@ class OpenQuestion extends Question
 {
     private $testimonial;
     private $twig;
+    private $token;
 
-    public function __construct(\FanFerret\QuestionBundle\Entity\Question $q, \FanFerret\QuestionBundle\Internationalization\TranslatorInterface $t, \Twig_Environment $twig)
+    public function __construct(\FanFerret\QuestionBundle\Entity\Question $q, \FanFerret\QuestionBundle\Internationalization\TranslatorInterface $t, \Twig_Environment $twig, \FanFerret\QuestionBundle\Utility\TokenGeneratorInterface $token)
     {
         parent::__construct($q,$t);
         $this->testimonial = $this->getBoolean('testimonial');
         $this->twig = $twig;
+        $this->token = $token;
     }
 
     public function addToFormBuilder(\Symfony\Component\Form\FormBuilderInterface $fb)
@@ -42,7 +44,7 @@ class OpenQuestion extends Question
             $t->setQuestionAnswer($retr);
             $t->setApproved(false);
             $t->setText($value);
-            //  TODO: Generate & set token
+            $t->setToken($this->token->generate());
             $retr->setTestimonial($t);
         }
         return $retr;
