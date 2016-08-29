@@ -1,0 +1,4 @@
+<h1>Group {{group.id}}</h1>
+{% for question in questions %}
+{{question.render()|raw}}
+{% endfor %}

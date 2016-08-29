@@ -7,10 +7,7 @@
 		{{form_start(form)}}
 		{{form_end(form)}}
 		{% for group in groups %}
-		<h1>Group {{group.group.id}}</h1>
-		{% for question in group.questions %}
-		{{question.render()|raw}}
-		{% endfor %}
+		{{group.render()|raw}}
 		{% endfor %}
 		<input type="button" onclick="document.getElementsByTagName('form')[0].submit();" value="Submit">
 	</body>
