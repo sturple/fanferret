@@ -80,13 +80,12 @@ class ChecklistQuestion extends Question
 
     public function render()
     {
-        $ctx = [
-            'options' => $this->options,
-            'hasOther' => $this->hasOther,
-            'title' => $this->getTranslatableString('title'),
-            'name' => $this->getName(),
-            'entity' => $this->getEntity()
-        ];
-        return $this->twig->render('FanFerretQuestionBundle:Question:checklist.html.twig',$ctx);
+        return $this->twig->render(
+            'FanFerretQuestionBundle:Question:checklist.html.twig',
+            $this->getRenderContext([
+                'options' => $this->options,
+                'hasOther' => $this->hasOther
+            ])
+        );
     }
 }
