@@ -43,7 +43,6 @@ class OpenQuestion extends Question
             $t->setApproved(false);
             $t->setText($value);
             //  TODO: Generate & set token
-            $t->setQuestionAnswer($retr);
             $retr->setTestimonial($t);
         }
         return $retr;
