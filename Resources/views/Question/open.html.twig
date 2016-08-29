@@ -10,7 +10,7 @@
 	{% endif %}
 </div>
 <script type="text/javascript">
-	require(['question/open'],function (o) {
+	require(['survey/question/open'],function (o) {
 		var q = new o({{name|json_encode()|raw}},document);
 	});
 </script>
