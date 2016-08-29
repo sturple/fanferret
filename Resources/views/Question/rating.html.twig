@@ -1,0 +1,19 @@
+<section id="{{name|escape('html_attr')}}" class="fanferret-question fanferret-rating">
+	<h3 class="fanferret-question-title">{{title}}</h3>
+	<div class="fanferret-question-input">
+		<ul class="fanferret-rating-ratings">
+			{% for i in 1..5 %}
+			<li class="fanferret-rating-rating">
+				<div class="fenferret-rating-rating-radio">
+					<input type="radio" name="{{name|escape('html_attr')}}_group" value="{{i|escape('html_attr')}}">
+				</div>
+				<div class="fanferret-rating-rating-label">
+					{{i}}
+				</div>
+			</li>
+			{% endfor %}
+		</ul>
+	</div>
+	{% include 'FanFerretQuestionBundle:Question:next.html.twig' with {'entity': entity} %}
+</section>
+{% include 'FanFerretQuestionBundle:Question:add.html.twig' with {'name': name, 'dependency': 'rating'} %}

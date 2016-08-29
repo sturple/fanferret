@@ -23,6 +23,7 @@ class DefaultController extends Controller
         if ($type === 'open') return new \FanFerret\QuestionBundle\Question\OpenQuestion($q,$t,$twig);
         if ($type === 'polar') return new \FanFerret\QuestionBundle\Question\PolarQuestion($q,$t,$twig);
         if ($type === 'checklist') return new \FanFerret\QuestionBundle\Question\ChecklistQuestion($q,$t,$twig);
+        if ($type === 'rating') return new \FanFerret\QuestionBundle\Question\RatingQuestion($q,$t,$twig);
         throw new \LogicException(
             sprintf(
                 'Unrecognized question type "%s"',
