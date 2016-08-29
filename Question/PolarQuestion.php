@@ -27,8 +27,7 @@ class PolarQuestion extends Question
 
 	public function getAnswer(array $data)
 	{
-		$retr = new \FanFerret\QuestionBundle\Entity\QuestionAnswer();
-		$retr->setQuestion($this->getEntity());
+		$retr = parent::getAnswer($data);
 		$retr->setValue($data[$this->getName()] ? 'true' : 'false');
 		return $retr;
 	}

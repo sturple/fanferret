@@ -32,8 +32,7 @@ class OpenQuestion extends Question
 
     public function getAnswer(array $data)
     {
-        $retr = new \FanFerret\QuestionBundle\Entity\QuestionAnswer();
-        $retr->setQuestion($this->getEntity());
+        $retr = parent::getAnswer($data);
         $name = $this->getName();
         $value = $data[$name];
         if (is_null($value)) $value = '';

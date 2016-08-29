@@ -31,6 +31,13 @@ abstract class Question implements QuestionInterface
         return $this->q;
     }
 
+    public function getAnswer(array $data)
+    {
+        $retr = new \FanFerret\QuestionBundle\Entity\QuestionAnswer();
+        $retr->setQuestion($this->q);
+        return $retr;
+    }
+
     protected function getName()
     {
         return sprintf(

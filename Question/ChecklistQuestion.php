@@ -73,8 +73,7 @@ class ChecklistQuestion extends Question
 
     public function getAnswer(array $data)
     {
-        $retr = new \FanFerret\QuestionBundle\Entity\QuestionAnswer();
-        $retr->setQuestion($this->getEntity());
+        $retr = parent::getAnswer($data);
         $retr->setValue(json_encode($this->getAnswerObject($data)));
         return $retr;
     }
