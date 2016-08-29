@@ -7,8 +7,9 @@ define(['jquery','survey/question/base'],function ($, base) {
 		var other = null;
 		var other_hidden = null;
 		var other_div = null;
+		var radios = div.find('input[name="' + name + '_group"]');
 		var update = function () {
-			var selected = div.find('input[name="' + name + '_group"]:checked').val();
+			var selected = radios.filter(':checked').val();
 			if (selected === 'other') {
 				hidden.val(null);
 				other_hidden.val(other.val());
@@ -28,5 +29,13 @@ define(['jquery','survey/question/base'],function ($, base) {
 		}
 		update();
 		div.find('input').change(update);
+		var valid = this.valid;
+		this.valid = function () {
+			var val = radios.filter(':checked').val();
+			if (!val) return false;
+			if (val !== 'other') return valid();
+			if (other.val().trim() === '') return false;
+			return valid();
+		};
 	};
 });
