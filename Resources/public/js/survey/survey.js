@@ -37,6 +37,16 @@ var fanFerret = (function () {
 		$('#survey_carousel').carousel(active);
 		groups[active].active();
 	};
+	retr.addQuestion = function (dependency, name) {
+		var handle = retr.register();
+		require([dependency],function (question) {
+			handle(function () {
+				var g = retr.currentGroup();
+				var q = new question(name,g,document);
+				g.addQuestion(q);
+			});
+		});
+	};
 	return retr;
 })();
 //	This just prevents anything from happening

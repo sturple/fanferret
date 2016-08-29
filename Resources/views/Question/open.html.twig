@@ -11,14 +11,5 @@
 	{% include 'FanFerretQuestionBundle:Question:next.html.twig' with {'entity': entity} %}
 </section>
 <script type="text/javascript">
-	(function () {
-		var handle = fanFerret.register();
-		require(['survey/question/open'],function (open) {
-			handle(function () {
-				var g = fanFerret.currentGroup();
-				var q = new open({{name|json_encode()|raw}},g,document);
-				g.addQuestion(q);
-			});
-		});
-	})();
+	fanFerret.addQuestion('survey/question/open',{{name|json_encode()|raw}});
 </script>
