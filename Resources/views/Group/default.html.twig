@@ -11,7 +11,7 @@
 </script>
 <section id="{{group.id|escape('html_attr')}}" class="fanferret-group">
 	<h2 class="fanferret-group-title">Group {{group.id}}</h2>
-	<div id="{{group.id|escape('html_attr')}}_carousel" class="carousel slide" data-ride="carousel" data-keyboard="false" data-interval="false">
+	<div id="{{group.id|escape('html_attr')}}_carousel" class="carousel slide vertical" data-ride="carousel" data-keyboard="false" data-interval="false">
 		<div class="carousel-inner" role="listbox">
 			{% for question in questions %}
 			<div class="carousel-item item {% if loop.index0 == 0 %}active{% endif %}">
