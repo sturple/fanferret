@@ -19,8 +19,10 @@ define(function () {
 		};
 		this.next = function () {
 			var last = questions.length - 1;
-			//	TODO: Next group
-			if (active === last) return;
+			if (active === last) {
+				survey.next();
+				return;
+			}
 			++active;
 			carousel.carousel(active);
 			questions[active].active();

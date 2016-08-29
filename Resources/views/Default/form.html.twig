@@ -10,9 +10,14 @@
 	<body>
 		{{form_start(form)}}
 		{{form_end(form)}}
-		{% for group in groups %}
-		{{group.render()|raw}}
-		{% endfor %}
-		<input type="button" onclick="document.getElementsByTagName('form')[0].submit();" value="Submit">
+		<div id="survey_carousel" class="carousel slide" data-ride="carousel" data-interval="false" data-keyboard="false">
+			<div class="carousel-inner" role="listbox">
+				{% for group in groups %}
+				<div class="carousel-item item {% if loop.index0 == 0 %}active{% endif %}">
+					{{group.render()|raw}}
+				</div>
+				{% endfor %}
+			</div>
+		</div>
 	</body>
 </html>
