@@ -32,9 +32,5 @@ var fanFerret = (function () {
 //	until the document is completely ready
 (function () {
 	var handle = fanFerret.register();
-	require(['jquery'],function ($) {
-		$(function () {
-			handle(function () {	});
-		});
-	});
+	$(function () {	handle(function () {	});	});
 })();
