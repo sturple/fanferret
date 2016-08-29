@@ -55,7 +55,8 @@ class OpenQuestion extends Question
         $ctx = [
             'name' => $this->getName(),
             'testimonial' => $this->testimonial,
-            'title' => $this->getTranslatableString('title')
+            'title' => $this->getTranslatableString('title'),
+            'entity' => $this->getEntity()
         ];
         return $this->twig->render('FanFerretQuestionBundle:Question:open.html.twig',$ctx);
     }

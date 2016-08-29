@@ -1,4 +1,23 @@
-<h1>Group {{group.id}}</h1>
-{% for question in questions %}
-{{question.render()|raw}}
-{% endfor %}
+<script type="text/javascript">
+	(function () {
+		var handle = fanFerret.register();
+		require(['survey/group'],function (group) {
+			handle(function () {
+				var g = new group({{group.id|json_encode()|raw}},fanFerret,document);
+				fanFerret.addGroup(g);
+			});
+		});
+	})();
+</script>
+<section id="{{group.id|escape('html_attr')}}" class="fanferret-group">
+	<h2 class="fanferret-group-title">Group {{group.id}}</h2>
+	<div id="{{group.id|escape('html_attr')}}_carousel" class="carousel slide" data-ride="carousel" data-interval="false">
+		<div class="carousel-inner" role="listbox">
+			{% for question in questions %}
+			<div class="carousel-item item {% if loop.index0 == 0 %}active{% endif %}">
+				{{question.render()|raw}}
+			</div>
+			{% endfor %}
+		</div>
+	</div>
+</section>

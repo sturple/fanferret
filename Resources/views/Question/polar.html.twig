@@ -1,11 +1,19 @@
-<div class="fanferret-polar fanferret-question" id="{{name|escape('html_attr')}}">
+<section class="fanferret-polar fanferret-question" id="{{name|escape('html_attr')}}">
 	<h3 class="fanferret-question-title">{{title}}</h3>
 	<div class="fanferret-question-input">
 		<input type="checkbox">
 	</div>
-</div>
+	{% include 'FanFerretQuestionBundle:Question:next.html.twig' with {'entity': entity} %}
+</section>
 <script type="text/javascript">
-	require(['survey/question/polar'],function (p) {
-		var q = new p({{name|json_encode()|raw}},document);
-	});
+	(function () {
+		var handle = fanFerret.register();
+		require(['survey/question/polar'],function (polar) {
+			handle(function () {
+				var g = fanFerret.currentGroup();
+				var q = new polar({{name|json_encode()|raw}},g,document);
+				g.addQuestion(q);
+			});
+		});
+	})();
 </script>

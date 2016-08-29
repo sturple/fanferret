@@ -1,5 +1,6 @@
-define(['jquery'],function ($) {
-	return function (name, document) {
+define(['jquery','survey/question/base'],function ($, base) {
+	return function (name, group, document) {
+		base.call(this,name,group,document);
 		document = $(document);
 		var div = document.find('#' + name);
 		var hidden = document.find('#form_' + name);

@@ -85,7 +85,8 @@ class ChecklistQuestion extends Question
             'options' => $this->options,
             'hasOther' => $this->hasOther,
             'title' => $this->getTranslatableString('title'),
-            'name' => $this->getName()
+            'name' => $this->getName(),
+            'entity' => $this->getEntity()
         ];
         return $this->twig->render('FanFerretQuestionBundle:Question:checklist.html.twig',$ctx);
     }

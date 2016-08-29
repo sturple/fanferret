@@ -38,7 +38,8 @@ class PolarQuestion extends Question
 		$ctx = [
 			'title' => $this->getTranslatableString('title'),
 			'negative' => $this->negative,
-			'name' => $this->getName()
+			'name' => $this->getName(),
+			'entity' => $this->getEntity()
 		];
 		return $this->twig->render('FanFerretQuestionBundle:Question:polar.html.twig',$ctx);
 	}

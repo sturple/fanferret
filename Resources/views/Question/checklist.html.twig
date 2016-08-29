@@ -1,4 +1,4 @@
-<div class="fanferret-checklist fanferret-question {% if hasOther %}fanferret-other{% endif %}" id="{{name|escape('html_attr')}}">
+<section id="{{name|escape('html_attr')}}" class="fanferret-checklist fanferret-question {% if hasOther %}fanferret-other{% endif %}">
 	<h3 class="fanferret-question-title">{{title}}</h3>
 	<div class="fanferret-question-input">
 		<ul class="fanferret-checklist-options">
@@ -27,9 +27,17 @@
 			{% endif %}
 		</ul>
 	</div>
-</div>
+	{% include 'FanFerretQuestionBundle:Question:next.html.twig' with {'entity': entity} %}
+</section>
 <script type="text/javascript">
-	require(['survey/question/checklist'],function (c) {
-		var q = new c({{name|json_encode()|raw}},document);
-	});
+	(function () {
+		var handle = fanFerret.register();
+		require(['survey/question/checklist'],function (checklist) {
+			handle(function () {
+				var g = fanFerret.currentGroup();
+				var q = new checklist({{name|json_encode()|raw}},g,document);
+				g.addQuestion(q);
+			});
+		});
+	})();
 </script>
