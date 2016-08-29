@@ -8,6 +8,7 @@ class ChecklistQuestionTest extends QuestionTestCase
     {
         return new \FanFerret\QuestionBundle\Question\ChecklistQuestion(
             $this->createEntity(),
+            $this->createTranslator(),
             $this->createTwig()
         );
     }

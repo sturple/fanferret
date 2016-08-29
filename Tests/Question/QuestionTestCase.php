@@ -40,4 +40,9 @@ class QuestionTestCase extends \PHPUnit_Framework_TestCase
 		$loader = new \Twig_Loader_Array($this->templates);
 		return new \Twig_Environment($loader);
 	}
+
+	protected function createTranslator($lang = 'en')
+	{
+		return new \FanFerret\QuestionBundle\Internationalization\Translator($lang);
+	}
 }
