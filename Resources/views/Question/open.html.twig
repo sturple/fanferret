@@ -10,6 +10,4 @@
 	{% endif %}
 	{% include 'FanFerretQuestionBundle:Question:next.html.twig' with {'entity': entity} %}
 </section>
-<script type="text/javascript">
-	fanFerret.addQuestion('survey/question/open',{{name|json_encode()|raw}});
-</script>
+{% include 'FanFerretQuestionBundle:Question:add.html.twig' with {'name': name, 'dependency': 'open'} %}
