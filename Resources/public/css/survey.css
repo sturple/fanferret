@@ -1,0 +1,30 @@
+@charset "UTF-8";
+
+body {
+	background: #0079D7;
+}
+
+#survey_carousel {
+	background: rgba(255,255,255,0.6);
+	margin: 50px;
+	padding: 50px;
+	overflow: hidden;
+	text-align: center;
+}
+
+h2 {
+	margin-top: 0;
+}
+
+#survey_carousel .carousel > .carousel-inner > .carousel-item {
+	min-height: 300px;
+}
+
+.fanferret-checklist-options, .fanferret-rating-ratings {
+	list-style-type: none;
+	padding-left: 0;
+}
+
+.fanferret-checklist-option > div, .fanferret-rating-rating > div {
+	display: inline-block;
+}
