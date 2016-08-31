@@ -27,6 +27,16 @@ class SurveyNotification
 	 * @ORM\Column(type="datetime")
 	 */
 	private $when;
+
+    /**
+     * @ORM\Column(type="datetime",nullable=true)
+     */
+    private $seen;
+
+    /**
+     * @ORM\Column(type="text")
+     */
+    private $body;
     
 
     /**
@@ -85,5 +95,53 @@ class SurveyNotification
     public function getSurveySession()
     {
         return $this->surveySession;
+    }
+
+    /**
+     * Set seen
+     *
+     * @param \DateTime $seen
+     *
+     * @return SurveyNotification
+     */
+    public function setSeen($seen)
+    {
+        $this->seen = $seen;
+
+        return $this;
+    }
+
+    /**
+     * Get seen
+     *
+     * @return \DateTime
+     */
+    public function getSeen()
+    {
+        return $this->seen;
+    }
+
+    /**
+     * Set body
+     *
+     * @param string $body
+     *
+     * @return SurveyNotification
+     */
+    public function setBody($body)
+    {
+        $this->body = $body;
+
+        return $this;
+    }
+
+    /**
+     * Get body
+     *
+     * @return string
+     */
+    public function getBody()
+    {
+        return $this->body;
     }
 }

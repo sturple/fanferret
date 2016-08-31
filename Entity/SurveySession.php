@@ -54,6 +54,11 @@ class SurveySession
     private $surveyNotifications;
 
     /**
+     * @ORM\Column(type="datetime")
+     */
+    private $checkout;
+
+    /**
      * @ORM\Column(type="datetime",nullable=true)
      */
     private $seen;
@@ -263,6 +268,30 @@ class SurveySession
     public function getToken()
     {
         return $this->token;
+    }
+
+    /**
+     * Set checkout
+     *
+     * @param \DateTime $checkout
+     *
+     * @return SurveySession
+     */
+    public function setCheckout($checkout)
+    {
+        $this->checkout = $checkout;
+
+        return $this;
+    }
+
+    /**
+     * Get checkout
+     *
+     * @return \DateTime
+     */
+    public function getCheckout()
+    {
+        return $this->checkout;
     }
 
     /**
