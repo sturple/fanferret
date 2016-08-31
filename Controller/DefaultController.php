@@ -122,6 +122,7 @@ class DefaultController extends Controller
             $data = $form->getData();
             foreach ($this->traverseQuestions($gs) as $q) {
                 $ans = $q->getAnswer($data);
+                $ans->setSurveySession($session);
                 $em->persist($ans);
                 $t = $ans->getTestimonial();
                 //  TODO: Other handling of testimonials
