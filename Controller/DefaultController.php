@@ -9,18 +9,12 @@ class DefaultController extends Controller
 {
     private function getQuestion(\FanFerret\QuestionBundle\Entity\Question $q, \FanFerret\QuestionBundle\Internationalization\TranslatorInterface $t)
     {
-        $type = $q->getType();
-        $twig = $this->get('twig');
-        if ($type === 'open') return new \FanFerret\QuestionBundle\Question\OpenQuestion($q,$t,$twig,$this->get('fan_ferret_question.token_generator'));
-        if ($type === 'polar') return new \FanFerret\QuestionBundle\Question\PolarQuestion($q,$t,$twig);
-        if ($type === 'checklist') return new \FanFerret\QuestionBundle\Question\ChecklistQuestion($q,$t,$twig);
-        if ($type === 'rating') return new \FanFerret\QuestionBundle\Question\RatingQuestion($q,$t,$twig);
-        throw new \LogicException(
-            sprintf(
-                'Unrecognized question type "%s"',
-                $type
-            )
+        $factory = new \FanFerret\QuestionBundle\Question\QuestionFactory(
+            $t,
+            $this->get('twig'),
+            $this->get('fan_ferret_question.token_generator')
         );
+        return $factory->create($q);
     }
 
     private function getQuestions(\FanFerret\QuestionBundle\Entity\Survey $s, \FanFerret\QuestionBundle\Internationalization\TranslatorInterface $t)
