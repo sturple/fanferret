@@ -29,6 +29,11 @@ class Rule
 	 * @ORM\Column(type="text")
 	 */
 	private $params;
+
+    /**
+     * @ORM\Column(type="string",length=128)
+     */
+    private $type;
     
     /**
      * Constructor
@@ -107,5 +112,29 @@ class Rule
     public function getQuestions()
     {
         return $this->questions;
+    }
+
+    /**
+     * Set type
+     *
+     * @param string $type
+     *
+     * @return Rule
+     */
+    public function setType($type)
+    {
+        $this->type = $type;
+
+        return $this;
+    }
+
+    /**
+     * Get type
+     *
+     * @return string
+     */
+    public function getType()
+    {
+        return $this->type;
     }
 }
