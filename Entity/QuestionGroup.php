@@ -25,11 +25,6 @@ class QuestionGroup
     private $survey;
     
     /**
-     * @ORM\OneToMany(targetEntity="QuestionGroupTranslation",mappedBy="questionGroup")
-     */
-    private $translations;
-    
-    /**
      * @ORM\Column(type="integer")
      */
     private $order;
@@ -50,7 +45,6 @@ class QuestionGroup
      */
     public function __construct()
     {
-        $this->translations = new \Doctrine\Common\Collections\ArrayCollection();
         $this->questions = new \Doctrine\Common\Collections\ArrayCollection();
     }
 
@@ -110,40 +104,6 @@ class QuestionGroup
     public function getSurvey()
     {
         return $this->survey;
-    }
-
-    /**
-     * Add translation
-     *
-     * @param \FanFerret\QuestionBundle\Entity\QuestionGroupTranslation $translation
-     *
-     * @return QuestionGroup
-     */
-    public function addTranslation(\FanFerret\QuestionBundle\Entity\QuestionGroupTranslation $translation)
-    {
-        $this->translations[] = $translation;
-
-        return $this;
-    }
-
-    /**
-     * Remove translation
-     *
-     * @param \FanFerret\QuestionBundle\Entity\QuestionGroupTranslation $translation
-     */
-    public function removeTranslation(\FanFerret\QuestionBundle\Entity\QuestionGroupTranslation $translation)
-    {
-        $this->translations->removeElement($translation);
-    }
-
-    /**
-     * Get translations
-     *
-     * @return \Doctrine\Common\Collections\Collection
-     */
-    public function getTranslations()
-    {
-        return $this->translations;
     }
 
     /**

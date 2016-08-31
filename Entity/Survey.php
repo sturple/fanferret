@@ -25,11 +25,6 @@ class Survey
     private $companyId;
     
     /**
-     * @ORM\OneToMany(targetEntity="SurveyTranslation",mappedBy="survey")
-     */
-    private $translations;
-    
-    /**
      * @ORM\Column(type="string",length=255)
      */
     private $slug;
@@ -55,7 +50,6 @@ class Survey
      */
     public function __construct()
     {
-        $this->translations = new \Doctrine\Common\Collections\ArrayCollection();
         $this->questionGroups = new \Doctrine\Common\Collections\ArrayCollection();
         $this->surveySessions = new \Doctrine\Common\Collections\ArrayCollection();
     }
@@ -116,40 +110,6 @@ class Survey
     public function getSlug()
     {
         return $this->slug;
-    }
-
-    /**
-     * Add translation
-     *
-     * @param \FanFerret\QuestionBundle\Entity\SurveyTranslation $translation
-     *
-     * @return Survey
-     */
-    public function addTranslation(\FanFerret\QuestionBundle\Entity\SurveyTranslation $translation)
-    {
-        $this->translations[] = $translation;
-
-        return $this;
-    }
-
-    /**
-     * Remove translation
-     *
-     * @param \FanFerret\QuestionBundle\Entity\SurveyTranslation $translation
-     */
-    public function removeTranslation(\FanFerret\QuestionBundle\Entity\SurveyTranslation $translation)
-    {
-        $this->translations->removeElement($translation);
-    }
-
-    /**
-     * Get translations
-     *
-     * @return \Doctrine\Common\Collections\Collection
-     */
-    public function getTranslations()
-    {
-        return $this->translations;
     }
 
     /**
