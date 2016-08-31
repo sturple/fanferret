@@ -7,18 +7,9 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 
 class DefaultController extends Controller
 {
-    private function getQuestionType(\FanFerret\QuestionBundle\Entity\Question $q)
-    {
-        $params = $q->getParams();
-        if (!isset($params->type)) throw new \InvalidArgumentException('Question parameter "type" missing');
-        $val = $params->type;
-        if (!is_string($val)) throw new \InvalidArgumentException('Question parameter "type" not string');
-        return $val;
-    }
-
     private function getQuestion(\FanFerret\QuestionBundle\Entity\Question $q, \FanFerret\QuestionBundle\Internationalization\TranslatorInterface $t)
     {
-        $type = $this->getQuestionType($q);
+        $type = $q->getType();
         $twig = $this->get('twig');
         if ($type === 'open') return new \FanFerret\QuestionBundle\Question\OpenQuestion($q,$t,$twig,$this->get('fan_ferret_question.token_generator'));
         if ($type === 'polar') return new \FanFerret\QuestionBundle\Question\PolarQuestion($q,$t,$twig);

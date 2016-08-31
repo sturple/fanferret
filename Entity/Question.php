@@ -43,6 +43,11 @@ class Question
      * @ORM\OneToMany(targetEntity="QuestionAnswer",mappedBy="question")
      */
     private $questionAnswers;
+
+    /**
+     * @ORM\Column(type="string",length=128)
+     */
+    private $type;
 	
     /**
      * Constructor
@@ -204,5 +209,29 @@ class Question
     public function getQuestionAnswers()
     {
         return $this->questionAnswers;
+    }
+
+    /**
+     * Set type
+     *
+     * @param string $type
+     *
+     * @return Question
+     */
+    public function setType($type)
+    {
+        $this->type = $type;
+
+        return $this;
+    }
+
+    /**
+     * Get type
+     *
+     * @return string
+     */
+    public function getType()
+    {
+        return $this->type;
     }
 }
