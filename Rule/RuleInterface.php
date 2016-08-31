@@ -12,6 +12,15 @@ namespace FanFerret\QuestionBundle\Rule;
 interface RuleInterface
 {
     /**
+     * Retrieves the Rule entity underlying the
+     * Rule object.
+     *
+     * @return
+     *  The Rule entity.
+     */
+    public function getEntity();
+
+    /**
      * Evaluates the rule.
      *
      * @param array $questions
