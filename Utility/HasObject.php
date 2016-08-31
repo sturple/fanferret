@@ -62,6 +62,18 @@ trait HasObject
         return $val;
     }
 
+    protected function getInteger($property, $obj = null)
+    {
+        $val = $this->getProperty($property,$obj);
+        if (!is_integer($val)) throw new \InvalidArgumentException(
+            sprintf(
+                'Property "%s" not integer',
+                $property
+            )
+        );
+        return $val;
+    }
+
     protected function getArray($property, $obj = null)
     {
         $val = $this->getProperty($property,$obj);
