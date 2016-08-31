@@ -96,6 +96,13 @@ class DefaultController extends Controller
                 $token
             )
         );
+        //  Mark the survey as seen
+        $em = $doctrine->getManager();
+        if (!$session->getSeen()) {
+            $session->setSeen(new \DateTime());
+            $em->persist($session);
+            $em->flush();
+        }
         //  Create form
         $survey = $session->getSurvey();
         //  TODO: Decide on language somehow
@@ -108,7 +115,6 @@ class DefaultController extends Controller
         $form->handleRequest($request);
         if ($form->isValid()) {
             $session->setCompleted(new \DateTime());
-            $em = $doctrine->getManager();
             $em->persist($session);
             $data = $form->getData();
             foreach ($this->traverseQuestions($gs) as $q) {

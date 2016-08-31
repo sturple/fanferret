@@ -52,6 +52,11 @@ class SurveySession
      * @ORM\OneToMany(targetEntity="SurveyNotification",mappedBy="surveySession")
      */
     private $surveyNotifications;
+
+    /**
+     * @ORM\Column(type="datetime",nullable=true)
+     */
+    private $seen;
     
     /**
      * Constructor
@@ -258,5 +263,29 @@ class SurveySession
     public function getToken()
     {
         return $this->token;
+    }
+
+    /**
+     * Set seen
+     *
+     * @param \DateTime $seen
+     *
+     * @return SurveySession
+     */
+    public function setSeen($seen)
+    {
+        $this->seen = $seen;
+
+        return $this;
+    }
+
+    /**
+     * Get seen
+     *
+     * @return \DateTime
+     */
+    public function getSeen()
+    {
+        return $this->seen;
     }
 }
