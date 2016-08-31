@@ -34,7 +34,7 @@ class QuestionAnswer
     private $value;
 
     /**
-     * @ORM\OneToOne(targetEntity="Testimonial",mappedBy="questionAnswer")
+     * @ORM\OneToOne(targetEntity="Testimonial",mappedBy="questionAnswer",cascade="all")
      */
     private $testimonial;
     

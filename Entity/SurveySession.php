@@ -44,7 +44,7 @@ class SurveySession
     private $completed;
     
     /**
-     * @ORM\OneToMany(targetEntity="QuestionAnswer",mappedBy="surveySession")
+     * @ORM\OneToMany(targetEntity="QuestionAnswer",mappedBy="surveySession",cascade="all")
      */
     private $questionAnswers;
     
