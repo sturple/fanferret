@@ -44,6 +44,7 @@ class DefaultController extends Controller
                 $twig,
                 $this->get('fan_ferret_question.token_generator')
             ),
+            new \FanFerret\QuestionBundle\Rule\RuleFactory(),
             $twig
         );
         //  Create form

@@ -6,23 +6,65 @@ class Survey implements SurveyInterface
 {
 	private $survey;
 	private $twig;
+	private $factory;
 	private $groups;
-
-	public function __construct(\FanFerret\QuestionBundle\Entity\Survey $survey, \FanFerret\QuestionBundle\Question\QuestionFactoryInterface $factory, \Twig_Environment $twig)
+	private $rules;
+	private $rfactory;
+	
+	private function getGroups()
 	{
-		$this->survey = $survey;
-		$this->twig = $twig;
-		$this->groups = [];
+		$retr = [];
 		foreach ($this->survey->getQuestionGroups() as $qg) {
 			$qs = [];
 			foreach ($qg->getQuestions() as $q) {
-				$qs[] = $factory->create($q);
+				$qs[] = $this->factory->create($q);
 			}
-			$this->groups[] = (object)[
+			$retr[] = (object)[
 				'group' => $qg,
 				'questions' => $qs
 			];
 		}
+		return $retr;
+	}
+
+	private function getRules()
+	{
+		$retr = [];
+		foreach ($this->traverseQuestions() as $q) {
+			$entity = $q->getEntity();
+			//	There's an issue here because rules can
+			//	be associated with multiple questions:
+			//	We might add the same rule multiple times.
+			//
+			//	Therefore when we encounter a rule we check
+			//	the first question it's associated with, if
+			//	that's us we add a Rule object otherwise we
+			//	assume that we either already got it or that
+			//	we'll find it later.
+			//
+			//	NOTE: The assumption is made that when a Rule
+			//	entity is associated with multiple Question
+			//	entities all those Question entities belong
+			//	to the same Survey entity.
+			foreach ($entity->getRules() as $r) {
+				$qs = $r->getQuestions();
+				$rq = $qs[0];
+				if ($rq->getId() === $entity->getId()) {
+					$retr[] = $this->rfactory->create($r);
+				}
+			}
+		}
+		return $retr;
+	}
+
+	public function __construct(\FanFerret\QuestionBundle\Entity\Survey $survey, \FanFerret\QuestionBundle\Question\QuestionFactoryInterface $factory, \FanFerret\QuestionBundle\Rule\RuleFactoryInterface $rfactory, \Twig_Environment $twig)
+	{
+		$this->survey = $survey;
+		$this->twig = $twig;
+		$this->factory = $factory;
+		$this->rfactory = $rfactory;
+		$this->groups = $this->getGroups();
+		$this->rules = $this->getRules();
 	}
 
 	private function traverseQuestions()
@@ -48,12 +90,21 @@ class Survey implements SurveyInterface
 
 	public function getAnswers(\FanFerret\QuestionBundle\Entity\SurveySession $session, array $data)
 	{
+		//	Collect answers and attach them to the
+		//	SurveySession
+		$qs = [];
 		foreach ($this->traverseQuestions() as $q) {
 			$ans = $q->getAnswer($data);
-			$q->getEntity()->addQuestionAnswer($ans);
+			$entity = $q->getEntity();
+			$entity->addQuestionAnswer($ans);
 			$session->addQuestionAnswer($ans);
 			$ans->setSurveySession($session);
 			//	TODO: Testimonial handling
+			$qs[$entity->getId()] = $ans;
+		}
+		//	Process all rules
+		foreach ($this->rules as $r) {
+			$r->evaluate($qs);
 		}
 	}
 
