@@ -24,9 +24,9 @@ class SurveySession
     private $survey;
     
     /**
-     * @ORM\Column(type="integer")
+     * @ORM\Column(type="string",length=128)
      */
-    private $guestId;
+    private $room;
     
     /**
      * @ORM\Column(type="string",length=128)
@@ -80,30 +80,6 @@ class SurveySession
     public function getId()
     {
         return $this->id;
-    }
-
-    /**
-     * Set guestId
-     *
-     * @param integer $guestId
-     *
-     * @return SurveySession
-     */
-    public function setGuestId($guestId)
-    {
-        $this->guestId = $guestId;
-
-        return $this;
-    }
-
-    /**
-     * Get guestId
-     *
-     * @return integer
-     */
-    public function getGuestId()
-    {
-        return $this->guestId;
     }
 
     /**
@@ -316,5 +292,29 @@ class SurveySession
     public function getSeen()
     {
         return $this->seen;
+    }
+
+    /**
+     * Set room
+     *
+     * @param string $room
+     *
+     * @return SurveySession
+     */
+    public function setRoom($room)
+    {
+        $this->room = $room;
+
+        return $this;
+    }
+
+    /**
+     * Get room
+     *
+     * @return string
+     */
+    public function getRoom()
+    {
+        return $this->room;
     }
 }
