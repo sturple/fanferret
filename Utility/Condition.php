@@ -50,4 +50,14 @@ class Condition
         //  This should never be reached (see ctor)
         return false;
     }
+
+    public function getCondition()
+    {
+        return $this->condition;
+    }
+
+    public function getThreshold()
+    {
+        return $this->threshold;
+    }
 }

@@ -38,4 +38,14 @@ abstract class RatingThresholdRule extends SingleQuestionRule
         $val = intval($ans->getValue());
         return $this->condition->check($val);
     }
+
+    protected function getCondition()
+    {
+        return $this->condition->getCondition();
+    }
+
+    protected function getThreshold()
+    {
+        return $this->condition->getThreshold();
+    }
 }
