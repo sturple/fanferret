@@ -32,15 +32,27 @@ trait HasObject
         return $obj->$property;
     }
 
-    protected function getString($property, $obj = null)
+    protected function getOptionalProperty($property, $obj = null)
     {
-        $val = $this->getProperty($property,$obj);
+        $obj = $this->filterObject($obj);
+        if (isset($obj->$property)) return $obj->$property;
+        return null;
+    }
+
+    private function checkString($val, $property)
+    {
         if (!is_string($val)) throw new \InvalidArgumentException(
             sprintf(
                 'Property "%s" not string',
                 $property
             )
         );
+    }
+
+    protected function getString($property, $obj = null)
+    {
+        $val = $this->getProperty($property,$obj);
+        $this->checkString($val,$property);
         return $val;
     }
 
@@ -102,5 +114,13 @@ trait HasObject
     {
         $val = $this->getArray($property,$obj);
         return array_map(function ($obj) {  return $this->t->translate($obj);   },$val);
+    }
+
+    protected function getOptionalString($property, $obj = null)
+    {
+        $val = $this->getOptionalProperty($property,$obj);
+        if (is_null($val)) return null;
+        $this->checkString($val,$property);
+        return $val;
     }
 }

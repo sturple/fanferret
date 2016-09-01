@@ -44,7 +44,10 @@ class DefaultController extends Controller
                 $twig,
                 $this->get('fan_ferret_question.token_generator')
             ),
-            new \FanFerret\QuestionBundle\Rule\RuleFactory(),
+            new \FanFerret\QuestionBundle\Rule\RuleFactory(
+                $twig,
+                $this->get('swiftmailer.mailer')
+            ),
             $twig
         );
         //  Create form
