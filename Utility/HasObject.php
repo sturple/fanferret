@@ -103,16 +103,4 @@ trait HasObject
         $val = $this->getArray($property,$obj);
         return array_map(function ($obj) {  return $this->t->translate($obj);   },$val);
     }
-
-    protected function getRenderContext(array $ctx = [])
-    {
-        return array_merge(
-            [
-                'title' => $this->getTranslatableString('title'),
-                'entity' => $this->q,
-                'name' => $this->getName()
-            ],
-            $ctx
-        );
-    }
 }

@@ -58,4 +58,16 @@ abstract class Question implements QuestionInterface
     {
         return $this->q->getParams();
     }
+
+    protected function getRenderContext(array $ctx = [])
+    {
+        return array_merge(
+            [
+                'title' => $this->getTranslatableString('title'),
+                'entity' => $this->q,
+                'name' => $this->getName()
+            ],
+            $ctx
+        );
+    }
 }
