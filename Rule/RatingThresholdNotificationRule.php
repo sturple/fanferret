@@ -29,6 +29,7 @@ class RatingThresholdNotificationRule extends RatingThresholdRule
         $msg = $this->getMessage();
         $msg->setContentType('text/plain');
         $msg->setBody($body);
+        //  TODO: Configurable and translatable
         $msg->setSubject('Unacceptable Answer Notification');
         $rs = $this->swift->send($msg);
         if ($rs === 0) throw new \RuntimeException('Failed to send email');
