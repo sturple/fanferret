@@ -4,36 +4,20 @@ namespace FanFerret\QuestionBundle\Rule;
 
 abstract class RatingThresholdRule extends SingleQuestionRule
 {
-    private $threshold;
     private $condition;
 
     public function __construct(\FanFerret\QuestionBundle\Entity\Rule $rule, $expected_type)
     {
         parent::__construct($rule,$expected_type);
-        $this->threshold = $this->getInteger('threshold');
-        if (($this->threshold < 1) || ($this->threshold > 5)) throw new \InvalidArgumentException(
+        $threshold = $this->getInteger('threshold');
+        if (($threshold < 1) || ($threshold > 5)) throw new \InvalidArgumentException(
             sprintf(
                 'Threshold %d out of range',
-                $this->threshold
+                $threshold
             )
         );
-        $this->condition = $this->getString('condition');
-        switch ($this->condition) {
-            case '=':
-            case '>':
-            case '<>':
-            case '<':
-            case '<=':
-            case '>=':
-                break;
-            default:
-                throw new \InvalidArgumentException(
-                    sprintf(
-                        'Unrecognized condition "%s"',
-                        $this->condition
-                    )
-                );
-        }
+        $condition = $this->getString('condition');
+        $this->condition = new \FanFerret\QuestionBundle\Utility\Condition($threshold,$condition);
     }
 
     /**
@@ -52,23 +36,6 @@ abstract class RatingThresholdRule extends SingleQuestionRule
     {
         $ans = $this->getAnswer($questions);
         $val = intval($ans->getValue());
-        switch ($this->condition) {
-            default:
-                break;
-            case '=':
-                return $val === $this->threshold;
-            case '>':
-                return $val > $this->threshold;
-            case '<':
-                return $val < $this->threshold;
-            case '<=':
-                return $val <= $this->threshold;
-            case '>=':
-                return $val >= $this->threshold;
-            case '<>':
-                return $val !== $this->threshold;
-        }
-        //  This should never be reached (see ctor)
-        return false;
+        return $this->condition->check($val);
     }
 }
