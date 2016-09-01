@@ -17,7 +17,6 @@ class RatingThresholdNotificationRule extends RatingThresholdRule
     public function evaluate(array $questions)
     {
         if (!$this->check($questions)) return;
-        //  TODO: Setup context
         $q = $this->getQuestion();
         $a = $this->getAnswer($questions);
         $ctx = [
