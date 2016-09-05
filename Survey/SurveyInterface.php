@@ -48,4 +48,15 @@ interface SurveyInterface
      * @return Renderable
      */
     public function render(\Symfony\Component\Form\FormView $fv);
+
+    /**
+     * Renders the survey's finish screen.
+     *
+     * @param SurveySession $session
+     *  The session for which a finish screen shall be
+     *  rendered.
+     *
+     * @return Renderable
+     */
+    public function renderFinish(\FanFerret\QuestionBundle\Entity\SurveySession $session);
 }

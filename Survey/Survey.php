@@ -139,4 +139,32 @@ class Survey implements SurveyInterface
 			$this->twig
 		);
 	}
+
+	public function renderFinish(\FanFerret\QuestionBundle\Entity\SurveySession $session)
+	{
+		//	Load answers back into memory/the appropriate
+		//	data structure so we can get conditional finish
+		//	from the rules
+		$qs = [];
+		foreach ($session->getQuestionAnswers() as $qa) {
+			$qs[$qa->getQuestion()->getId()] = $qa;
+		}
+		//	Traverse the rules and obtain conditional finish
+		//	renderables
+		$rs = [];
+		//	TODO: We need to order the rules somehow so that
+		//	conditional finishes appear in some consistent
+		//	order
+		foreach ($this->rules as $r) {
+			$rs = array_merge($r->getConditionalFinish($qs),$rs);
+		}
+		$ctx = [
+			'conditional' => $rs
+		];
+		return new \FanFerret\QuestionBundle\Utility\Renderable(
+			'FanFerretQuestionBundle:Survey:finish.html.twig',
+			$ctx,
+			$this->twig
+		);
+	}
 }
