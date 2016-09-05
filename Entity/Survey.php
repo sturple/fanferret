@@ -23,6 +23,11 @@ class Survey
      * @ORM\Column(type="string",length=255)
      */
     private $slug;
+
+    /**
+     * @ORM\Column(type="string",length=255,nullable=true)
+     */
+    private $slugGroup;
     
     /**
      * @ORM\OneToMany(targetEntity="QuestionGroup",mappedBy="survey")
@@ -176,5 +181,29 @@ class Survey
         $retr=Json::decode($this->params);
         if (!is_object($retr)) throw new \LogicException('$params not JSON object');
         return $retr;
+    }
+
+    /**
+     * Set slugGroup
+     *
+     * @param string $slugGroup
+     *
+     * @return Survey
+     */
+    public function setSlugGroup($slugGroup)
+    {
+        $this->slugGroup = $slugGroup;
+
+        return $this;
+    }
+
+    /**
+     * Get slugGroup
+     *
+     * @return string
+     */
+    public function getSlugGroup()
+    {
+        return $this->slugGroup;
     }
 }
