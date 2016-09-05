@@ -133,6 +133,10 @@ class Survey implements SurveyInterface
 			'groups' => $gs,
 			'form' => $fv
 		];
-		return $this->twig->render('FanFerretQuestionBundle:Survey:default.html.twig',$ctx);
+		return new \FanFerret\QuestionBundle\Utility\Renderable(
+			'FanFerretQuestionBundle:Survey:default.html.twig',
+			$ctx,
+			$this->twig
+		);
 	}
 }

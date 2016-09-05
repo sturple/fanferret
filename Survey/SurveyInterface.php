@@ -44,6 +44,8 @@ interface SurveyInterface
      * @param $fv
      *  A FormView object created from the form builder
      *  this survey populated.
+     *
+     * @return Renderable
      */
     public function render(\Symfony\Component\Form\FormView $fv);
 }
