@@ -20,11 +20,6 @@ class Survey
     private $id;
     
     /**
-     * @ORM\Column(type="integer")
-     */
-    private $companyId;
-    
-    /**
      * @ORM\Column(type="string",length=255)
      */
     private $slug;
@@ -62,30 +57,6 @@ class Survey
     public function getId()
     {
         return $this->id;
-    }
-
-    /**
-     * Set companyId
-     *
-     * @param integer $companyId
-     *
-     * @return Survey
-     */
-    public function setCompanyId($companyId)
-    {
-        $this->companyId = $companyId;
-
-        return $this;
-    }
-
-    /**
-     * Get companyId
-     *
-     * @return integer
-     */
-    public function getCompanyId()
-    {
-        return $this->companyId;
     }
 
     /**
