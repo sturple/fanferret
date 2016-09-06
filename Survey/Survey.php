@@ -10,6 +10,7 @@ class Survey implements SurveyInterface
 	private $groups;
 	private $rules;
 	private $rfactory;
+	private $tokens;
 	
 	private function getGroups()
 	{
@@ -57,12 +58,18 @@ class Survey implements SurveyInterface
 		return $retr;
 	}
 
-	public function __construct(\FanFerret\QuestionBundle\Entity\Survey $survey, \FanFerret\QuestionBundle\Question\QuestionFactoryInterface $factory, \FanFerret\QuestionBundle\Rule\RuleFactoryInterface $rfactory, \Twig_Environment $twig)
-	{
+	public function __construct(
+		\FanFerret\QuestionBundle\Entity\Survey $survey,
+		\FanFerret\QuestionBundle\Question\QuestionFactoryInterface $factory,
+		\FanFerret\QuestionBundle\Rule\RuleFactoryInterface $rfactory,
+		\FanFerret\QuestionBundle\Utility\TokenGeneratorInterface $tokens,
+		\Twig_Environment $twig
+	) {
 		$this->survey = $survey;
 		$this->twig = $twig;
 		$this->factory = $factory;
 		$this->rfactory = $rfactory;
+		$this->tokens = $tokens;
 		$this->groups = $this->getGroups();
 		$this->rules = $this->getRules();
 	}
@@ -182,6 +189,7 @@ class Survey implements SurveyInterface
 		$retr->setSurveySession($session);
 		$retr->setSent(new \DateTime());
 		$retr->setBody('Remember to take your survey');
+		$retr->setToken($this->tokens->generate());
 		$session->addSurveyNotification($retr);
 		return $retr;
 	}

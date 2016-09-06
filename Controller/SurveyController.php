@@ -34,6 +34,7 @@ class SurveyController extends Controller
             $session->getSurvey(),
             $qfactory,
             $rfactory,
+            $tokens,
             $twig
         );
     }

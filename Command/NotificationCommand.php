@@ -25,6 +25,7 @@ class NotificationCommand extends \Symfony\Bundle\FrameworkBundle\Command\Contai
             $session->getSurvey(),
             $qfactory,
             $rfactory,
+            $tokens,
             $twig
         );
     }

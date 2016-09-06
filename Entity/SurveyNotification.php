@@ -6,7 +6,7 @@ use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @ORM\Entity(repositoryClass="FanFerret\QuestionBundle\Repository\SurveyNotificationRepository")
- * @ORM\Table(name="survey_notification")
+ * @ORM\Table(name="survey_notification",uniqueConstraints={@ORM\UniqueConstraint(name="token_idx",columns={"token"})})
  */
 class SurveyNotification
 {
@@ -37,6 +37,11 @@ class SurveyNotification
      * @ORM\Column(type="text")
      */
     private $body;
+
+    /**
+     * @ORM\Column(type="string",length=128)
+     */
+    private $token;
     
 
     /**
@@ -143,5 +148,29 @@ class SurveyNotification
     public function getSent()
     {
         return $this->sent;
+    }
+
+    /**
+     * Set token
+     *
+     * @param string $token
+     *
+     * @return SurveyNotification
+     */
+    public function setToken($token)
+    {
+        $this->token = $token;
+
+        return $this;
+    }
+
+    /**
+     * Get token
+     *
+     * @return string
+     */
+    public function getToken()
+    {
+        return $this->token;
     }
 }
