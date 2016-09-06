@@ -72,6 +72,11 @@ class SurveySession
      * @ORM\Column(type="string",length=128)
      */
     private $email;
+
+    /**
+     * @ORM\Column(type="string",length=128,nullable=true)
+     */
+    private $language;
     
     /**
      * Constructor
@@ -374,5 +379,29 @@ class SurveySession
     public function getName()
     {
         return $this->name;
+    }
+
+    /**
+     * Set language
+     *
+     * @param string $language
+     *
+     * @return SurveySession
+     */
+    public function setLanguage($language)
+    {
+        $this->language = $language;
+
+        return $this;
+    }
+
+    /**
+     * Get language
+     *
+     * @return string
+     */
+    public function getLanguage()
+    {
+        return $this->language;
     }
 }
