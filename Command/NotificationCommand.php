@@ -13,20 +13,10 @@ class NotificationCommand extends \Symfony\Bundle\FrameworkBundle\Command\Contai
 
     private function createSurvey(\FanFerret\QuestionBundle\Entity\SurveySession $session)
     {
-        //  TODO: Customize
-        $translator = new \FanFerret\QuestionBundle\Internationalization\Translator('en-CA');
-        $container = $this->getContainer();
-        $twig = $container->get('twig');
-        $tokens = $container->get('fan_ferret_question.token_generator');
-        $swift = $container->get('swiftmailer.mailer');
-        $qfactory = new \FanFerret\QuestionBundle\Question\QuestionFactory($translator,$twig,$tokens);
-        $rfactory = new \FanFerret\QuestionBundle\Rule\RuleFactory($twig,$swift);
-        return new \FanFerret\QuestionBundle\Survey\Survey(
+        return \FanFerret\QuestionBundle\DependencyInjection\Factory::createSurvey(
             $session->getSurvey(),
-            $qfactory,
-            $rfactory,
-            $tokens,
-            $twig
+            $this->getContainer(),
+            $session->getLanguage()
         );
     }
 

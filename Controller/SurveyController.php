@@ -23,19 +23,13 @@ class SurveyController extends Controller
 
     private function createSurvey(\FanFerret\QuestionBundle\Entity\SurveySession $session)
     {
-        //  We need to figure out how to customize the language
-        $translator = new \FanFerret\QuestionBundle\Internationalization\Translator('en-CA');
-        $twig = $this->get('twig');
-        $tokens = $this->get('fan_ferret_question.token_generator');
-        $swift = $this->get('swiftmailer.mailer');
-        $qfactory = new \FanFerret\QuestionBundle\Question\QuestionFactory($translator,$twig,$tokens);
-        $rfactory = new \FanFerret\QuestionBundle\Rule\RuleFactory($twig,$swift);
-        return new \FanFerret\QuestionBundle\Survey\Survey(
+        return \FanFerret\QuestionBundle\DependencyInjection\Factory::createSurvey(
             $session->getSurvey(),
-            $qfactory,
-            $rfactory,
-            $tokens,
-            $twig
+            //  Not sure whether or not I'm supposed to
+            //  rely on the fact that container in the base
+            //  class is protected rather than private
+            $this->container,
+            $session->getLanguage()
         );
     }
 
