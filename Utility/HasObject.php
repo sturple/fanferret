@@ -3,16 +3,29 @@
 namespace FanFerret\QuestionBundle\Utility;
 
 /**
- * This trait expects classes which use it to provide
- * the following methods:
+ * Classes which use this trait may provide the following
+ * methods:
  *
  * - getDefaultObject: Retrieves the object to operate
  *   on if one is not supplied
  * - getTranslator: Retrieves a Translator object which
  *   may be used to translate strings.
+ *
+ * This trait supplies default implementations which simply
+ * throw.
  */
 trait HasObject
 {
+    protected function getDefaultObject()
+    {
+        throw new \LogicException('No default object');
+    }
+
+    protected function getTranslator()
+    {
+        throw new \LogicException('No translator');
+    }
+
     private function filterObject($obj)
     {
         if (is_null($obj)) return $this->getDefaultObject();

@@ -31,16 +31,6 @@ abstract class Rule implements RuleInterface
         return [];
     }
 
-    /**
-     * May be overriden by a derived class which actually
-     * provides a Translator, default implementation simply
-     * throws an exception.
-     */
-    protected function getTranslator()
-    {
-        throw new \LogicException('No Translator');
-    }
-
     private function getDefaultObject()
     {
         return $this->entity->getParams();
