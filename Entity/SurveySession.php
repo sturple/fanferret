@@ -62,6 +62,16 @@ class SurveySession
      * @ORM\Column(type="datetime",nullable=true)
      */
     private $seen;
+
+    /**
+     * @ORM\Column(type="string",length=255)
+     */
+    private $guestName;
+
+    /**
+     * @ORM\Column(type="string",length=128)
+     */
+    private $email;
     
     /**
      * Constructor
@@ -316,5 +326,53 @@ class SurveySession
     public function getRoom()
     {
         return $this->room;
+    }
+
+    /**
+     * Set guestName
+     *
+     * @param string $guestName
+     *
+     * @return SurveySession
+     */
+    public function setGuestName($guestName)
+    {
+        $this->guestName = $guestName;
+
+        return $this;
+    }
+
+    /**
+     * Get guestName
+     *
+     * @return string
+     */
+    public function getGuestName()
+    {
+        return $this->guestName;
+    }
+
+    /**
+     * Set email
+     *
+     * @param string $email
+     *
+     * @return SurveySession
+     */
+    public function setEmail($email)
+    {
+        $this->email = $email;
+
+        return $this;
+    }
+
+    /**
+     * Get email
+     *
+     * @return string
+     */
+    public function getEmail()
+    {
+        return $this->email;
     }
 }
