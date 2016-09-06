@@ -21,7 +21,8 @@ class Factory
             $qfactory,
             $rfactory,
             $tokens,
-            $twig
+            $twig,
+            $swift
         );
     }
 }

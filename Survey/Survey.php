@@ -4,6 +4,8 @@ namespace FanFerret\QuestionBundle\Survey;
 
 class Survey implements SurveyInterface
 {
+	use \FanFerret\QuestionBundle\Utility\HasObject;
+
 	private $survey;
 	private $twig;
 	private $factory;
@@ -11,6 +13,12 @@ class Survey implements SurveyInterface
 	private $rules;
 	private $rfactory;
 	private $tokens;
+	private $swift;
+
+	private function getDefaultObject()
+	{
+		return $this->survey->getParams();
+	}
 	
 	private function getGroups()
 	{
@@ -63,13 +71,15 @@ class Survey implements SurveyInterface
 		\FanFerret\QuestionBundle\Question\QuestionFactoryInterface $factory,
 		\FanFerret\QuestionBundle\Rule\RuleFactoryInterface $rfactory,
 		\FanFerret\QuestionBundle\Utility\TokenGeneratorInterface $tokens,
-		\Twig_Environment $twig
+		\Twig_Environment $twig,
+		\Swift_Mailer $swift
 	) {
 		$this->survey = $survey;
 		$this->twig = $twig;
 		$this->factory = $factory;
 		$this->rfactory = $rfactory;
 		$this->tokens = $tokens;
+		$this->swift = $swift;
 		$this->groups = $this->getGroups();
 		$this->rules = $this->getRules();
 	}
@@ -184,11 +194,22 @@ class Survey implements SurveyInterface
 	public function sendNotification(\FanFerret\QuestionBundle\Entity\SurveySession $session, $num)
 	{
 		if (!$this->isNiceTime()) return null;
-		//	TODO: Send email
+		$body = $this->twig->render('FanFerretQuestionBundle:Notification:notification.txt.twig',[]);
+		$msg = new \Swift_Message();
+		$msg->setCharset('UTF-8');
+		$from = $this->getEmailArray('from');
+		$to = $this->getEmailArray('to');
+		$msg->setFrom($this->toSwiftAddressArray($from));
+		$msg->setTo($this->toSwiftAddressArray($to));
+		$msg->setBody($body);
+		$msg->setContentType('text/plain');
+		$msg->setSubject('Survey Reminder');
+		$rs = $this->swift->send($msg);
+		if ($rs === 0) throw new \RuntimeException('Failed to send email');
 		$retr = new \FanFerret\QuestionBundle\Entity\SurveyNotification();
 		$retr->setSurveySession($session);
 		$retr->setSent(new \DateTime());
-		$retr->setBody('Remember to take your survey');
+		$retr->setBody($body);
 		$retr->setToken($this->tokens->generate());
 		$session->addSurveyNotification($retr);
 		return $retr;
