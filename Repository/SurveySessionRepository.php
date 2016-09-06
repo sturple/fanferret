@@ -69,7 +69,7 @@ class SurveySessionRepository extends \Doctrine\ORM\EntityRepository
                 '$since is negative interval'
             );
             //  Add to query
-            $max_expr = $qb->expr()->max('sn.when');
+            $max_expr = $qb->expr()->max('sn.sent');
             $having_max_expr = $qb->expr()->gte($max_expr,':when');
             $qb->andHaving($having_max_expr)
                 ->setParameter('when',$when);

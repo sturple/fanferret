@@ -26,7 +26,7 @@ class SurveyNotification
 	/**
 	 * @ORM\Column(type="datetime")
 	 */
-	private $when;
+	private $sent;
 
     /**
      * @ORM\Column(type="datetime",nullable=true)
@@ -47,30 +47,6 @@ class SurveyNotification
     public function getId()
     {
         return $this->id;
-    }
-
-    /**
-     * Set when
-     *
-     * @param \DateTime $when
-     *
-     * @return SurveyNotification
-     */
-    public function setWhen($when)
-    {
-        $this->when = $when;
-
-        return $this;
-    }
-
-    /**
-     * Get when
-     *
-     * @return \DateTime
-     */
-    public function getWhen()
-    {
-        return $this->when;
     }
 
     /**
@@ -143,5 +119,29 @@ class SurveyNotification
     public function getBody()
     {
         return $this->body;
+    }
+
+    /**
+     * Set sent
+     *
+     * @param \DateTime $sent
+     *
+     * @return SurveyNotification
+     */
+    public function setSent($sent)
+    {
+        $this->sent = $sent;
+
+        return $this;
+    }
+
+    /**
+     * Get sent
+     *
+     * @return \DateTime
+     */
+    public function getSent()
+    {
+        return $this->sent;
     }
 }
