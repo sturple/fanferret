@@ -29,4 +29,24 @@ class SurveySessionRepository extends \Doctrine\ORM\EntityRepository
         if (count($arr) !== 1) return null;
         return $arr[0];
     }
+
+    /**
+     * Attempts to retrieve all SurveySession entities
+     * which have a certain number of notifications.
+     *
+     * @param int $count
+     *
+     * @return array
+     */
+    public function getByNotificationCount($count)
+    {
+        $qb = $this->createQueryBuilder('ss');
+        $count_expr = $qb->expr()->count('sn.id');
+        $having_expr = $qb->expr()->eq($count_expr,$count);
+        $qb->leftJoin('ss.surveyNotifications','sn')
+            ->addGroupBy('ss.id')
+            ->andHaving($having_expr);
+        $q = $qb->getQuery();
+        return $q->getResult();
+    }
 }
