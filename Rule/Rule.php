@@ -57,17 +57,6 @@ abstract class Rule implements RuleInterface
         return $qg->getSurvey();
     }
 
-    private function toSwiftAddressArray(array $arr = null)
-    {
-        if (is_null($arr)) return [];
-        $retr = [];
-        foreach ($arr as $obj) {
-            if (isset($obj->name)) $retr[$obj->name] = $obj->address;
-            else $retr[] = $obj->address;
-        }
-        return $retr;
-    }
-
     private function getOptionalInheritedEmailArray($property)
     {
         $local = $this->getOptionalEmailArray($property);

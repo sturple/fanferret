@@ -195,4 +195,15 @@ trait HasObject
         if (is_null($emails)) $this->noProperty($property);
         return $emails;
     }
+
+    protected function toSwiftAddressArray($addrs)
+    {
+        if (!is_array($addrs)) $addrs = [$addrs];
+        $retr = [];
+        foreach ($addrs as $addr) {
+            if (isset($addr->name)) $retr[$addr->name] = $addr->address;
+            else $retr[] = $addr->address;
+        }
+        return $retr;
+    }
 }
