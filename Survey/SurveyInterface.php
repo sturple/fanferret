@@ -59,4 +59,23 @@ interface SurveyInterface
      * @return Renderable
      */
     public function renderFinish(\FanFerret\QuestionBundle\Entity\SurveySession $session);
+
+    /**
+     * Sends the Nth notification if appropriate.
+     *
+     * @param SurveySession $session
+     *  The SurveySession entity for which to send the
+     *  notification.
+     * @param int $num
+     *  The number N of the notification to send.  For
+     *  example the first notification has an N of 1.
+     *
+     * @return SurveyNotification|null
+     *  If a notification was sent a SurveyNotification
+     *  entity is returned, otherwise null is returned.
+     *  If a SurveyNotification entity is returned it is
+     *  expected to be associated with the Survey associated
+     *  with this object.
+     */
+    public function sendNotification(\FanFerret\QuestionBundle\Entity\SurveySession $session, $num);
 }

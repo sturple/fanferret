@@ -167,4 +167,22 @@ class Survey implements SurveyInterface
 			$this->twig
 		);
 	}
+
+	private function isNiceTime()
+	{
+		//	TODO: Implement this
+		return true;
+	}
+
+	public function sendNotification(\FanFerret\QuestionBundle\Entity\SurveySession $session, $num)
+	{
+		if (!$this->isNiceTime()) return null;
+		//	TODO: Send email
+		$retr = new \FanFerret\QuestionBundle\Entity\SurveyNotification();
+		$retr->setSurveySession($session);
+		$retr->setSent(new \DateTime());
+		$retr->setBody('Remember to take your survey');
+		$session->addSurveyNotification($retr);
+		return $retr;
+	}
 }
