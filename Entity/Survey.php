@@ -44,6 +44,11 @@ class Survey
      * @ORM\Column(type="text")
      */
     private $params;
+
+    /**
+     * @ORM\Column(type="string",length=128)
+     */
+    private $language;
     
     /**
      * Constructor
@@ -205,5 +210,29 @@ class Survey
     public function getSlugGroup()
     {
         return $this->slugGroup;
+    }
+
+    /**
+     * Set language
+     *
+     * @param string $language
+     *
+     * @return Survey
+     */
+    public function setLanguage($language)
+    {
+        $this->language = $language;
+
+        return $this;
+    }
+
+    /**
+     * Get language
+     *
+     * @return string
+     */
+    public function getLanguage()
+    {
+        return $this->language;
     }
 }
