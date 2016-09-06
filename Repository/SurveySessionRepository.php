@@ -32,9 +32,9 @@ class SurveySessionRepository extends \Doctrine\ORM\EntityRepository
 
     /**
      * Attempts to retrieve all SurveySession entities
-     * which have a certain number of notifications and
-     * whose last notification was sent a certain amount
-     * of time ago.
+     * which are not completed, have a certain number of
+     * notifications, and whose last notification was sent
+     * a certain amount of time ago.
      *
      * @param int $count
      * @param DateInterval|null $since
@@ -54,7 +54,9 @@ class SurveySessionRepository extends \Doctrine\ORM\EntityRepository
         $qb = $this->createQueryBuilder('ss');
         $count_expr = $qb->expr()->count('sn.id');
         $having_count_expr = $qb->expr()->eq($count_expr,$count);
+        $completed_expr = $qb->expr()->isNull('ss.completed');
         $qb->leftJoin('ss.surveyNotifications','sn')
+            ->andWhere($completed_expr)
             ->addGroupBy('ss.id')
             ->andHaving($having_count_expr);
         //  Handle date/time constraint
