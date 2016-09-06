@@ -4,3 +4,6 @@ fgms_question_survey:
 fgms_question_survey_finish:
     path: /survey/{token}/finish/
     defaults: { _controller: FanFerretQuestionBundle:Survey:finish }
+fgms_question_notification_seen:
+    path: /notification/{token}/
+    defaults: { _controller: FanFerretQuestionBundle:Notification:seen }
