@@ -58,70 +58,6 @@ abstract class Rule implements RuleInterface
         return $questions[$id];
     }
 
-    /**
-     * Converts a value into an object representing an email
-     * address.
-     *
-     * @param mixed $obj
-     *  The value to convert.
-     *
-     * @return object
-     *  An object with a "name" and "address" property.
-     */
-    protected function toEmail($obj)
-    {
-        if (is_string($obj)) return (object)[
-            'address' => $obj,
-            'name' => null
-        ];
-        if (!is_object($obj)) throw new \InvalidArgumentException(
-            'Expected either string or object'
-        );
-        return (object)[
-            'address' => $this->getString('address',$obj),
-            'name' => $this->getOptionalString('name',$obj)
-        ];
-    }
-
-    protected function toEmailArray($obj)
-    {
-        if (!is_array($obj)) return [$this->toEmail($obj)];
-        return array_map(function ($obj) {
-            return $this->toEmail($obj);
-        },$obj);
-    }
-
-    protected function getEmail($property)
-    {
-        $retr = $this->getOptionalProperty($property);
-        if (!is_null($retr)) return $this->toEmail($retr);
-        $s = $this->getSurvey();
-        $retr = $this->getProperty($property,$s->getParams());
-        return $this->toEmail($retr);
-    }
-
-    private function getEmailArrayImpl($property)
-    {
-        $retr = $this->getOptionalProperty($property);
-        if (!is_null($retr)) return $this->toEmailArray($retr);
-        $s = $this->getSurvey();
-        $retr = $this->getOptionalProperty($property,$s->getParams());
-        if (is_null($retr)) return [];
-        return $this->toEmailArray($retr);
-    }
-
-    protected function getEmailArray($property, $allow_empty = true)
-    {
-        $retr = $this->getEmailArrayImpl($property);
-        if (!$allow_empty && (count($retr) === 0)) throw new \InvalidArgumentException(
-            sprintf(
-                'No emails associated with property "%s"',
-                $property
-            )
-        );
-        return $retr;
-    }
-
     protected function getSurvey()
     {
         $qs = $this->entity->getQuestions();
@@ -131,8 +67,9 @@ abstract class Rule implements RuleInterface
         return $qg->getSurvey();
     }
 
-    private function toSwiftAddressArray(array $arr)
+    private function toSwiftAddressArray(array $arr = null)
     {
+        if (is_null($arr)) return [];
         $retr = [];
         foreach ($arr as $obj) {
             if (isset($obj->name)) $retr[$obj->name] = $obj->address;
@@ -141,15 +78,35 @@ abstract class Rule implements RuleInterface
         return $retr;
     }
 
+    private function getOptionalInheritedEmailArray($property)
+    {
+        $local = $this->getOptionalEmailArray($property);
+        if (!is_null($local)) return $local;
+        $s = $this->getSurvey();
+        return $this->getOptionalEmailArray($property,$s->getParams());
+    }
+
+    private function getInheritedEmailArray($property)
+    {
+        $retr = $this->getOptionalInheritedEmailArray($property);
+        if (is_null($retr)) throw new \InvalidArgumentException(
+            sprintf(
+                'No property "%s"',
+                $property
+            )
+        );
+        return $retr;
+    }
+
     protected function getMessage()
     {
         $retr = new \Swift_Message();
         $retr->setCharset('UTF-8');
-        $from = $this->getEmailArray('from',false);
-        $to = $this->getEmailArray('to',false);
-        $cc = $this->getEmailArray('cc');
-        $bcc = $this->getEmailArray('bcc');
-        $reply = $this->getEmailArray('replyto');
+        $from = $this->getInheritedEmailArray('from');
+        $to = $this->getInheritedEmailArray('to');
+        $cc = $this->getOptionalInheritedEmailArray('cc');
+        $bcc = $this->getOptionalInheritedEmailArray('bcc');
+        $reply = $this->getOptionalInheritedEmailArray('replyto');
         $retr->setFrom($this->toSwiftAddressArray($from));
         $retr->setTo($this->toSwiftAddressArray($to));
         $retr->setCc($this->toSwiftAddressArray($cc));

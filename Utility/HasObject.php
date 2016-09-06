@@ -20,15 +20,20 @@ trait HasObject
         return $obj;
     }
 
-    protected function getProperty($property, $obj = null)
+    private function noProperty($property)
     {
-        $obj = $this->filterObject($obj);
-        if (!isset($obj->$property)) throw new \InvalidArgumentException(
+        throw new \InvalidArgumentException(
             sprintf(
                 'No property "%s"',
                 $property
             )
         );
+    }
+
+    protected function getProperty($property, $obj = null)
+    {
+        $obj = $this->filterObject($obj);
+        if (!isset($obj->$property)) $this->noProperty($property);
         return $obj->$property;
     }
 
@@ -86,15 +91,23 @@ trait HasObject
         return $val;
     }
 
-    protected function getArray($property, $obj = null)
+    protected function getOptionalArray($property, $obj = null)
     {
-        $val = $this->getProperty($property,$obj);
+        $val = $this->getOptionalProperty($property,$obj);
+        if (is_null($val)) return null;
         if (!is_array($val)) throw new \InvalidArgumentException(
             sprintf(
                 'Property "%s" not array',
                 $property
             )
         );
+        return $val;
+    }
+
+    protected function getArray($property, $obj = null)
+    {
+        $val = $this->getOptionalArray($property,$obj);
+        if (is_null($val)) $this->noProperty($property);
         return $val;
     }
 
@@ -122,5 +135,51 @@ trait HasObject
         if (is_null($val)) return null;
         $this->checkString($val,$property);
         return $val;
+    }
+
+    protected function toEmail($obj)
+    {
+        if (is_string($obj)) return (object)[
+            'address' => $obj,
+            'name' => null
+        ];
+        if (!is_object($obj)) throw new \InvalidArgumentException(
+            'Expected either string or object'
+        );
+        return (object)[
+            'address' => $this->getString('address',$obj),
+            'name' => $this->getOptionalString('name',$obj)
+        ];
+    }
+
+    protected function getOptionalEmail($property, $obj = null)
+    {
+        $email = $this->getOptionalProperty($property,$obj);
+        if (is_null($email)) return null;
+        return $this->toEmail($email);
+    }
+
+    protected function getEmail($property, $obj = null)
+    {
+        $email = $this->getOptionalEmail($property,$obj);
+        if (is_null($email)) $this->noProperty($property);
+        return $email;
+    }
+
+    protected function getOptionalEmailArray($property, $obj = null)
+    {
+        $emails = $this->getOptionalProperty($property,$obj);
+        if (is_null($emails)) return null;
+        if (is_array($emails)) return array_map(function ($obj) {
+            return $this->toEmail($obj);
+        },$emails);
+        return [$this->toEmail($emails)];
+    }
+
+    protected function getEmailArray($property, $obj = null)
+    {
+        $emails = $this->getOptionalEmailArray($property,$obj);
+        if (is_null($emails)) $this->noProperty($property);
+        return $emails;
     }
 }
