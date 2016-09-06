@@ -42,6 +42,16 @@ class SurveyNotification
      * @ORM\Column(type="string",length=128)
      */
     private $token;
+
+    /**
+     * @ORM\Column(type="string",length=128)
+     */
+    private $contentType;
+
+    /**
+     * @ORM\Column(type="text")
+     */
+    private $subject;
     
 
     /**
@@ -172,5 +182,53 @@ class SurveyNotification
     public function getToken()
     {
         return $this->token;
+    }
+
+    /**
+     * Set contentType
+     *
+     * @param string $contentType
+     *
+     * @return SurveyNotification
+     */
+    public function setContentType($contentType)
+    {
+        $this->contentType = $contentType;
+
+        return $this;
+    }
+
+    /**
+     * Get contentType
+     *
+     * @return string
+     */
+    public function getContentType()
+    {
+        return $this->contentType;
+    }
+
+    /**
+     * Set subject
+     *
+     * @param string $subject
+     *
+     * @return SurveyNotification
+     */
+    public function setSubject($subject)
+    {
+        $this->subject = $subject;
+
+        return $this;
+    }
+
+    /**
+     * Get subject
+     *
+     * @return string
+     */
+    public function getSubject()
+    {
+        return $this->subject;
     }
 }

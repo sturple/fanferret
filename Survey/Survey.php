@@ -195,15 +195,17 @@ class Survey implements SurveyInterface
 	{
 		if (!$this->isNiceTime()) return null;
 		$body = $this->twig->render('FanFerretQuestionBundle:Notification:notification.txt.twig',[]);
-		$msg = new \Swift_Message();
-		$msg->setCharset('UTF-8');
+		$subject = 'Survey Reminder';
+		$content_type = 'text/plain';
 		$from = $this->getEmailArray('from');
 		$to = $this->getEmailArray('to');
+		$msg = new \Swift_Message();
+		$msg->setCharset('UTF-8');
 		$msg->setFrom($this->toSwiftAddressArray($from));
 		$msg->setTo($this->toSwiftAddressArray($to));
 		$msg->setBody($body);
-		$msg->setContentType('text/plain');
-		$msg->setSubject('Survey Reminder');
+		$msg->setContentType($content_type);
+		$msg->setSubject($subject);
 		$rs = $this->swift->send($msg);
 		if ($rs === 0) throw new \RuntimeException('Failed to send email');
 		$retr = new \FanFerret\QuestionBundle\Entity\SurveyNotification();
@@ -211,6 +213,8 @@ class Survey implements SurveyInterface
 		$retr->setSent(new \DateTime());
 		$retr->setBody($body);
 		$retr->setToken($this->tokens->generate());
+		$retr->setSubject($subject);
+		$retr->setContentType($content_type);
 		$session->addSurveyNotification($retr);
 		return $retr;
 	}
