@@ -16,7 +16,7 @@ class SurveySessionRepository extends \Doctrine\ORM\EntityRepository
      *
      * @param string $token
      *
-     * @return SurveySession
+     * @return SurveySession|null
      */
     public function getByToken($token)
     {
