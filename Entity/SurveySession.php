@@ -66,7 +66,7 @@ class SurveySession
     /**
      * @ORM\Column(type="string",length=255)
      */
-    private $guestName;
+    private $name;
 
     /**
      * @ORM\Column(type="string",length=128)
@@ -329,30 +329,6 @@ class SurveySession
     }
 
     /**
-     * Set guestName
-     *
-     * @param string $guestName
-     *
-     * @return SurveySession
-     */
-    public function setGuestName($guestName)
-    {
-        $this->guestName = $guestName;
-
-        return $this;
-    }
-
-    /**
-     * Get guestName
-     *
-     * @return string
-     */
-    public function getGuestName()
-    {
-        return $this->guestName;
-    }
-
-    /**
      * Set email
      *
      * @param string $email
@@ -374,5 +350,29 @@ class SurveySession
     public function getEmail()
     {
         return $this->email;
+    }
+
+    /**
+     * Set name
+     *
+     * @param string $name
+     *
+     * @return SurveySession
+     */
+    public function setName($name)
+    {
+        $this->name = $name;
+
+        return $this;
+    }
+
+    /**
+     * Get name
+     *
+     * @return string
+     */
+    public function getName()
+    {
+        return $this->name;
     }
 }
