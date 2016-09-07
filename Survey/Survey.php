@@ -198,11 +198,16 @@ class Survey implements SurveyInterface
 		$subject = 'Survey Reminder';
 		$content_type = 'text/plain';
 		$from = $this->getEmailArray('from');
-		$to = $this->getEmailArray('to');
+		$to = (object)[
+			'name' => $session->getName(),
+			'address' => $session->getEmail()
+		];
+		$replyto = $this->getOptionalEmailArray('replyto');
 		$msg = new \Swift_Message();
 		$msg->setCharset('UTF-8');
 		$msg->setFrom($this->toSwiftAddressArray($from));
 		$msg->setTo($this->toSwiftAddressArray($to));
+		$msg->setReplyTo($this->toSwiftAddressArray($replyto));
 		$msg->setBody($body);
 		$msg->setContentType($content_type);
 		$msg->setSubject($subject);
