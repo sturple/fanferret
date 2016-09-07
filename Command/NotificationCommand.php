@@ -69,11 +69,6 @@ class NotificationCommand extends \Symfony\Bundle\FrameworkBundle\Command\Contai
     protected function execute(\Symfony\Component\Console\Input\InputInterface $input, \Symfony\Component\Console\Output\OutputInterface $output)
     {
         $this->writeln($output,'START');
-        $now = new \DateTime();
-        $output->writeln(
-            'START: Time is %s',
-            $now->format(\DateTime::ATOM)
-        );
         $doctrine = $this->getContainer()->get('doctrine');
         $repo = $doctrine->getRepository(\FanFerret\QuestionBundle\Entity\SurveySession::class);
         //  TODO: Support multiple notifications
