@@ -70,7 +70,7 @@ class SurveySessionRepository extends \Doctrine\ORM\EntityRepository
             );
             //  Add to query
             $max_expr = $qb->expr()->max('sn.sent');
-            $having_max_expr = $qb->expr()->gte($max_expr,':when');
+            $having_max_expr = $qb->expr()->lte($max_expr,':when');
             $qb->andHaving($having_max_expr)
                 ->setParameter('when',$when);
         }
