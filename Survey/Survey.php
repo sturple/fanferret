@@ -19,6 +19,11 @@ class Survey implements SurveyInterface
     {
         return $this->survey->getParams();
     }
+
+    private function getTimezone()
+    {
+        return new \DateTimeZone($this->getString('timezone'));
+    }
     
     private function getGroups()
     {
@@ -187,13 +192,19 @@ class Survey implements SurveyInterface
 
     private function isNiceTime()
     {
-        //	TODO: Implement this
+        $now = new \DateTime();
+        $now->setTimezone($this->getTimezone());
+        $h = intval($now->format('G'));
+        //  Only send emails between the hours of 9AM and
+        //  5PM local time
+        if ($h < 9) return false;
+        if ($h >= 17) return false;
         return true;
     }
 
     public function sendNotification(\FanFerret\QuestionBundle\Entity\SurveySession $session, $num)
     {
-        if (!$this->isNiceTime()) return null;
+        if (!$this->isNiceTime($session)) return null;
         $subject = 'Survey Reminder';
         $content_type = 'text/html';
         $from = $this->getEmailArray('from');
