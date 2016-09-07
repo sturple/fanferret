@@ -198,10 +198,11 @@ trait HasObject
 
     protected function toSwiftAddressArray($addrs)
     {
+        if (is_null($addrs)) return [];
         if (!is_array($addrs)) $addrs = [$addrs];
         $retr = [];
         foreach ($addrs as $addr) {
-            if (isset($addr->name)) $retr[$addr->name] = $addr->address;
+            if (isset($addr->name)) $retr[$addr->address] = $addr->name;
             else $retr[] = $addr->address;
         }
         return $retr;
