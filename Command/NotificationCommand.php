@@ -78,7 +78,7 @@ class NotificationCommand extends \Symfony\Bundle\FrameworkBundle\Command\Contai
         $sessions = $repo->getByNotification(0,$since);
         $sent += $this->sendNotifications($output,$sessions,1);
         //  Second notification is sent 11 days
-        //  after first notification
+        //  after checkout
         $since = new \DateInterval('P11D');
         $sessions = $repo->getByNotification(1,$since);
         $sent += $this->sendNotifications($output,$sessions,2);

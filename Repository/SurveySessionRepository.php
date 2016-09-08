@@ -33,11 +33,8 @@ class SurveySessionRepository extends \Doctrine\ORM\EntityRepository
     /**
      * Attempts to retrieve all SurveySession entities
      * which are not completed, have a certain number of
-     * notifications, and whose last notification was sent
-     * a certain amount of time ago.
-     *
-     * If the number of notifications is zero then the
-     * time will be measured since checkout.
+     * notifications, and whose checkout date was a certain
+     * amount of time ago (or longer).
      *
      * @param int $count
      * @param DateInterval|null $since
@@ -69,14 +66,8 @@ class SurveySessionRepository extends \Doctrine\ORM\EntityRepository
                 '$since is negative interval'
             );
             //  Add to query
-            if ($count === 0) {
-                $since_expr = $qb->expr()->lte('ss.checkout',':when');
-                $qb->andWhere($since_expr);
-            } else {
-                $max_expr = $qb->expr()->max('sn.sent');
-                $having_max_expr = $qb->expr()->lte($max_expr,':when');
-                $qb->andHaving($having_max_expr);
-            }
+            $since_expr = $qb->expr()->lte('ss.checkout',':when');
+            $qb->andWhere($since_expr);
             $qb->setParameter('when',$when);
         }
         //  Execute query
