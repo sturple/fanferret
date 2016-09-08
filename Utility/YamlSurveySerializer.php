@@ -10,7 +10,7 @@ class YamlSurveySerializer implements SurveySerializer
 {
     private function parseYaml($str)
     {
-        $yaml = \Symfony\Component\Yaml\Yaml::parse($str,\Symfony\Component\Yaml\Yaml::PARSE_OBJECT_FOR_MAP);
+        $yaml = \Symfony\Component\Yaml\Yaml::parse($str,false,false,true);
         if (!is_object($yaml)) throw new \InvalidArgumentException('Expected root of YAML structure to be object');
         return $yaml;
     }
