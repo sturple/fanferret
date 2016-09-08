@@ -8,264 +8,178 @@ namespace FanFerret\QuestionBundle\Utility;
  */
 class YamlSurveySerializer implements SurveySerializer
 {
-    
-    private $defaultLanguage='en';
-    
-    /**
-     * Sets the default language which will be used by
-     * this serializer.
-     *
-     * @param string $lang
-     *  The IETF language tag.
-     *
-     * @return YamlSurveySerializer
-     */
-    public function setDefaultLanguage($lang)
-    {
-        $this->defaultLanguage=$lang;
-        return $this;
-    }
-    
-    private function raise(...$args)
-    {
-        //  TODO: Use different/better type
-        throw new \RuntimeException(sprintf(...$args));
-    }
-    
-    private function extract(array $arr, $key)
-    {
-        if (!isset($arr[$key])) $this->raise('No key "%s"',$key);
-        return $arr[$key];
-    }
-    
-    private function extractArray(array $arr, $key)
-    {
-        $v=$this->extract($arr,$key);
-        if (!is_array($v)) $this->raise('"%s" is not array',$key);
-        return $v;
-    }
-    
-    private function extractString(array $arr, $key)
-    {
-        $v=$this->extract($arr,$key);
-        if (!is_string($v)) $this->raise('"%s" is not string',$key);
-        return $v;
-    }
-    
-    private function fetchQuestionGroups(array $arr)
-    {
-        return $this->extractArray($arr,'questionGroup');
-    }
-    
-    private function fetchQuestions(array $arr)
-    {
-        return $this->extractArray($arr,'questions');
-    }
-    
-    private function fetchOrder(array $arr)
-    {
-        if (!isset($arr['order'])) return null;
-        $o=$arr['order'];
-        if (!is_int($o)) $this->raise('Expected "order" to be integer, got %s',gettype($o));
-        return $o;
-    }
-    
-    private function sort(array &$arr)
-    {
-        Sort::stable($arr,function ($a, $b) {
-            $this->checkArray($a);
-            $this->checkArray($b);
-            $a=$this->fetchOrder($a);
-            $b=$this->fetchOrder($b);
-            if (is_null($a)) return is_null($b) ? 0 : 1;
-            if (is_null($b)) return -1;
-            return $a-$b;
-        });
-    }
-    
     private function parseYaml($str)
     {
-        $yaml=\Symfony\Component\Yaml\Yaml::parse($str);
-        if (!is_array($yaml)) $this->raise('Expected root of YAML structure to be array, got %s',gettype($yaml));
+        $yaml = \Symfony\Component\Yaml\Yaml::parse($str,\Symfony\Component\Yaml\Yaml::PARSE_OBJECT_FOR_MAP);
+        if (!is_object($yaml)) throw new \InvalidArgumentException('Expected root of YAML structure to be object');
         return $yaml;
     }
-    
-    private function checkArray($obj)
+
+    private function expected($property, $type)
     {
-        if (!is_array($obj)) $this->raise('Expected an array, got %s',gettype($obj));
+        throw new \InvalidArgumentException(
+            sprintf(
+                'Expected "%s" to be %s',
+                $property,
+                $type
+            )
+        );
     }
-    
-    private function getRulesCollection(array $col)
+
+    private function noProperty($property)
     {
-        foreach ($col as $r)
-        {
-            $this->checkArray($r);
-            $retr=new \FanFerret\QuestionBundle\Entity\Rule();
-            $retr->setParams((object)$r);
-            yield $retr;
-        }
+        throw new \InvalidArgumentException(
+            sprintf(
+                'No property "%s"',
+                $property
+            )
+        );
     }
-    
-    private function getRulesEmail(array $em)
+
+    private function getOptionalProperty($obj, $property)
     {
-        $em['type']='email';
-        $retr=new \FanFerret\QuestionBundle\Entity\Rule();
-        $retr->setParams((object)$em);
-        yield $retr;
+        return isset($obj->$property) ? $obj->$property : null;
     }
-    
-    private function getRules(array &$q)
+
+    private function getOptionalString($obj, $property)
     {
-        $col=isset($q['rules']);
-        $email=isset($q['email']);
-        if ($col && $email) $this->raise('Both "rules" collection and "email"');
-        if (!($col || $email)) return [];
-        if ($col)
-        {
-            $rs=$q['rules'];
-            unset($q['rules']);
-            $this->checkArray($rs);
-            return $this->getRulesCollection($rs);
-        }
-        $em=$q['email'];
-        unset($q['email']);
-        $this->checkArray($em);
-        return $this->getRulesEmail($em);
-    }
-    
-    private function getQuestion(array $q)
-    {
-        if ($this->extractString($q,'type')==='group') $this->raise('Unexpected group question');
-        unset($q['order']); //  Handled elsewhere
-        unset($q['field']); //  Legacy database interop, no longer needed as per discussion with Shawn 17/05/2016
-        unset($q['status']);    //  May add support for this in the future, not now, as per discussion with Shawn 17/05/2016
-        $retr=new \FanFerret\QuestionBundle\Entity\Question();
-        foreach ($this->getRules($q) as $r)
-        {
-            $retr->addRule($r);
-            $r->addQuestion($retr);
-        }
-        $retr->setParams((object)$q);
+        $retr = $this->getOptionalProperty($obj,$property);
+        if (is_null($retr)) return null;
+        if (!is_string($retr)) $this->expected($property,'string');
         return $retr;
     }
-    
-    private function getQuestions($name, array $qs)
+
+    private function getString($obj, $property)
     {
-        $arr=$this->extractArray($qs,$name);
-        $this->sort($arr);
-        $i=0;
-        foreach ($arr as $q)
-        {
-            $this->checkArray($q);
-            $retr=$this->getQuestion($q);
-            $retr->setOrder(++$i);
-            yield $retr;
-        }
-    }
-    
-    private function isQuestionGroups($name, array $qs)
-    {
-        foreach ($this->extractArray($qs,$name) as $q)
-        {
-            $this->checkArray($q);
-            return $this->extractString($q,'type')==='group';
-        }
-        return false;
-    }
-    
-    private function getSingleQuestionGroup($name, array $qs)
-    {
-        $retr=new \FanFerret\QuestionBundle\Entity\QuestionGroup();
-        $retr->setOrder(1);
-        $retr->setParams(new \stdClass());
-        foreach ($this->getQuestions($name,$qs) as $q)
-        {
-            $retr->addQuestion($q);
-            $q->setQuestionGroup($retr);
-        }
-        yield $retr;
-    }
-    
-    private function getParams(array $arr)
-    {
-        if (!isset($arr['params'])) return new \stdClass();
-        $ps=$arr['params'];
-        if (!is_array($ps)) $this->raise('"params" is not an array');
-        return (object)$ps;
-    }
-    
-    private function getMultipleQuestionGroups($name, array $qs, array $seen)
-    {
-        if (in_array($name,$seen,true)) $this->raise('Cycle on "%s"',$name);
-        $seen[]=$name;
-        $arr=$this->extractArray($qs,$name);
-        $this->sort($arr);
-        foreach ($arr as $q)
-        {
-            $this->checkArray($q);
-            if ($this->extractString($q,'type')!=='group') $this->raise('Unexpected non-group question among groups');
-            $set=$this->extractString($q,'set');
-            if ($this->isQuestionGroups($set,$qs))
-            {
-                foreach ($this->getMultipleQuestionGroups($set,$qs,$seen) as $qg) yield $qg;
-                continue;
-            }
-            //  Actually build a question group
-            $retr=new \FanFerret\QuestionBundle\Entity\QuestionGroup();
-            $retr->setParams($this->getParams($q));
-            $t=new \FanFerret\QuestionBundle\Entity\QuestionGroupTranslation();
-            $t->setLanguage($this->defaultLanguage)->setText($this->extractString($q,'title'))->setQuestionGroup($retr);
-            $retr->addTranslation($t);
-            foreach ($this->getQuestions($set,$qs) as $qu)
-            {
-                $qu->setQuestionGroup($retr);
-                $retr->addQuestion($qu);
-            }
-            yield $retr;
-        }
-    }
-    
-    private function getQuestionGroupsImpl($name, array $qs, array $seen)
-    {
-        if (!$this->isQuestionGroups($name,$qs)) return $this->getSingleQuestionGroup($name,$qs);
-        return $this->getMultipleQuestionGroups($name,$qs,$seen);
-    }
-    
-    private function getQuestionGroups($name, array $qs)
-    {
-        $i=0;
-        foreach ($this->getQuestionGroupsImpl($name,$qs,[]) as $qg)
-        {
-            $qg->setOrder(++$i);
-            yield $qg;
-        }
-    }
-    
-    private function toSurvey(array $g, array $qs)
-    {
-        $retr=new \FanFerret\QuestionBundle\Entity\Survey();
-        $retr->setSlug($this->extractString($g,'slug'));
-        $retr->setParams($this->getParams($g));
-        $t=new \FanFerret\QuestionBundle\Entity\SurveyTranslation();
-        $t->setLanguage($this->defaultLanguage)->setText($this->extractString($g,'title'))->setSurvey($retr);
-        $retr->addTranslation($t);
-        foreach ($this->getQuestionGroups($this->extractString($g,'id'),$qs) as $qg)
-        {
-            $retr->addQuestionGroup($qg);
-            $qg->setSurvey($retr);
-        }
+        $retr = $this->getOptionalString($obj,$property);
+        if (is_null($retr)) $this->noProperty($property);
         return $retr;
+    }
+
+    private function getOptionalObject($obj, $property)
+    {
+        $retr = $this->getOptionalProperty($obj,$property);
+        if (is_null($retr)) return null;
+        if (!is_object($retr)) $this->expected($property,'object');
+        //  TODO: Fix this
+        return $retr;
+    }
+
+    private function getObject($obj, $property)
+    {
+        $retr = $this->getOptionalObject($obj,$property);
+        if (is_null($retr)) $this->noProperty($property);
+        return $retr;
+    }
+
+    private function getOptionalArray($obj, $property)
+    {
+        $retr = $this->getOptionalProperty($obj,$property);
+        if (is_null($retr)) return null;
+        if (!is_array($retr)) $this->expected($property,'array');
+        return $retr;
+    }
+
+    private function getArray($obj, $property)
+    {
+        $retr = $this->getOptionalArray($obj,$property);
+        if (is_null($retr)) $this->noProperty($property);
+        return $retr;
+    }
+
+    private function getOptionalInteger($obj, $property)
+    {
+        $retr = $this->getOptionalProperty($obj,$property);
+        if (is_null($retr)) return null;
+        if (!is_integer($retr)) $this->expected($property,'integer');
+        return $retr;
+    }
+
+    private function getInteger($obj, $property)
+    {
+        $retr = $this->getOptionalInteger($obj,$property);
+        if (is_null($retr)) $this->noProperty($property);
+        return $retr;
+    }
+
+    private function forEachObject(array $arr, $represents, $callable)
+    {
+        foreach ($arr as $obj) {
+            if (!is_object($obj)) throw new \InvalidArgumentException(
+                sprintf(
+                    'Expected %s to be represented by object',
+                    $represents
+                )
+            );
+            yield $callable($obj);
+        }
+    }
+
+    private function getRule($obj)
+    {
+        $r = new \FanFerret\QuestionBundle\Entity\Rule();
+        $r->setParams($this->getObject($obj,'params'));
+        $r->setType($this->getString($obj,'type'));
+        return $r;
+    }
+
+    private function getRules(array $arr)
+    {
+        return $this->forEachObject($arr,'Rule',function ($obj) {   return $this->getRule($obj);    });
+    }
+
+    private function getQuestion($obj)
+    {
+        $q = new \FanFerret\QuestionBundle\Entity\Question();
+        $q->setOrder($this->getInteger($obj,'order'));
+        $q->setParams($this->getObject($obj,'params'));
+        $q->setType($this->getString($obj,'type'));
+        foreach ($this->getRules($this->getArray($obj,'rules')) as $r) {
+            $r->addQuestion($q);
+            $q->addRule($r);
+        }
+        return $q;
+    }
+
+    private function getQuestions(array $arr)
+    {
+        return $this->forEachObject($arr,'Question',function ($obj) {  return $this->getQuestion($obj);    });
+    }
+
+    private function getQuestionGroup($obj)
+    {
+        $qg = new \FanFerret\QuestionBundle\Entity\QuestionGroup();
+        $qg->setOrder($this->getInteger($obj,'order'));
+        $qg->setParams($this->getObject($obj,'params'));
+        foreach ($this->getQuestions($this->getArray($obj,'questions')) as $q) {
+            $q->setQuestionGroup($qg);
+            $qg->addQuestion($q);
+        }
+        return $qg;
+    }
+
+    private function getQuestionGroups(array $arr)
+    {
+        return $this->forEachObject($arr,'QuestionGroup',function ($obj) { return $this->getQuestionGroup($obj);   });
+    }
+
+    private function getSurvey($obj)
+    {
+        $s = new \FanFerret\QuestionBundle\Entity\Survey();
+        $s->setSlug($this->getString($obj,'slug'));
+        $s->setSlugGroup($this->getOptionalString($obj,'slugGroup'));
+        $s->setParams($this->getObject($obj,'params'));
+        $s->setLanguage($this->getString($obj,'language'));
+        foreach ($this->getQuestionGroups($this->getArray($obj,'questionGroups')) as $qg) {
+            $s->addQuestionGroup($qg);
+            $qg->setSurvey($s);
+        }
+        return $s;
     }
     
     public function fromString($str)
     {
-        $yaml=$this->parseYaml($str);
-        $groups=$this->fetchQuestionGroups($yaml);
-        $questions=$this->fetchQuestions($yaml);
-        return array_map(function ($group) use ($questions) {
-            $this->checkArray($group);
-            return $this->toSurvey($group,$questions);
-        },$groups);
+        $yaml = $this->parseYaml($str);
+        return [$this->getSurvey($yaml)];
     }
-    
 }
