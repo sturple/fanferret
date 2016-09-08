@@ -11,13 +11,18 @@
 </script>
 <section id="{{group.id|escape('html_attr')}}" class="fanferret-group">
 	<h2 class="fanferret-group-title">Group {{group.id}}</h2>
-	<div id="{{group.id|escape('html_attr')}}_carousel" class="carousel slide vertical" data-ride="carousel" data-keyboard="false" data-interval="false">
-		<div class="carousel-inner" role="listbox">
-			{% for question in questions %}
-			<div class="carousel-item item {% if loop.index0 == 0 %}active{% endif %}">
-				{{question.render()|raw}}
-			</div>
-			{% endfor %}
-		</div>
+	{% for question in questions %}
+	{{question.render()|raw}}
+	{% endfor %}
+	{% set last_group = group.survey.questionGroups[group.survey.questionGroups|length - 1] %}
+	{% set last = group.id == last_group.id %}
+	<div class="fanferret-group-done {% if last %}fanferret-question-last{% else %}fanferret-question-next{% endif %}">
+		<button class="btn btn-primary btn-md {% if last %}finish-button{% endif %}">
+			{% if last %}
+			Finish
+			{% else %}
+			Next
+			{% endif %}
+		</button>
 	</div>
 </section>

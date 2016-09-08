@@ -12,6 +12,7 @@ define(['jquery','survey/question/base'],function ($, base) {
 		};
 		var update = function () {
 			hidden.val(get_value());
+			group.update();
 		};
 		update();
 		div.find('input[type="radio"]').change(update);

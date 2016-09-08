@@ -15,12 +15,13 @@ define(['jquery','survey/question/base'],function ($, base) {
 				other_hidden.val(other.val());
 				other_div.show();
 				return;
-			}
-			if (other) {
+			} else if (other) {
 				other_hidden.val(null);
 				other_div.hide();
+			} else {
+				hidden.val(selected);
 			}
-			hidden.val(selected);
+			group.update();
 		};
 		if (div.hasClass('fanferret-other')) {
 			other = div.find('input[type="text"]');
