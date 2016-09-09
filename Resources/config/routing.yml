@@ -7,3 +7,9 @@ fgms_question_survey_finish:
 fgms_question_notification_seen:
     path: /notification/{token}/
     defaults: { _controller: FanFerretQuestionBundle:Notification:seen }
+fgms_question_admin_delivery:
+    path: /admin/{slug}/delivery
+    defaults: { _controller: FanFerretQuestionBundle:Admin:delivery, sluggroup: null }
+fgms_question_admin_delivery_group:
+    path: /admin/{sluggroup}/{slug}/delivery
+    defaults: { _controller: FanFerretQuestionBundle:Admin:delivery }
