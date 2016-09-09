@@ -76,4 +76,32 @@ class AdminController extends \Symfony\Bundle\FrameworkBundle\Controller\Control
         $survey = $this->getSurveyBySlug($slug,$sluggroup);
         return $this->deliveryActionImpl($request,$survey);
     }
+
+    private function commentCardsActionImpl(\FanFerret\QuestionBundle\Entity\Survey $survey, $page, $perpage)
+    {
+        $page = intval($page);
+        if ($page <= 0) throw $this->createNotFoundException(
+            'Expected strictly positive page number'
+        );
+        //  Make it zero relative
+        --$page;
+        //  TODO: Cap this?
+        $perpage = intval($perpage);
+        if ($perpage <= 0) throw $this->createNotFoundException(
+            'Expected strictly positive number of results per page'
+        );
+        $doctrine = $this->getDoctrine();
+        $repo = $doctrine->getRepository(\FanFerret\QuestionBundle\Entity\SurveySession::class);
+        $page = $repo->getPage($survey,$page,$perpage);
+        return $this->render('FanFerretQuestionBundle:Admin:commentcards.html.twig',[
+            'page' => $page,
+            'survey' => $survey
+        ]);
+    }
+
+    public function commentCardsAction($page, $perpage, $slug, $sluggroup = null)
+    {
+        $survey = $this->getSurveyBySlug($slug,$sluggroup);
+        return $this->commentCardsActionImpl($survey,$page,$perpage);
+    }
 }

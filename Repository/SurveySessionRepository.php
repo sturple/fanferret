@@ -74,4 +74,38 @@ class SurveySessionRepository extends \Doctrine\ORM\EntityRepository
         $q = $qb->getQuery();
         return $q->getResult();
     }
+
+    /**
+     * Attempts to retrieve a page of SurveySession entities
+     * from the data store.
+     *
+     * @param Survey $survey
+     *  The Survey entity whose SurveySession entities shall be
+     *  retrieved.
+     * @param int $num
+     *  The zero relative page number to retrieve.
+     * @param int $count
+     *  The number of SurveySession entities per page.
+     *
+     * @return array
+     */
+    public function getPage(\FanFerret\QuestionBundle\Entity\Survey $survey, $num, $count)
+    {
+        if ($num < 0) throw new \InvalidArgumentException(
+            'Page number must not be negative'
+        );
+        if ($count <= 0) throw new \InvalidArgumentException(
+            'Number of results per page must be strictly positive'
+        );
+        $qb = $this->createQueryBuilder('ss');
+        $where_expr = $qb->expr()->eq('s.id',':sid');
+        $qb->innerJoin('ss.survey','s')
+            ->orderBy('ss.checkout','desc')
+            ->setMaxResults($count)
+            ->setFirstResult($count * $num)
+            ->andWhere($where_expr)
+            ->setParameter('sid',$survey->getId());
+        $q = $qb->getQuery();
+        return $q->getResult();
+    }
 }

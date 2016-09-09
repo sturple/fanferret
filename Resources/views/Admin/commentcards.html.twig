@@ -1,0 +1,21 @@
+<!doctype html>
+<html>
+	<head>
+	</head>
+	<body>
+		<table>
+			<thead>
+				<tr>
+					<th>Checkout Date</th>
+				</tr>
+			</thead>
+			<tbody>
+				{% for session in page %}
+				<tr>
+					<td>{{session.checkout|date('D, d M Y H:i:s O')}}</td>
+				</tr>
+				{% endfor %}
+			<tbody>
+		</table>
+	</body>
+</html>
