@@ -1,12 +1,12 @@
-<section class="fanferret-polar fanferret-question {% if negative %}fanferret-polar-negative {% endif %}{% if explain %}fanferret-polar-explain fanferret-polar-explain-{{explain|escape('html_attr')}}{% endif %}" id="{{name|escape('html_attr')}}">
-	<h3 class="fanferret-question-title">{{title}}</h3>
-	<div class="fanferret-question-input">
+<section class="fanferret-polar fanferret-question {% if negative %}fanferret-polar-negative {% endif %}{% if explain %}fanferret-polar-explain fanferret-polar-explain-{{explain|escape('html_attr')}}{% endif %} row" id="{{name|escape('html_attr')}}">
+	<h3 class="fanferret-question-title col-md-7">{{title}}</h3>
+	<div class="fanferret-question-input col-md-5">
 		<input type="checkbox">
+		{% if explain %}
+		<div class="fanferret-polar-explain-input" style="display:none;">
+			Please explain <input type="text">
+		</div>
+		{% endif %}
 	</div>
-	{% if explain %}
-	<div class="fanferret-question-input fanferret-polar-explain-input" style="display:none;">
-		Please explain <input type="text">
-	</div>
-	{% endif %}
 </section>
 {% include 'FanFerretQuestionBundle:Question:add.html.twig' with {'name': name, 'dependency': 'polar'} %}

@@ -1,14 +1,14 @@
-<section id="{{name|escape('html_attr')}}" class="fanferret-question fanferret-rating">
-	<h3 class="fanferret-question-title">{{title}}</h3>
-	<div class="fanferret-question-input">
+<section id="{{name|escape('html_attr')}}" class="fanferret-question fanferret-rating row">
+	<h3 class="fanferret-question-title col-md-7">{{title}}</h3>
+	<div class="fanferret-question-input col-md-5">
 		<ul class="fanferret-rating-ratings">
 			{% for i in 1..5 %}
 			<li class="fanferret-rating-rating">
 				<div class="fenferret-rating-rating-radio">
-					<input type="radio" name="{{name|escape('html_attr')}}_group" value="{{i|escape('html_attr')}}">
+					<input type="radio" name="{{name|escape('html_attr')}}_group" value="{{6-i|escape('html_attr')}}">
 				</div>
 				<div class="fanferret-rating-rating-label">
-					{{i}}
+					{{6-i}}
 				</div>
 			</li>
 			{% endfor %}

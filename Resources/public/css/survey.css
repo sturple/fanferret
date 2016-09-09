@@ -9,11 +9,11 @@ body {
 	margin: 50px;
 	padding: 50px;
 	overflow: hidden;
-	text-align: center;
 }
 
 h2 {
 	margin-top: 0;
+	text-align: center;
 }
 
 #survey_carousel .carousel > .carousel-inner > .carousel-item {
@@ -25,6 +25,19 @@ h2 {
 	padding-left: 0;
 }
 
-.fanferret-checklist-option > div, .fanferret-rating-rating > div {
+.fanferret-checklist-option > div, .fanferret-rating-rating > div, .fanferret-polar-explain-input {
 	display: inline-block;
+}
+
+.fanferret-rating-rating {
+	display: inline-block;
+}
+
+.fanferret-question-title {
+	margin-bottom: 0;
+	margin-top: 0;
+}
+
+section {
+	margin-bottom: 10px;
 }
