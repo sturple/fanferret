@@ -66,7 +66,12 @@ class SurveySession
     /**
      * @ORM\Column(type="string",length=255)
      */
-    private $name;
+    private $firstName;
+
+    /**
+     * @ORM\Column(type="string",length=255)
+     */
+    private $lastName;
 
     /**
      * @ORM\Column(type="string",length=128)
@@ -358,30 +363,6 @@ class SurveySession
     }
 
     /**
-     * Set name
-     *
-     * @param string $name
-     *
-     * @return SurveySession
-     */
-    public function setName($name)
-    {
-        $this->name = $name;
-
-        return $this;
-    }
-
-    /**
-     * Get name
-     *
-     * @return string
-     */
-    public function getName()
-    {
-        return $this->name;
-    }
-
-    /**
      * Set language
      *
      * @param string $language
@@ -403,5 +384,53 @@ class SurveySession
     public function getLanguage()
     {
         return $this->language;
+    }
+
+    /**
+     * Set firstName
+     *
+     * @param string $firstName
+     *
+     * @return SurveySession
+     */
+    public function setFirstName($firstName)
+    {
+        $this->firstName = $firstName;
+
+        return $this;
+    }
+
+    /**
+     * Get firstName
+     *
+     * @return string
+     */
+    public function getFirstName()
+    {
+        return $this->firstName;
+    }
+
+    /**
+     * Set lastName
+     *
+     * @param string $lastName
+     *
+     * @return SurveySession
+     */
+    public function setLastName($lastName)
+    {
+        $this->lastName = $lastName;
+
+        return $this;
+    }
+
+    /**
+     * Get lastName
+     *
+     * @return string
+     */
+    public function getLastName()
+    {
+        return $this->lastName;
     }
 }
