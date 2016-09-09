@@ -104,6 +104,7 @@ class YamlSurveySerializer implements SurveySerializer
 
     private function forEachObject(array $arr, $represents, $callable)
     {
+        $i = 0;
         foreach ($arr as $obj) {
             if (!is_object($obj)) throw new \InvalidArgumentException(
                 sprintf(
@@ -111,7 +112,7 @@ class YamlSurveySerializer implements SurveySerializer
                     $represents
                 )
             );
-            yield $callable($obj);
+            yield $callable($obj,$i++);
         }
     }
 
@@ -128,10 +129,12 @@ class YamlSurveySerializer implements SurveySerializer
         return $this->forEachObject($arr,'Rule',function ($obj) {   return $this->getRule($obj);    });
     }
 
-    private function getQuestion($obj)
+    private function getQuestion($obj, $curr)
     {
         $q = new \FanFerret\QuestionBundle\Entity\Question();
-        $q->setOrder($this->getInteger($obj,'order'));
+        $order = $this->getOptionalInteger($obj,'order');
+        if (is_null($order)) $order = $curr;
+        $q->setOrder($order);
         $q->setParams($this->getObject($obj,'params'));
         $q->setType($this->getString($obj,'type'));
         foreach ($this->getRules($this->getArray($obj,'rules')) as $r) {
@@ -143,13 +146,15 @@ class YamlSurveySerializer implements SurveySerializer
 
     private function getQuestions(array $arr)
     {
-        return $this->forEachObject($arr,'Question',function ($obj) {  return $this->getQuestion($obj);    });
+        return $this->forEachObject($arr,'Question',function ($obj, $curr) {  return $this->getQuestion($obj,$curr);    });
     }
 
-    private function getQuestionGroup($obj)
+    private function getQuestionGroup($obj, $curr)
     {
         $qg = new \FanFerret\QuestionBundle\Entity\QuestionGroup();
-        $qg->setOrder($this->getInteger($obj,'order'));
+        $order = $this->getOptionalInteger($obj,'order');
+        if (is_null($order)) $order = $curr;
+        $qg->setOrder($order);
         $qg->setParams($this->getObject($obj,'params'));
         foreach ($this->getQuestions($this->getArray($obj,'questions')) as $q) {
             $q->setQuestionGroup($qg);
@@ -160,7 +165,7 @@ class YamlSurveySerializer implements SurveySerializer
 
     private function getQuestionGroups(array $arr)
     {
-        return $this->forEachObject($arr,'QuestionGroup',function ($obj) { return $this->getQuestionGroup($obj);   });
+        return $this->forEachObject($arr,'QuestionGroup',function ($obj, $curr) { return $this->getQuestionGroup($obj,$curr);   });
     }
 
     private function getSurvey($obj)
