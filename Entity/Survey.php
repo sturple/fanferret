@@ -30,7 +30,7 @@ class Survey
     private $slugGroup;
     
     /**
-     * @ORM\OneToMany(targetEntity="QuestionGroup",mappedBy="survey")
+     * @ORM\OneToMany(targetEntity="QuestionGroup",mappedBy="survey",cascade="all")
      * @ORM\OrderBy({"order"="ASC"})
      */
     private $questionGroups;

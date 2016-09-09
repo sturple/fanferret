@@ -25,7 +25,7 @@ class Question
     private $questionGroup;
     
     /**
-     * @ORM\Column(type="integer")
+     * @ORM\Column(type="integer",name="`order`")
      */
     private $order;
 	
@@ -35,7 +35,7 @@ class Question
 	private $params;
 	
 	/**
-	 * @ORM\ManyToMany(targetEntity="Rule",mappedBy="questions")
+	 * @ORM\ManyToMany(targetEntity="Rule",mappedBy="questions",cascade="all")
 	 */
 	private $rules;
 	
