@@ -10,4 +10,33 @@ namespace FanFerret\QuestionBundle\Repository;
  */
 class SurveyRepository extends \Doctrine\ORM\EntityRepository
 {
+    /**
+     * Attempts to retrieve the Survey which has
+     * a particular slug.
+     *
+     * @param string $slug
+     * @param string|null $sluggroup
+     *  Set to null if there is no group.
+     *
+     * @return Survey|null
+     */
+    public function getBySlug($slug, $sluggroup = null)
+    {
+        $qb = $this->createQueryBuilder('s');
+        $slug_expr = $qb->expr()->eq('s.slug',':slug');
+        $qb->setParameter('slug',$slug);
+        if (is_null($sluggroup)) {
+            $sluggroup_expr = $qb->expr()->isNull('s.slugGroup');
+        } else {
+            $sluggroup_expr = $qb->expr()->eq('s.slugGroup',':slugGroup');
+            $qb->setParameter('slugGroup',$sluggroup);
+        }
+        $qb->andWhere($slug_expr)
+            ->andWhere($sluggroup_expr);
+        $q = $qb->getQuery();
+        $arr = $q->getResult();
+        if (count($arr) === 0) return null;
+        if (count($arr) !== 1) throw new \RuntimeException('Expected slug & group to uniquely identify Survey entity');
+        return $arr[0];
+    }
 }
