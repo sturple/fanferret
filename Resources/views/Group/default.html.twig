@@ -10,7 +10,7 @@
 	})();
 </script>
 <section id="{{group.id|escape('html_attr')}}" class="fanferret-group">
-	<h2 class="fanferret-group-title">Group {{group.id}}</h2>
+	<h2 class="fanferret-group-title">{{title}}</h2>
 	{% for question in questions %}
 	{{question.render()|raw}}
 	{% endfor %}

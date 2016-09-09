@@ -143,7 +143,8 @@ class Survey implements SurveyInterface
         $gs = array_map(function ($group) {
             $ctx = [
                 'questions' => $group->questions,
-                'group' => $group->group
+                'group' => $group->group,
+                'title' => $this->getString('title',$group->group->getParams())
             ];
             return new \FanFerret\QuestionBundle\Utility\Renderable(
                 $this->getGroupTemplate($group->group),
