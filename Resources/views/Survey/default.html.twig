@@ -11,13 +11,15 @@
 	<body>
 		{{form_start(form)}}
 		{{form_end(form)}}
-		<div id="survey_carousel" class="carousel slide" data-ride="carousel" data-interval="false" data-keyboard="false">
-			<div class="carousel-inner" role="listbox">
-				{% for group in groups %}
-				<div class="carousel-item item {% if loop.index0 == 0 %}active{% endif %}">
-					{{group.render()|raw}}
+		<div class="container">
+			<div id="survey_carousel" class="carousel slide" data-ride="carousel" data-interval="false" data-keyboard="false">
+				<div class="carousel-inner" role="listbox">
+					{% for group in groups %}
+					<div class="carousel-item item {% if loop.index0 == 0 %}active{% endif %}">
+						{{group.render()|raw}}
+					</div>
+					{% endfor %}
 				</div>
-				{% endfor %}
 			</div>
 		</div>
 	</body>
