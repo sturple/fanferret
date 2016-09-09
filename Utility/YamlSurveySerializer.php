@@ -68,7 +68,7 @@ class YamlSurveySerializer implements SurveySerializer
     private function getObject($obj, $property)
     {
         $retr = $this->getOptionalObject($obj,$property);
-        if (is_null($retr)) $this->noProperty($property);
+        if (is_null($retr)) return (object)[];
         return $retr;
     }
 
@@ -83,7 +83,7 @@ class YamlSurveySerializer implements SurveySerializer
     private function getArray($obj, $property)
     {
         $retr = $this->getOptionalArray($obj,$property);
-        if (is_null($retr)) $this->noProperty($property);
+        if (is_null($retr)) return [];
         return $retr;
     }
 
