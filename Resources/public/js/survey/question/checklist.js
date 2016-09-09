@@ -14,12 +14,12 @@ define(['jquery','survey/question/base'],function ($, base) {
 				hidden.val(null);
 				other_hidden.val(other.val());
 				other_div.show();
-				return;
-			} else if (other) {
-				other_hidden.val(null);
-				other_div.hide();
 			} else {
 				hidden.val(selected);
+				if (other) {
+					other_hidden.val(null);
+					other_div.hide();
+				}
 			}
 			group.update();
 		};
