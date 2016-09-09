@@ -210,7 +210,7 @@ class Survey implements SurveyInterface
         $content_type = 'text/html';
         $from = $this->getEmailArray('from');
         $to = (object)[
-            'name' => $session->getName(),
+            'name' => sprintf('%s %s',$session->getFirstName(),$session->getLastName()),
             'address' => $session->getEmail()
         ];
         $replyto = $this->getOptionalEmailArray('replyto');
