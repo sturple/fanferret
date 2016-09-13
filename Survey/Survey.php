@@ -162,7 +162,8 @@ class Survey implements SurveyInterface
         },$this->groups);
         $ctx = [
             'groups' => $gs,
-            'form' => $fv
+            'form' => $fv,
+            'survey' => $this->survey
         ];
         return new \FanFerret\QuestionBundle\Utility\Renderable(
             $this->getSurveyTemplate(),

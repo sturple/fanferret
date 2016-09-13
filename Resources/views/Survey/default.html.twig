@@ -12,6 +12,12 @@
 		{{form_start(form)}}
 		{{form_end(form)}}
 		<div class="container">
+			{% if survey.params.logo is defined %}
+			<img src="{{survey.params.logo|escape('html_attr')}}">
+			{% endif %}
+			{% if survey.params.title is defined %}
+			<h1>{{survey.params.title}}</h1>
+			{% endif %}
 			<div id="survey_carousel" class="carousel slide" data-ride="carousel" data-interval="false" data-keyboard="false">
 				<div class="carousel-inner" role="listbox">
 					{% for group in groups %}

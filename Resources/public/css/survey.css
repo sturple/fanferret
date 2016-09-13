@@ -4,15 +4,21 @@ body {
 	background: #0079D7;
 }
 
-#survey_carousel {
-	background: rgba(255,255,255,0.6);
-	margin: 50px;
-	padding: 50px;
-	overflow: hidden;
+.container {
+	background: white;
+	padding-bottom: 50px;
+	padding-left: 50px;
+	padding-right: 50px;
+	padding-top: 50px;
 }
 
-h2 {
-	margin-top: 0;
+.container > img {
+	display: block;
+	margin-left: auto;
+	margin-right: auto;
+}
+
+h1, h2 {
 	text-align: center;
 }
 
