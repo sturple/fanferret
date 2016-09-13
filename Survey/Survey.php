@@ -130,12 +130,20 @@ class Survey implements SurveyInterface
         }
     }
 
+    private function getTemplate($default, $obj = null)
+    {
+        $str = $this->getOptionalString('template',$obj);
+        return is_null($str) ? $default : $str;
+    }
+
     private function getGroupTemplate(\FanFerret\QuestionBundle\Entity\QuestionGroup $group)
     {
-        $params = $group->getParams();
-        if (!isset($params->template)) return 'FanFerretQuestionBundle:Group:default.html.twig';
-        if (!is_string($params->template)) throw new \InvalidArgumentException('Expected "template" to be a string');
-        return $params->template;
+        return $this->getTemplate('FanFerretQuestionBundle:Group:default.html.twig',$group->getParams());
+    }
+
+    private function getSurveyTemplate()
+    {
+        return $this->getTemplate('FanFerretQuestionBundle:Survey:default.html.twig');
     }
 
     public function render(\Symfony\Component\Form\FormView $fv)
@@ -157,7 +165,7 @@ class Survey implements SurveyInterface
             'form' => $fv
         ];
         return new \FanFerret\QuestionBundle\Utility\Renderable(
-            'FanFerretQuestionBundle:Survey:default.html.twig',
+            $this->getSurveyTemplate(),
             $ctx,
             $this->twig
         );
