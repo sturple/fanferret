@@ -14,15 +14,4 @@
 	{% for question in questions %}
 	{{question.render()|raw}}
 	{% endfor %}
-	{% set last_group = group.survey.questionGroups[group.survey.questionGroups|length - 1] %}
-	{% set last = group.id == last_group.id %}
-	<div class="fanferret-group-done {% if last %}fanferret-question-last{% else %}fanferret-question-next{% endif %}">
-		<button class="btn btn-primary btn-md {% if last %}finish-button{% endif %}">
-			{% if last %}
-			Finish
-			{% else %}
-			Next
-			{% endif %}
-		</button>
-	</div>
 </section>

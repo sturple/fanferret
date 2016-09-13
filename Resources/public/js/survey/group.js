@@ -19,20 +19,13 @@ define(['jquery'],function ($) {
 			is_active = true;
 			questions.forEach(function (q) {	q.active();	});
 		};
-		var is_valid = function () {
+		this.valid = function () {
 			return questions.reduce(function (prev, curr) {
 				if (!curr.valid()) return false;
 				return prev;
 			},true);
 		};
-		var button = document.find('#' + name + ' .fanferret-group-done > button');
-		this.update = function () {
-			var enabled = is_valid();
-			button.attr('disabled',!enabled);
-		};
-		button.click(function () {
-			if (is_valid()) survey.next();
-		});
-		this.update();
+		this.update = survey.update;
+		survey.update();
 	};
 });

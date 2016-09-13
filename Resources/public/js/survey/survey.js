@@ -18,24 +18,59 @@ var fanFerret = (function () {
 		var handle = retr.register();
 		handle(func);
 	};
+	var next = null;
+	var prev = null;
+	$(function () {
+		next = $('.fanferret-survey-button-next');
+		next.click(function () {	retr.next();	});
+		prev = $('.fanferret-survey-button-previous');
+		prev.click(function () {	retr.prev();	});
+	});
 	var groups = [];
 	var active = 0;
+	var is_last = function () {
+		var last = groups.length - 1;
+		return active === last;
+	};
+	var is_first = function () {
+		return active === 0;
+	};
+	var set_next_label = function (label) {
+		var node = document.createTextNode(label);
+		var e = next[0];
+		while (e.firstChild !== null) e.removeChild(e.firstChild);
+		e.appendChild(node);
+	};
+	var update_buttons = function () {
+		prev.attr('disabled',active === 0);
+		next.attr('disabled',(groups.length !== 0) && !groups[active].valid());
+		set_next_label(is_last() ? 'Submit' : 'Next');
+	};
 	retr.addGroup = function (group) {
 		groups.push(group);
 		if (groups.length === 1) group.active();
+		update_buttons();
 	};
 	retr.currentGroup = function () {
 		return groups[groups.length - 1];
 	};
+	var set_active = function () {
+		$('#survey_carousel').carousel(active);
+		groups[active].active();
+		update_buttons();
+	};
 	retr.next = function () {
-		var last = groups.length - 1;
-		if (active === last) {
+		if (is_last()) {
 			document.getElementsByTagName('form')[0].submit();
 			return;
 		}
 		++active;
-		$('#survey_carousel').carousel(active);
-		groups[active].active();
+		set_active();
+	};
+	retr.prev = function () {
+		if (is_first()) return;
+		--active;
+		set_active();
 	};
 	retr.addQuestion = function (dependency, name) {
 		var handle = retr.register();
@@ -46,6 +81,9 @@ var fanFerret = (function () {
 				g.addQuestion(q);
 			});
 		});
+	};
+	retr.update = function () {
+		update_buttons();
 	};
 	return retr;
 })();
