@@ -31,7 +31,7 @@ h1, h2 {
 	padding-left: 0;
 }
 
-.fanferret-checklist-option > div, .fanferret-rating-rating > div, .fanferret-polar-explain-input {
+.fanferret-checklist-option > div, .fanferret-rating-rating > div {
 	display: inline-block;
 }
 
