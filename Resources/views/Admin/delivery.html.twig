@@ -1,13 +1,10 @@
-<!doctype html>
-<html>
-	<head>
-	</head>
-	<body>
-		{% if session %}
-		<div>
-			Created session with token {{session.token}}.
-		</div>
-		{% endif %}
-		{{form(form)}}
-	</body>
-</html>
+{% extends 'FanFerretQuestionBundle:Admin:base.html.twig' %}
+
+{% block content %}
+{% if session %}
+<div>
+	Created session with token {{session.token}}.
+</div>
+{% endif %}
+{{form(form)}}
+{% endblock %}
