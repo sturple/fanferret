@@ -14,8 +14,8 @@ fgms_question_admin_delivery_group:
     path: /admin/{sluggroup}/{slug}/delivery
     defaults: { _controller: FanFerretQuestionBundle:Admin:delivery }
 fgms_question_admin_comment_cards:
-    path: /admin/{slug}/commentCards/{page}/{perpage}
+    path: /admin/{slug}/comment-cards/{page}/{perpage}
     defaults: { _controller: FanFerretQuestionBundle:Admin:commentCards, sluggroup: null, page: 1, perpage: 50 }
 fgms_question_admin_comment_cards_group:
-    path: /admin/{sluggroup}/{slug}/commentCards/{page}/{perpage}
+    path: /admin/{sluggroup}/{slug}/comment-cards/{page}/{perpage}
     defaults: { _controller: FanFerretQuestionBundle:Admin:commentCards, page: 1, perpage: 50 }
