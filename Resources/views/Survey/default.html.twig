@@ -28,7 +28,9 @@
 		</div>
 	</div>
 	<div class="fanferret-survey-buttons">
+		{% if groups|length > 1 %}
 		<button class="btn btn-primary btn-md fanferret-survey-button-previous" disabled>Previous</button>
+		{% endif %}
 		<button class="btn btn-primary btn-md fanferret-survey-button-next" disabled>Next</button>
 	</div>
 {% endblock %}
