@@ -55,12 +55,12 @@ class PolarQuestion extends Question
 		}
 		$ans = (object)[
 			'value' => $val,
-			'explain' => null
+			'explanation' => null
 		];
 		$explain_positive = $this->explain === 'positive';
 		$is_positive = $val !== $this->negative;
 		if ($explain_positive === $is_positive) {
-			$ans->explain = $data[$name . '_explain'];
+			$ans->explanation = $data[$name . '_explain'];
 		}
 		$retr->setValue(json_encode($ans));
 		return $retr;
