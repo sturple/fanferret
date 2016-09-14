@@ -6,12 +6,17 @@ class RatingQuestion extends Question
 {
     private $twig;
     private $explain;
+    private $explain_prompt;
 
     public function __construct(\FanFerret\QuestionBundle\Entity\Question $q, \FanFerret\QuestionBundle\Internationalization\TranslatorInterface $t, \Twig_Environment $twig)
     {
         parent::__construct($q,$t);
         $this->twig = $twig;
-        $this->explain = $this->getOptionalConditionObject(1,5,'explain');
+        $explain = $this->getOptionalObject('explain');
+        if (!is_null($explain)) {
+            $this->explain_prompt = $t->translate($this->getProperty('prompt',$explain));
+            $this->explain = $this->getOptionalConditionObject(1,5,null,$explain);
+        }
     }
 
     public function addToFormBuilder(\Symfony\Component\Form\FormBuilderInterface $fb)
@@ -64,8 +69,10 @@ class RatingQuestion extends Question
 
     public function render()
     {
-        $ctx = $this->getRenderContext();
-        $ctx['explain'] = $this->explain;
+        $ctx = $this->getRenderContext([
+            'explain' => $this->explain,
+            'prompt' => $this->explain_prompt
+        ]);
         return $this->twig->render('FanFerretQuestionBundle:Question:rating.html.twig',$ctx);
     }
 }
