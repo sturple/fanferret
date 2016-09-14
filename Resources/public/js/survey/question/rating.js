@@ -16,7 +16,9 @@ define(['jquery','survey/question/base','survey/condition'],function ($, base, c
 		};
 		var is_explain = function () {
 			if (!c) return false;
-			return c.check(get_value());
+			var v = get_value();
+			if (v === null) return false;
+			return c.check(v);
 		};
 		var get_explain = function () {
 			if (!is_explain()) return null;
