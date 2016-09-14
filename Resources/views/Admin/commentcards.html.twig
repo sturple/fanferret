@@ -6,13 +6,43 @@
 		<table>
 			<thead>
 				<tr>
-					<th>Checkout Date</th>
+					<th rowspan="2">Checkout</th>
+					<th rowspan="2">Seen</th>
+					<th rowspan="2">Completed</th>
+					<th colspan="2">First Notification</th>
+					<th colspan="2">Second Notification</th>
+				</tr>
+				<tr>
+					<th>Sent</th>
+					<th>Seen</th>
+					<th>Sent</th>
+					<th>Seen</th>
 				</tr>
 			</thead>
 			<tbody>
+				{% set fmt = 'M j, Y' %}
 				{% for session in page %}
 				<tr>
-					<td>{{session.checkout|date('D, d M Y H:i:s O')}}</td>
+					<td>{{session.checkout|date(fmt)}}</td>
+					<td>{% if session.seen %}{{session.seen|date(fmt)}}{% endif %}</td>
+					<td>{% if session.completed %}{{session.completed|date(fmt)}}{% endif %}</td>
+					{% set notifications = session.surveyNotifications %}
+					{% if notifications|length == 0 %}
+					<td></td>
+					<td></td>
+					<td></td>
+					<td></td>
+					{% else %}
+					<td>{{notifications[0].sent|date(fmt)}}</td>
+					<td>{% if notifications[0].seen %}{{notifications[0].seen|date(fmt)}}{% endif %}</td>
+					{% if notifications|length > 1 %}
+					<td>{{notifications[1].sent|date(fmt)}}</td>
+					<td>{% if notifications[1].seen %}{{notifications[1].seen|date(fmt)}}{% endif %}</td>
+					{% else %}
+					<td></td>
+					<td></td>
+					{% endif %}
+					{% endif %}
 				</tr>
 				{% endfor %}
 			<tbody>
