@@ -1,7 +1,7 @@
 @charset "UTF-8";
 
 body {
-	background: #0079D7;
+	background: #D3EBF7;
 }
 
 .container {
@@ -16,6 +16,12 @@ body {
 	display: block;
 	margin-left: auto;
 	margin-right: auto;
+}
+
+h1 {
+	color: #D50544;
+	font-size: 48px;
+	text-transform: uppercase;
 }
 
 h1, h2 {
