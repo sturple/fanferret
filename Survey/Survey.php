@@ -209,7 +209,8 @@ class Survey implements SurveyInterface
             $rs = array_merge($r->getConditionalFinish($qs),$rs);
         }
         $ctx = [
-            'conditional' => $rs
+            'conditional' => $rs,
+            'styles' => $this->getStyles()
         ];
         return new \FanFerret\QuestionBundle\Utility\Renderable(
             'FanFerretQuestionBundle:Survey:finish.html.twig',
