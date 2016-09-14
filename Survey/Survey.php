@@ -146,6 +146,23 @@ class Survey implements SurveyInterface
         return $this->getTemplate('FanFerretQuestionBundle:Survey:default.html.twig');
     }
 
+    private function getStyles()
+    {
+        $styles = $this->getOptionalObject('styles');
+        if (is_null($styles)) return [];
+        $retr = [];
+        foreach ($styles as $selector => $rules) {
+            if (!is_object($rules)) throw new \InvalidArgumentException('Expected rules to be object');
+            $arr = [];
+            foreach ($rules as $rule => $value) {
+                if (!is_string($value)) throw new \InvalidArgumentException('Expected rule to be string');
+                $arr[$rule] = $value;
+            }
+            $retr[$selector] = $arr;
+        }
+        return $retr;
+    }
+
     public function render(\Symfony\Component\Form\FormView $fv)
     {
         $gs = array_map(function ($group) {
@@ -163,7 +180,8 @@ class Survey implements SurveyInterface
         $ctx = [
             'groups' => $gs,
             'form' => $fv,
-            'survey' => $this->survey
+            'survey' => $this->survey,
+            'styles' => $this->getStyles()
         ];
         return new \FanFerret\QuestionBundle\Utility\Renderable(
             $this->getSurveyTemplate(),
