@@ -19,11 +19,14 @@ class RatingThresholdNotificationRule extends RatingThresholdRule
         if (!$this->check($questions)) return;
         $q = $this->getQuestion();
         $a = $this->getAnswer($questions);
+        $obj = json_decode($a->getValue());
         $ctx = [
             'question' => $q,
             'answer' => $a,
             'survey' => $this->getSurvey(),
-            'session' => $a->getSurveySession()
+            'session' => $a->getSurveySession(),
+            'rating' => $this->getInteger('rating',$obj),
+            'explanation' => $this->getOptionalString('explanation',$obj)
         ];
         $body = $this->twig->render('FanFerretQuestionBundle:Rule:ratingthresholdnotification.txt.twig',$ctx);
         $msg = $this->getMessage();

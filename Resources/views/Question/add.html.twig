@@ -1,3 +1,11 @@
 <script type="text/javascript">
-	fanFerret.addQuestion({{('survey/question/' ~ dependency)|json_encode()|raw}},{{name|json_encode()|raw}});
+	fanFerret.addQuestion(
+		{{('survey/question/' ~ dependency)|json_encode()|raw}},
+		{{name|json_encode()|raw}}
+		{% if arguments is defined %}
+		{% for arg in arguments %}
+		,{{arg|json_encode()|raw}}
+		{% endfor %}
+		{% endif %}
+	);
 </script>

@@ -9,15 +9,7 @@ abstract class RatingThresholdRule extends SingleQuestionRule
     public function __construct(\FanFerret\QuestionBundle\Entity\Rule $rule, $expected_type)
     {
         parent::__construct($rule,$expected_type);
-        $threshold = $this->getInteger('threshold');
-        if (($threshold < 1) || ($threshold > 5)) throw new \InvalidArgumentException(
-            sprintf(
-                'Threshold %d out of range',
-                $threshold
-            )
-        );
-        $condition = $this->getString('condition');
-        $this->condition = new \FanFerret\QuestionBundle\Utility\Condition($threshold,$condition);
+        $this->condition = $this->getConditionObject(1,5);
     }
 
     /**
@@ -35,8 +27,8 @@ abstract class RatingThresholdRule extends SingleQuestionRule
     protected function check(array $questions)
     {
         $ans = $this->getAnswer($questions);
-        $val = intval($ans->getValue());
-        return $this->condition->check($val);
+        $obj = json_decode($ans->getValue());
+        return $this->condition->check($this->getInteger('rating',$obj));
     }
 
     protected function getCondition()

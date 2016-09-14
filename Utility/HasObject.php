@@ -92,15 +92,43 @@ trait HasObject
         return $val;
     }
 
-    protected function getInteger($property, $obj = null)
+    protected function getOptionalInteger($property, $obj = null)
     {
-        $val = $this->getProperty($property,$obj);
+        $val = $this->getOptionalProperty($property,$obj);
+        if (is_null($val)) return null;
         if (!is_integer($val)) throw new \InvalidArgumentException(
             sprintf(
                 'Property "%s" not integer',
                 $property
             )
         );
+        return $val;
+    }
+
+    protected function getInteger($property, $obj = null)
+    {
+        $val = $this->getOptionalInteger($property,$obj);
+        if (is_null($val)) $this->noProperty($property);
+        return $val;
+    }
+
+    protected function getOptionalObject($property, $obj = null)
+    {
+        $val = $this->getOptionalProperty($property,$obj);
+        if (is_null($val)) return null;
+        if (!is_object($val)) throw new \InvalidArgumentException(
+            sprintf(
+                'Property "%s" not object',
+                $property
+            )
+        );
+        return $val;
+    }
+
+    protected function getObject($property, $obj = null)
+    {
+        $val = $this->getOptionalObject($property,$obj);
+        if (is_null($val)) $this->noProperty($property);
         return $val;
     }
 
@@ -204,6 +232,37 @@ trait HasObject
         foreach ($addrs as $addr) {
             if (isset($addr->name)) $retr[$addr->address] = $addr->name;
             else $retr[] = $addr->address;
+        }
+        return $retr;
+    }
+
+    protected function getOptionalConditionObject($min, $max, $property = null, $obj = null)
+    {
+        if (!is_null($property)) {
+            $obj = $this->getOptionalObject($property,$obj);
+            if (is_null($obj)) return null;
+            $t = $this->getInteger('threshold',$obj);
+        } else {
+            $t = $this->getOptionalInteger('threshold',$obj);
+            if (is_null($t)) return null;
+        }
+        if (($t < $min) || ($t > $max)) throw new \InvalidArgumentException(
+            sprintf(
+                'Expected "threshold" to be on the range [%d, %d] got %d',
+                $min,
+                $max,
+                $t
+            )
+        );
+        return new Condition($t,$this->getString('condition',$obj));
+    }
+
+    protected function getConditionObject($min, $max, $property = null, $obj = null)
+    {
+        $retr = $this->getOptionalConditionObject($min,$max,$property,$obj);
+        if (is_null($retr)) {
+            if (is_null($property)) throw new \InvalidArgumentException('Not a Condition object');
+            $this->noProperty($property);
         }
         return $retr;
     }

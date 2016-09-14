@@ -1,4 +1,4 @@
-<section id="{{name|escape('html_attr')}}" class="fanferret-question fanferret-rating row">
+<section id="{{name|escape('html_attr')}}" class="fanferret-question fanferret-rating row {% if explain %}fanferret-rating-explain{% endif %}">
 	<div class="fanferret-question-title col-md-7">{{title}}</div>
 	<div class="fanferret-question-input col-md-5">
 		<ul class="fanferret-rating-ratings">
@@ -13,6 +13,18 @@
 			</li>
 			{% endfor %}
 		</ul>
+		{% if explain %}
+		<div class="fanferret-rating-explain-input" style="display:none;">
+			Please explain <input type="text">
+		</div>
+		{% endif %}
 	</div>
 </section>
-{% include 'FanFerretQuestionBundle:Question:add.html.twig' with {'name': name, 'dependency': 'rating'} %}
+{% if explain %}
+{% set threshold = explain.threshold %}
+{% set condition = explain.condition %}
+{% else %}
+{% set threshold = null %}
+{% set condition = null %}
+{% endif %}
+{% include 'FanFerretQuestionBundle:Question:add.html.twig' with {'name': name, 'dependency': 'rating', 'arguments': [threshold, condition]} %}

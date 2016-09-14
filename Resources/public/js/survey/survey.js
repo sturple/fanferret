@@ -72,12 +72,15 @@ var fanFerret = (function () {
 		--active;
 		set_active();
 	};
-	retr.addQuestion = function (dependency, name) {
+	retr.addQuestion = function (dependency) {
+		var args = Array.apply(null,arguments);
+		args.splice(0,1);
 		var handle = retr.register();
 		require([dependency],function (question) {
 			handle(function () {
 				var g = retr.currentGroup();
-				var q = new question(name,g,document);
+				args.push(g,document);
+				var q = new (function () {	question.apply(this,args);	})();
 				g.addQuestion(q);
 			});
 		});
