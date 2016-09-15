@@ -1,4 +1,4 @@
-define(['jquery','survey/question/base','survey/condition'],function ($, base, condition) {
+define(['jquery','survey/question/base','survey/condition','survey/radio'],function ($, base, condition, radio) {
 	return function (name, threshold, operator, group, document) {
 		base.call(this,name,group,document);
 		document = $(document);
@@ -8,9 +8,9 @@ define(['jquery','survey/question/base','survey/condition'],function ($, base, c
 		var explain_div = null;
 		var c = null;
 		var div = document.find('#' + name);
-		var radios = div.find('input[name="' + name + '_group"]');
+		var radios = new radio(div.find('a'));
 		var get_value = function () {
-			var val = radios.filter(':checked').val();
+			var val = radios.getValue();
 			if (!val) return null;
 			return parseInt(val);
 		};
@@ -40,7 +40,11 @@ define(['jquery','survey/question/base','survey/condition'],function ($, base, c
 			c = new condition(threshold,operator);
 		}
 		update();
-		div.find('input[type="radio"]').change(update);
+		var prev = radios.change;
+		radios.change = function () {
+			prev();
+			update();
+		};
 		if (explain) explain.on('input change',update);
 		var valid = this.valid;
 		this.valid = function () {

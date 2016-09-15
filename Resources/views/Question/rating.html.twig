@@ -5,12 +5,7 @@
 			<ul class="fanferret-rating-ratings">
 				{% for i in 1..5 %}
 				<li class="fanferret-rating-rating">
-					<div class="fenferret-rating-rating-radio">
-						<input type="radio" name="{{name|escape('html_attr')}}_group" value="{{6-i|escape('html_attr')}}">
-					</div>
-					<div class="fanferret-rating-rating-label">
-						{{6-i}}
-					</div>
+					<a href="javascript:void(0);" data-value="{{6-i|escape('html_attr')}}">{{6-i}}</a>
 				</li>
 				{% endfor %}
 			</ul>

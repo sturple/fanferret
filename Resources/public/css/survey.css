@@ -37,12 +37,33 @@ h1, h2 {
 	padding-left: 0;
 }
 
-.fanferret-checklist-option > div, .fanferret-rating-rating > div {
+.fanferret-checklist-option > div {
 	display: inline-block;
 }
 
 .fanferret-rating-rating {
 	display: inline-block;
+}
+
+.fanferret-rating-rating > a {
+	background: #337AB7;
+	border: 0px black solid;
+	border-radius: 15px;
+	color: white;
+	display: block;
+	height: 30px;
+	line-height: 30px;
+	text-align: center;
+	text-decoration: none;
+	width: 30px;
+}
+
+.fanferret-rating-rating > a:hover {
+	background: #286090;
+}
+
+.fanferret-rating-rating > a:active, .fanferret-rating-rating > a.selected {
+	background: #275F8F;
 }
 
 .fanferret-question-title {
