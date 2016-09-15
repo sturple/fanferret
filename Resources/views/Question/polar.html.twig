@@ -2,12 +2,12 @@
 	<div class="row">
 		<div class="fanferret-question-title col-md-7">{{title}}</div>
 		<div class="fanferret-question-input col-md-5">
-			<input type="checkbox">
+			<input class="form-check" type="checkbox">
 		</div>
 	</div>
 	{% if explain %}
 	<div class="fanferret-polar-explain-input" style="display:none;">
-		{{prompt}} <textarea></textarea>
+		{{prompt}} <textarea class="form-control"></textarea>
 	</div>
 	{% endif %}
 </section>

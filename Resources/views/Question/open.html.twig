@@ -1,11 +1,11 @@
 <section class="fanferret-open fanferret-question {% if testimonial %}fanferret-testimonial{% endif %}" id="{{name|escape('html_attr')}}">
 	<div class="fanferret-question-title">{{title}}</div>
 	<div class="fanferret-question-input">
-		<textarea></textarea>
+		<textarea class="form-control"></textarea>
 	</div>
 	{% if testimonial %}
 	<div class="fanferret-question-testimonial">
-		<input type="checkbox">
+		<input type="checkbox" class="form-check">
 	</div>
 	{% endif %}
 </section>
