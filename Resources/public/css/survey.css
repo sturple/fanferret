@@ -41,8 +41,27 @@ h1, h2 {
 	display: inline-block;
 }
 
+.fanferret-rating-explanations {
+	overflow: hidden;
+}
+
+.fanferret-rating-explanation {
+	float: left;
+	width: 33%;
+}
+
+.fanferret-rating-explanation:nth-child(2) {
+	text-align: center;
+}
+
+.fanferret-rating-explanation:nth-child(3) {
+	text-align: right;
+}
+
 .fanferret-rating-rating {
-	display: inline-block;
+	box-sizing: border-box;
+	float: left;
+	width: 20%;
 }
 
 .fanferret-rating-rating > a {
@@ -53,6 +72,8 @@ h1, h2 {
 	display: block;
 	height: 30px;
 	line-height: 30px;
+	margin-left: auto;
+	margin-right: auto;
 	text-align: center;
 	text-decoration: none;
 	width: 30px;
@@ -64,6 +85,10 @@ h1, h2 {
 
 .fanferret-rating-rating > a:active, .fanferret-rating-rating > a.selected {
 	background: #275F8F;
+}
+
+.fanferret-rating-ratings {
+	overflow: hidden;
 }
 
 .fanferret-question-title {

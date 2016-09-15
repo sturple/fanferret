@@ -1,7 +1,20 @@
 <section id="{{name|escape('html_attr')}}" class="fanferret-question fanferret-rating {% if explain %}fanferret-rating-explain{% endif %}">
 	<div class="row">
+		<div class="col-md-7"></div>
+		<div class="col-md-5 fanferret-rating-explanations hidden-sm hidden-xs">
+			<div class="fanferret-rating-explanation"><span class="fa fa-smile-o"></span> Excellent</div>
+			<div class="fanferret-rating-explanation"><span class="fa fa-meh-o"></span> Average</div>
+			<div class="fanferret-rating-explanation"><span class="fa fa-frown-o"></span> Poor</div>
+		</div>
+	</div>
+	<div class="row">
 		<div class="fanferret-question-title col-md-7">{{title}}</div>
 		<div class="fanferret-question-input col-md-5">
+			<div class="fanferret-rating-explanations hidden-md hidden-lg">
+				<div class="fanferret-rating-explanation"><span class="fa fa-smile-o"></span> Excellent</div>
+				<div class="fanferret-rating-explanation"><span class="fa fa-meh-o"></span> Average</div>
+				<div class="fanferret-rating-explanation"><span class="fa fa-frown-o"></span> Poor</div>
+			</div>
 			<ul class="fanferret-rating-ratings">
 				{% for i in 1..5 %}
 				<li class="fanferret-rating-rating">
