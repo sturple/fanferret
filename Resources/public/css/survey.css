@@ -83,4 +83,5 @@ section {
 button[disabled] {
 	background: #CCC;
 	border-color: #CCC;
+	cursor: default;
 }
