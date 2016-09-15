@@ -27,8 +27,8 @@ define(['jquery','survey/question/base','survey/condition'],function ($, base, c
 		var update = function () {
 			hidden.val(get_value());
 			if (explain_hidden) {
-				if (is_explain()) explain_div.show();
-				else explain_div.hide();
+				if (is_explain()) explain_div.slideDown();
+				else explain_div.slideUp();
 				explain_hidden.val(get_explain());
 			}
 			group.update();

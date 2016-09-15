@@ -35,8 +35,8 @@ define(['jquery','survey/question/base'],function ($, base) {
 			hidden.val(value ? 'true' : '');
 			check.prop('checked',value);
 			if (explain) {
-				if (is_explain()) explain_div.show();
-				else explain_div.hide();
+				if (is_explain()) explain_div.slideDown();
+				else explain_div.slideUp();
 			}
 			group.update();
 		};
