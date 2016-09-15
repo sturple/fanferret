@@ -80,7 +80,7 @@ section {
 	display: block;
 }
 
-button[disabled] {
+button[disabled], .fanferret-survey-buttons button[disabled]:hover {
 	background: #CCC;
 	border-color: #CCC;
 	cursor: default;
