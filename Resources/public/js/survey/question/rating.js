@@ -41,7 +41,7 @@ define(['jquery','survey/question/base','survey/condition'],function ($, base, c
 		}
 		update();
 		div.find('input[type="radio"]').change(update);
-		if (explain) explain.change(update);
+		if (explain) explain.on('input change',update);
 		var valid = this.valid;
 		this.valid = function () {
 			if (get_value() === null) return false;

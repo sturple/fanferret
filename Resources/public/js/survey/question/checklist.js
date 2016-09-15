@@ -27,9 +27,10 @@ define(['jquery','survey/question/base'],function ($, base) {
 			other = div.find('input[type="text"]');
 			other_div = div.find('.fanferret-checklist-option-other-text');
 			other_hidden = document.find('#form_' + name + '_other');
+			other.on('input change',update);
 		}
 		update();
-		div.find('input').change(update);
+		div.find('input[type="radio"]').change(update);
 		var valid = this.valid;
 		this.valid = function () {
 			var val = radios.filter(':checked').val();

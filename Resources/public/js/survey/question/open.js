@@ -12,7 +12,7 @@ define(['jquery','survey/question/base'],function ($, base) {
 			if (!testimonial) return;
 			testimonial_hidden.val(testimonial.prop('checked') ? 'true' : '');
 		};
-		response.change(update);
+		response.on('input change',update);
 		if (div.hasClass('fanferret-testimonial')) {
 			testimonial = div.find('input[type="checkbox"]');
 			testimonial.change(update);

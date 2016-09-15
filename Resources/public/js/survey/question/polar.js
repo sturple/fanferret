@@ -23,7 +23,7 @@ define(['jquery','survey/question/base'],function ($, base) {
 				group.update();
 			};
 			update();
-			explain.change(update);
+			explain.on('input change',update);
 			var valid = this.valid;
 			this.valid = function () {
 				if (!is_explain()) return valid();
