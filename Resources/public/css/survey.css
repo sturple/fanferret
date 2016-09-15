@@ -54,3 +54,7 @@ h1, h2 {
 section {
 	margin-bottom: 10px;
 }
+
+.fanferret-rating-explain-input > textarea, .fanferret-polar-explain-input > textarea {
+	display: block;
+}

@@ -1,24 +1,26 @@
-<section id="{{name|escape('html_attr')}}" class="fanferret-question fanferret-rating row {% if explain %}fanferret-rating-explain{% endif %}">
-	<div class="fanferret-question-title col-md-7">{{title}}</div>
-	<div class="fanferret-question-input col-md-5">
-		<ul class="fanferret-rating-ratings">
-			{% for i in 1..5 %}
-			<li class="fanferret-rating-rating">
-				<div class="fenferret-rating-rating-radio">
-					<input type="radio" name="{{name|escape('html_attr')}}_group" value="{{6-i|escape('html_attr')}}">
-				</div>
-				<div class="fanferret-rating-rating-label">
-					{{6-i}}
-				</div>
-			</li>
-			{% endfor %}
-		</ul>
-		{% if explain %}
-		<div class="fanferret-rating-explain-input" style="display:none;">
-			{{prompt}} <input type="text">
+<section id="{{name|escape('html_attr')}}" class="fanferret-question fanferret-rating {% if explain %}fanferret-rating-explain{% endif %}">
+	<div class="row">
+		<div class="fanferret-question-title col-md-7">{{title}}</div>
+		<div class="fanferret-question-input col-md-5">
+			<ul class="fanferret-rating-ratings">
+				{% for i in 1..5 %}
+				<li class="fanferret-rating-rating">
+					<div class="fenferret-rating-rating-radio">
+						<input type="radio" name="{{name|escape('html_attr')}}_group" value="{{6-i|escape('html_attr')}}">
+					</div>
+					<div class="fanferret-rating-rating-label">
+						{{6-i}}
+					</div>
+				</li>
+				{% endfor %}
+			</ul>
 		</div>
-		{% endif %}
 	</div>
+	{% if explain %}
+	<div class="fanferret-rating-explain-input" style="display:none;">
+		{{prompt}} <textarea></textarea>
+	</div>
+	{% endif %}
 </section>
 {% if explain %}
 {% set threshold = explain.threshold %}

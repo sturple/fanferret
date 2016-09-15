@@ -35,7 +35,7 @@ define(['jquery','survey/question/base','survey/condition'],function ($, base, c
 		};
 		if ((threshold !== null) && (operator !== null)) {
 			explain_hidden = document.find('#form_' + name + '_explain');
-			explain = div.find('input[type="text"]');
+			explain = div.find('textarea');
 			explain_div = div.find('.fanferret-rating-explain-input');
 			c = new condition(threshold,operator);
 		}

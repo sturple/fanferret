@@ -16,7 +16,7 @@ define(['jquery','survey/question/base'],function ($, base) {
 		};
 		if (root.hasClass('fanferret-polar-explain')) {
 			explain_div = root.find('.fanferret-polar-explain-input');
-			explain = root.find('input[type="text"]');
+			explain = root.find('textarea');
 			explain_hidden = document.find('#form_' + name + '_explain');
 			var update = function () {
 				explain_hidden.val(explain.val());
