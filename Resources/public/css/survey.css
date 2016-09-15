@@ -58,3 +58,8 @@ section {
 .fanferret-rating-explain-input > textarea, .fanferret-polar-explain-input > textarea {
 	display: block;
 }
+
+button[disabled] {
+	background: #CCC;
+	border-color: #CCC;
+}
