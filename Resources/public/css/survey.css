@@ -85,3 +85,7 @@ button[disabled], .fanferret-survey-buttons button[disabled]:hover {
 	border-color: #CCC;
 	cursor: default;
 }
+
+textarea {
+	max-width: 100%;
+}
