@@ -6,5 +6,31 @@
 	Created session with token {{session.token}}.
 </div>
 {% endif %}
-{{form(form)}}
+{{form_start(form)}}
+	{{form_errors(form)}}
+	<div class="row">
+		<label for="{{form.first_name.vars.id|escape('html_attr')}}" class="col-md-4">First Name</label>
+		<div class="col-md-8">{{form_widget(form.first_name,{'attr': {'class': 'form-control'}})}}</div>
+	</div>
+	<div class="row">
+		<label for="{{form.last_name.vars.id|escape('html_attr')}}" class="col-md-4">Last Name</label>
+		<div class="col-md-8">{{form_widget(form.last_name,{'attr': {'class': 'form-control'}})}}</div>
+	</div>
+	<div class="row">
+		<label for="{{form.email.vars.id|escape('html_attr')}}" class="col-md-4">Email</label>
+		<div class="col-md-8">{{form_widget(form.email,{'attr': {'class': 'form-control'}})}}</div>
+	</div>
+	<div class="row">
+		<label for="{{form.room.vars.id|escape('html_attr')}}" class="col-md-4">Room Number</label>
+		<div class="col-md-8">{{form_widget(form.room,{'attr': {'class': 'form-control'}})}}</div>
+	</div>
+	<div class="row">
+		<label for="{{form.checkout.vars.id|escape('html_attr')}}" class="col-md-4">Checkout Date</label>
+		<div class="col-md-8">{{form_widget(form.checkout,{'attr': {'class': 'form-control'}})}}</div>
+	</div>
+	<div class="row">
+		<div class="col-md-4"></div>
+		<div class="col-md-8">{{form_widget(form.submit,{'attr': {'class': 'form-control'}})}}</div>
+	</div>
+{{form_end(form)}}
 {% endblock %}

@@ -11,7 +11,7 @@ class AdminController extends \Symfony\Bundle\FrameworkBundle\Controller\Control
             ->add('last_name',\Symfony\Component\Form\Extension\Core\Type\TextType::class)
             ->add('email',\Symfony\Component\Form\Extension\Core\Type\TextType::class)
             ->add('room',\Symfony\Component\Form\Extension\Core\Type\TextType::class)
-            ->add('checkout',\Symfony\Component\Form\Extension\Core\Type\DateTimeType::class)
+            ->add('checkout',\Symfony\Component\Form\Extension\Core\Type\DateType::class,['widget' => 'single_text'])
             ->add('submit',\Symfony\Component\Form\Extension\Core\Type\SubmitType::class)
             ->getForm();
     }
