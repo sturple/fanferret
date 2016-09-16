@@ -1,6 +1,31 @@
 {% extends 'FanFerretQuestionBundle:Admin:base.html.twig' %}
 
 {% block content %}
+<div class="fanferret-comment-cards-result-count">
+	{{count}} Comment Cards
+</div>
+{% block pagination %}
+<div class="fanferret-comment-cards-pagination">
+	{% set args = {'slug': survey.slug, 'perpage': per_page} %}
+	{% if survey.slugGroup != null %}
+	{% set route = 'fgms_question_admin_comment_cards_group' %}
+	{% set args = args|merge({'sluggroup': survey.slugGroup}) %}
+	{% else %}
+	{% set route = 'fgms_question_admin_comment_cards' %}
+	{% endif %}
+	{% if page != 0 %}
+	<a href="{{path(route,args|merge({'page': page}))|escape('html_attr')}}">
+		<i class="fa fa-caret-left"></i>
+	</a>
+	{% endif %}
+	Page {{page + 1}} of {{pages}}
+	{% if page + 1 != pages %}
+	<a href="{{path(route,args|merge({'page': page + 2}))|escape('html_attr')}}">
+		<i class="fa fa-caret-right"></i>
+	</a>
+	{% endif %}
+</div>
+{% endblock %}
 <table>
 	<thead>
 		<tr>
@@ -19,7 +44,7 @@
 	</thead>
 	<tbody>
 		{% set fmt = 'M j, Y' %}
-		{% for session in page %}
+		{% for session in sessions %}
 		<tr>
 			<td>{{session.checkout|date(fmt)}}</td>
 			<td>{% if session.seen %}{{session.seen|date(fmt)}}{% endif %}</td>
@@ -45,4 +70,5 @@
 		{% endfor %}
 	<tbody>
 </table>
+{{block('pagination')}}
 {% endblock %}

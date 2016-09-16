@@ -92,9 +92,16 @@ class AdminController extends \Symfony\Bundle\FrameworkBundle\Controller\Control
         );
         $doctrine = $this->getDoctrine();
         $repo = $doctrine->getRepository(\FanFerret\QuestionBundle\Entity\SurveySession::class);
-        $page = $repo->getPage($survey,$page,$perpage);
+        $sessions = $repo->getPage($survey,$page,$perpage);
+        $results = count($survey->getSurveySessions());
+        $pages = intval($results / $perpage);
+        if (($results === 0) || (($results % $perpage) !== 0)) ++$pages;
         return $this->render('FanFerretQuestionBundle:Admin:commentcards.html.twig',[
             'page' => $page,
+            'per_page' => $perpage,
+            'count' => $results,
+            'pages' => $pages,
+            'sessions' => $sessions,
             'survey' => $survey
         ]);
     }
