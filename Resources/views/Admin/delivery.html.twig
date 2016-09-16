@@ -1,9 +1,12 @@
 {% extends 'FanFerretQuestionBundle:Admin:base.html.twig' %}
 
 {% block content %}
+<h1>Digital Comment Card Delivery</h1>
 {% if session %}
-<div>
-	Created session with token {{session.token}}.
+<div class="fanferret-delivery-scheduled">
+	{% set fmt = 'F j, Y' %}
+	{{session.firstName}} {{session.lastName}} at <a href="mailto:{{session.email|escape('html_attr')}}">{{session.email}}</a>
+	will receive the digital comment card no earlier than {{session.checkout|date_modify('+3 days')|date(fmt)}}.
 </div>
 {% endif %}
 {{form_start(form)}}

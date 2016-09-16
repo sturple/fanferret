@@ -3,6 +3,7 @@
 body {
 	background: #FF8410;
 	color: white;
+	font-size: 16px;
 }
 
 input, button, textarea, select {
@@ -47,4 +48,37 @@ table tbody tr:nth-child(odd) {
 
 h1 {
 	text-align: center;
+}
+
+.fanferret-delivery-scheduled {
+	font-weight: bold;
+	margin-bottom: 20px;
+}
+
+.fanferret-delivery-scheduled a {
+	color: inherit;
+	text-decoration: none;
+}
+
+form, .fanferret-delivery-scheduled {
+	background: #FFB570;
+	padding: 20px;
+	text-align: center;
+}
+
+form > .row {
+	margin-top: 10px;
+}
+
+form > .row:first-child {
+	margin-top: 0;
+}
+
+form label {
+	padding-top: 5px;
+	text-align: right;
+}
+
+form label:after {
+	content: ":";
 }
