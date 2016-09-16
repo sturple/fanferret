@@ -32,7 +32,7 @@ h1, h2 {
 	min-height: 300px;
 }
 
-.fanferret-checklist-options, .fanferret-rating-ratings {
+.fanferret-checklist-options, .fanferret-rating-ratings, .fanferret-polar-options {
 	list-style-type: none;
 	margin-bottom: 0;
 	padding-left: 0;
@@ -59,13 +59,13 @@ h1, h2 {
 	text-align: right;
 }
 
-.fanferret-rating-rating {
+.fanferret-rating-rating, .fanferret-polar-option {
 	box-sizing: border-box;
 	float: left;
 	width: 20%;
 }
 
-.fanferret-rating-rating > a {
+.fanferret-rating-rating > a, .fanferret-polar-option > a {
 	background: #337AB7;
 	border: 0px black solid;
 	border-radius: 15px;
@@ -80,15 +80,16 @@ h1, h2 {
 	width: 30px;
 }
 
-.fanferret-rating-rating > a:hover {
+.fanferret-rating-rating > a:hover, .fanferret-polar-option > a:hover {
 	background: #286090;
 }
 
-.fanferret-rating-rating > a:active, .fanferret-rating-rating > a.selected {
+.fanferret-rating-rating > a:active, .fanferret-rating-rating > a.selected,
+.fanferret-polar-option > a:active, .fanferret-polar-option > a.selected {
 	background: #275F8F;
 }
 
-.fanferret-rating-ratings {
+.fanferret-rating-ratings, .fanferret-polar-options {
 	overflow: hidden;
 }
 

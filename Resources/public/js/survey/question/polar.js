@@ -1,8 +1,9 @@
-define(['jquery','survey/question/base'],function ($, base) {
+define(['jquery','survey/question/base','survey/radio'],function ($, base, radio) {
 	return function (name, group, document) {
 		base.call(this,name,group,document);
 		document = $(document);
 		var root = document.find('#' + name);
+		var radios = new radio(root.find('a'));
 		var check = root.find('input[type="checkbox"]');
 		var hidden = document.find('#form_' + name);
 		var negative = root.hasClass('fanferret-polar-negative');
@@ -10,39 +11,44 @@ define(['jquery','survey/question/base'],function ($, base) {
 		var explain = null;
 		var explain_hidden = null;
 		var explain_negative = root.hasClass('fanferret-polar-explain-negative');
+		var get_value = function () {
+			var val = radios.getValue();
+			if (val === null) return null;
+			return val === 'true';
+		};
 		var is_explain = function () {
-			var is_negative = check[0].checked === negative;
+			if (!explain) return false;
+			var val = get_value();
+			if (val === null) return false;
+			var is_negative = val === negative;
 			return is_negative === explain_negative;
+		};
+		var update = function () {
+			if (explain) {
+				if (is_explain()) explain_div.slideDown();
+				else explain_div.slideUp();
+				explain_hidden.val(explain.val().trim());
+			}
+			hidden.val((radios.getValue() === 'true') ? 'true' : '');
+			group.update();
+		};
+		var valid = this.valid;
+		this.valid = function () {
+			if (get_value() === null) return false;
+			if (is_explain() && (explain.val().trim() === '')) return false;
+			return valid();
 		};
 		if (root.hasClass('fanferret-polar-explain')) {
 			explain_div = root.find('.fanferret-polar-explain-input');
 			explain = root.find('textarea');
 			explain_hidden = document.find('#form_' + name + '_explain');
-			var update = function () {
-				explain_hidden.val(explain.val());
-				group.update();
-			};
-			update();
 			explain.on('input change',update);
-			var valid = this.valid;
-			this.valid = function () {
-				if (!is_explain()) return valid();
-				if (explain.val().trim() === '') return false;
-				return valid();
-			};
 		}
-		var set = function (value) {
-			hidden.val(value ? 'true' : '');
-			check.prop('checked',value);
-			if (explain) {
-				if (is_explain()) explain_div.slideDown();
-				else explain_div.slideUp();
-			}
-			group.update();
+		var change = radios.change;
+		radios.change = function () {
+			change();
+			update();
 		};
-		set(check.prop('checked'));
-		check.change(function () {
-			set(this.checked);
-		});
+		update();
 	};
 });

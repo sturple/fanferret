@@ -2,7 +2,14 @@
 	<div class="row">
 		<div class="fanferret-question-title col-md-7">{{title}}</div>
 		<div class="fanferret-question-input col-md-5">
-			<input class="form-check" type="checkbox">
+			<ul class="fanferret-polar-options">
+				<li class="fanferret-polar-option">
+					<a href="javascript:void(0);" data-value="true">Yes</a>
+				</li>
+				<li class="fanferret-polar-option">
+					<a href="javascript:void(0);" data-value="false">No</a>
+				</li>
+			</ul>
 		</div>
 	</div>
 	{% if explain %}
