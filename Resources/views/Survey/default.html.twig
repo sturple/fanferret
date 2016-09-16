@@ -19,9 +19,14 @@
 	<h1>{{survey.params.title}}</h1>
 	{% endif %}
 	<div id="survey-carousel" class="carousel slide" data-ride="carousel" data-interval="false" data-keyboard="false">
+		<ol class="carousel-indicators">
+			{% for num in 0..groups|length - 1 %}
+			<li data-target="#survey-carousel" data-slide-to="{{num|escape('html_attr')}}" {% if num == 0 %}class="active"{% endif %}></li>
+			{% endfor %}
+		</ol>
 		<div class="carousel-inner" role="listbox">
 			{% for group in groups %}
-			<div class="carousel-item item {% if loop.index0 == 0 %}active{% endif %}">
+			<div class="carousel-item item {% if loop.index0 == 0 %}active{% endif %}" data-index="{{loop.index0|escape('html_attr')}}">
 				{{group.render()|raw}}
 			</div>
 			{% endfor %}

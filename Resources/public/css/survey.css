@@ -114,3 +114,18 @@ button[disabled], .fanferret-survey-buttons button[disabled]:hover {
 textarea {
 	max-width: 100%;
 }
+
+#survey-carousel > .carousel-indicators {
+	margin-left: 0;
+	margin-right: 0;
+	position: static;
+	width: auto;
+}
+
+#survey-carousel > .carousel-indicators > li {
+	border-color: black;
+}
+
+#survey-carousel > .carousel-indicators > li.active {
+	background-color: black;
+}

@@ -88,6 +88,19 @@ var fanFerret = (function () {
 	retr.update = function () {
 		update_buttons();
 	};
+	$(function () {
+		$('#survey-carousel').on('slide.bs.carousel',function (e) {
+			var curr = parseInt($(e.relatedTarget).attr('data-index'));
+			var retr = groups.slice(0,curr).reduce(function (prev, curr) {
+				if (!curr.valid()) return false;
+				return prev;
+			},true);
+			if (!retr) return false;
+			active = curr;
+			update_buttons();
+			return true;
+		});
+	});
 	return retr;
 })();
 //	This just prevents anything from happening
