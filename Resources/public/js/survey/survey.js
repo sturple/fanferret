@@ -55,7 +55,7 @@ var fanFerret = (function () {
 		return groups[groups.length - 1];
 	};
 	var set_active = function () {
-		$('#survey_carousel').carousel(active);
+		$('#survey-carousel').carousel(active);
 		groups[active].active();
 		update_buttons();
 	};

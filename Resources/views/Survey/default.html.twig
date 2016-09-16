@@ -18,7 +18,7 @@
 	{% if survey.params.title is defined %}
 	<h1>{{survey.params.title}}</h1>
 	{% endif %}
-	<div id="survey_carousel" class="carousel slide" data-ride="carousel" data-interval="false" data-keyboard="false">
+	<div id="survey-carousel" class="carousel slide" data-ride="carousel" data-interval="false" data-keyboard="false">
 		<div class="carousel-inner" role="listbox">
 			{% for group in groups %}
 			<div class="carousel-item item {% if loop.index0 == 0 %}active{% endif %}">
