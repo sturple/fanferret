@@ -14,9 +14,13 @@ table {
 	margin-right: auto;
 }
 
-table td, table th {
+table td, table th, .table > thead:first-child > tr:first-child > th {
 	border: 1px white solid;
 	padding: 7px;
+}
+
+.table > thead > tr > th {
+	vertical-align: middle;
 }
 
 table th {
