@@ -44,3 +44,7 @@ table tbody tr:nth-child(odd) {
 	color: inherit;
 	text-decoration: none;
 }
+
+h1 {
+	text-align: center;
+}
