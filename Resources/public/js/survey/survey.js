@@ -89,7 +89,8 @@ var fanFerret = (function () {
 		update_buttons();
 	};
 	$(function () {
-		$('#survey-carousel').on('slide.bs.carousel',function (e) {
+		var carousel = $('#survey-carousel');
+		carousel.on('slide.bs.carousel',function (e) {
 			var curr = parseInt($(e.relatedTarget).attr('data-index'));
 			var retr = groups.slice(0,curr).reduce(function (prev, curr) {
 				if (!curr.valid()) return false;
@@ -100,6 +101,22 @@ var fanFerret = (function () {
 			update_buttons();
 			return true;
 		});
+		var itemsj = carousel.find('> .carousel-inner > .carousel-item');
+		var items = itemsj.toArray().map(function (curr) {	return $(curr);	});
+		var set_height = function () {
+			var height = items.reduce(function (prev, curr) {
+				var height = curr.height();
+				if (height > prev) return height;
+				return prev;
+			},0);
+			itemsj.height(height);
+		};
+		var update = retr.update;
+		retr.update = function () {
+			set_height();
+			update();
+		};
+		set_height();
 	});
 	return retr;
 })();
