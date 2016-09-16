@@ -100,11 +100,19 @@ h1, h2 {
 }
 
 section {
-	margin-bottom: 10px;
+	margin-top: 10px;
+}
+
+section:first-child {
+	margin-top: 0;
 }
 
 .fanferret-rating-explain-input > textarea, .fanferret-polar-explain-input > textarea {
 	display: block;
+}
+
+.fanferret-survey-buttons {
+	margin-top: 10px;
 }
 
 button[disabled], .fanferret-survey-buttons button[disabled]:hover {
