@@ -4,12 +4,12 @@
 		{% block head %}
 		<meta charset="UTF-8">
 		<title>{% block title %}{% endblock %}</title>
-		<link rel="stylesheet" type="text/css" href="/bundles/fanferretquestion/css/bootstrap.min.css">
-		<link rel="stylesheet" type="text/css" href="/bundles/fanferretquestion/css/survey.css">
-		<link rel="stylesheet" type="text/css" href="/bundles/fanferretquestion/css/font-awesome.min.css">
-		<script type="text/javascript" src="/bundles/fanferretquestion/js/jquery-3.1.0.min.js"></script>
-		<script type="text/javascript" src="/bundles/fanferretquestion/js/bootstrap.min.js"></script>
-		<script type="text/javascript" src="/bundles/fanferretquestion/js/require.js" data-main="/bundles/fanferretquestion/js/app.js"></script>
+		<link rel="stylesheet" type="text/css" href="{{asset('bundles/fanferretquestion/css/bootstrap.min.css')|escape('html_attr')}}">
+		<link rel="stylesheet" type="text/css" href="{{asset('bundles/fanferretquestion/css/survey.css')|escape('html_attr')}}">
+		<link rel="stylesheet" type="text/css" href="{{asset('bundles/fanferretquestion/css/font-awesome.min.css')|escape('html_attr')}}">
+		<script type="text/javascript" src="{{asset('bundles/fanferretquestion/js/jquery-3.1.0.min.js')|escape('html_attr')}}"></script>
+		<script type="text/javascript" src="{{asset('bundles/fanferretquestion/js/bootstrap.min.js')|escape('html_attr')}}"></script>
+		<script type="text/javascript" src="{{asset('bundles/fanferretquestion/js/require.js')|escape('html_attr')}}" data-main="{{asset('bundles/fanferretquestion/js/app.js')|escape('html_attr')}}"></script>
 		<style type="text/css">
 			{% for selector, rules in styles %}
 			{{selector|raw}} {
