@@ -13,12 +13,12 @@ define(['jquery','survey/question/base'],function ($, base) {
 			if (selected === 'other') {
 				hidden.val(null);
 				other_hidden.val(other.val());
-				other_div.show();
+				other_div.slideDown();
 			} else {
 				hidden.val(selected);
 				if (other) {
 					other_hidden.val(null);
-					other_div.hide();
+					other_div.slideUp();
 				}
 			}
 			group.update();

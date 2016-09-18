@@ -42,6 +42,10 @@ h1, h2 {
 	display: inline-block;
 }
 
+.fanferret-checklist-option > .fanferret-checklist-option-other-text {
+	display: block;
+}
+
 .fanferret-rating-explanations {
 	overflow: hidden;
 }
