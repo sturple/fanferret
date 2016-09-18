@@ -145,3 +145,9 @@ textarea {
 #survey-carousel > .carousel-indicators > li.active {
 	background-color: black;
 }
+
+.fanferret-valid .fanferret-question-title:after {
+	color: green;
+	content: "\002713";
+	margin-left: 5px;
+}

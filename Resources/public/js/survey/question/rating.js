@@ -46,11 +46,10 @@ define(['jquery','survey/question/base','survey/condition','survey/radio'],funct
 			update();
 		};
 		if (explain) explain.on('input change',update);
-		var valid = this.valid;
-		this.valid = function () {
+		this.addValid(function () {
 			if (get_value() === null) return false;
 			if (is_explain() && !get_explain()) return false;
-			return valid();
-		};
+			return true;
+		});
 	};
 });

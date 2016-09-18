@@ -32,12 +32,11 @@ define(['jquery','survey/question/base','survey/radio'],function ($, base, radio
 			hidden.val((radios.getValue() === 'true') ? 'true' : '');
 			group.update();
 		};
-		var valid = this.valid;
-		this.valid = function () {
+		this.addValid(function () {
 			if (get_value() === null) return false;
 			if (is_explain() && (explain.val().trim() === '')) return false;
-			return valid();
-		};
+			return true;
+		});
 		if (root.hasClass('fanferret-polar-explain')) {
 			explain_div = root.find('.fanferret-polar-explain-input');
 			explain = root.find('textarea');

@@ -31,13 +31,12 @@ define(['jquery','survey/question/base'],function ($, base) {
 		}
 		update();
 		div.find('input[type="radio"]').change(update);
-		var valid = this.valid;
-		this.valid = function () {
+		this.addValid(function () {
 			var val = radios.filter(':checked').val();
 			if (!val) return false;
-			if (val !== 'other') return valid();
+			if (val !== 'other') return true;
 			if (other.val().trim() === '') return false;
-			return valid();
-		};
+			return true;
+		});
 	};
 });
