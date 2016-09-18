@@ -52,6 +52,7 @@ h1, h2 {
 
 .fanferret-rating-explanation {
 	float: left;
+	max-width: 75px;
 	width: 33%;
 }
 
@@ -66,6 +67,7 @@ h1, h2 {
 .fanferret-rating-rating, .fanferret-polar-option {
 	box-sizing: border-box;
 	float: left;
+	max-width: 45px;
 	width: 20%;
 }
 
