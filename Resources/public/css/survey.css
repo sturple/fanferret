@@ -72,8 +72,6 @@ h1, h2 {
 }
 
 .fanferret-rating-rating > a, .fanferret-polar-option > a {
-	background: #337AB7;
-	border: 0px black solid;
 	border-radius: 15px;
 	color: white;
 	display: block;
@@ -86,13 +84,18 @@ h1, h2 {
 	width: 30px;
 }
 
-.fanferret-rating-rating > a:hover, .fanferret-polar-option > a:hover {
-	background: #286090;
+.fanferret-rating-rating > a, .fanferret-polar-option > a,
+#survey-carousel > ol.carousel-indicators > li {
+	background: #337AB7;
+	border: 1px #2e6da4 solid;
 }
 
+.fanferret-rating-rating > a:hover, .fanferret-polar-option > a:hover,
 .fanferret-rating-rating > a:active, .fanferret-rating-rating > a.selected,
-.fanferret-polar-option > a:active, .fanferret-polar-option > a.selected {
-	background: #275F8F;
+.fanferret-polar-option > a:active, .fanferret-polar-option > a.selected,
+#survey-carousel > ol.carousel-indicators > li.active {
+	background: #286090;
+	border-color: #204d74;
 }
 
 .fanferret-rating-ratings, .fanferret-polar-options {
@@ -121,7 +124,8 @@ section:first-child {
 	margin-top: 10px;
 }
 
-button[disabled], .fanferret-survey-buttons button[disabled]:hover {
+button[disabled], .fanferret-survey-buttons button[disabled]:hover,
+#survey-carousel > ol.carousel-indicators > li.fanferret-disabled {
 	background: #CCC;
 	border-color: #CCC;
 	cursor: default;
@@ -136,14 +140,6 @@ textarea {
 	margin-right: 0;
 	position: static;
 	width: auto;
-}
-
-#survey-carousel > .carousel-indicators > li {
-	border-color: black;
-}
-
-#survey-carousel > .carousel-indicators > li.active {
-	background-color: black;
 }
 
 .fanferret-valid .fanferret-question-title:after {

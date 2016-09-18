@@ -45,6 +45,22 @@ var fanFerret = (function () {
 		prev.attr('disabled',active === 0);
 		next.attr('disabled',(groups.length !== 0) && !groups[active].valid());
 		set_next_label(is_last() ? 'Submit' : 'Next');
+		//	This could more elegantly be expressed as a reduce
+		//	or left fold, but jQuery doesn't have that
+		var valid = true;
+		$('#survey-carousel > ol.carousel-indicators > li').each(function (i, li) {
+			//	Just in case this is running while we're still
+			//	loading all the groups
+			if (groups.length <= i) return;
+			li = $(li);
+			if (!valid) {
+				li.addClass('fanferret-disabled');
+				return;
+			}
+			li.removeClass('fanferret-disabled');
+			var g = groups[i];
+			valid = g.valid();
+		});
 	};
 	retr.addGroup = function (group) {
 		groups.push(group);
