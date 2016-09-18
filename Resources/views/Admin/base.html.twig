@@ -15,6 +15,7 @@
 	<body>
 		{% block body %}
 		<div class="container">
+			<img class="fanferret-logo" src="{{asset('bundles/fanferretquestion/images/fanferret-logo-white.png')|escape('html_attr')}}" alt="FanFerret Logo">
 			{% block content %}{% endblock %}
 		</div>
 		{% endblock %}
