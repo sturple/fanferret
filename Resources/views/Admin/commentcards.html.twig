@@ -1,5 +1,15 @@
 {% extends 'FanFerretQuestionBundle:Admin:base.html.twig' %}
 
+{% set args = {'slug': survey.slug, 'perpage': per_page} %}
+{% if survey.slugGroup != null %}
+{% set route = 'fgms_question_admin_comment_cards_group' %}
+{% set route_delivery = 'fgms_question_admin_delivery_group' %}
+{% set args = args|merge({'sluggroup': survey.slugGroup}) %}
+{% else %}
+{% set route = 'fgms_question_admin_comment_cards' %}
+{% set route_delivery = 'fgms_question_admin_delivery' %}
+{% endif %}
+
 {% block content %}
 <h1>Comment Cards</h1>
 <div class="fanferret-comment-cards-result-count">
@@ -7,13 +17,6 @@
 </div>
 {% block pagination %}
 <div class="fanferret-comment-cards-pagination">
-	{% set args = {'slug': survey.slug, 'perpage': per_page} %}
-	{% if survey.slugGroup != null %}
-	{% set route = 'fgms_question_admin_comment_cards_group' %}
-	{% set args = args|merge({'sluggroup': survey.slugGroup}) %}
-	{% else %}
-	{% set route = 'fgms_question_admin_comment_cards' %}
-	{% endif %}
 	{% if page != 0 %}
 	<a href="{{path(route,args|merge({'page': page}))|escape('html_attr')}}">
 		<i class="fa fa-caret-left"></i>
@@ -73,4 +76,11 @@
 	<tbody>
 </table>
 {{block('pagination')}}
+{% endblock %}
+
+{% block nav %}
+<div class="col-md-8">
+	<a class="btn btn-primary" href="{{path(route_delivery,args)|escape('html_attr')}}">Schedule a Delivery</a>
+</div>
+{{parent()}}
 {% endblock %}

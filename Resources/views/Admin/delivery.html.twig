@@ -56,3 +56,17 @@
 	</div>
 {{form_end(form)}}
 {% endblock %}
+
+{% block nav %}
+<div class="col-md-8">
+	{% set args = {'slug' : survey.slug} %}
+	{% if survey.slugGroup != null %}
+	{% set route = 'fgms_question_admin_comment_cards_group' %}
+	{% set args = args|merge({'sluggroup': survey.slugGroup}) %}
+	{% else %}
+	{% set route = 'fgms_question_admin_comment_cards' %}
+	{% endif %}
+	<a class="btn btn-primary" href="{{path(route,args)|escape('html_attr')}}">View All Comment Cards</a>
+</div>
+{{parent()}}
+{% endblock %}

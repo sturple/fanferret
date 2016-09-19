@@ -47,7 +47,8 @@ class AdminController extends \Symfony\Bundle\FrameworkBundle\Controller\Control
         }
         return $this->render('FanFerretQuestionBundle:Admin:delivery.html.twig',[
             'form' => $form->createView(),
-            'session' => $session
+            'session' => $session,
+            'survey' => $survey
         ]);
     }
 

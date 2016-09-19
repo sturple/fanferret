@@ -17,6 +17,13 @@
 		<div class="container">
 			<img class="fanferret-logo" src="{{asset('bundles/fanferretquestion/images/fanferret-logo-white.png')|escape('html_attr')}}" alt="FanFerret Logo">
 			{% block content %}{% endblock %}
+			<div class="fanferret-admin-nav row">
+				{% block nav %}
+				<div class="col-md-4">
+					<a class="btn btn-primary" href="javascript:void(0);">Logout</a>
+				</div>
+				{% endblock %}
+			</div>
 		</div>
 		{% endblock %}
 	</body>
