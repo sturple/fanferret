@@ -51,7 +51,7 @@ class Survey
     private $language;
 
     /**
-     * @ORM\OneToMany(targetEntity="User",mappedBy="survey")
+     * @ORM\OneToMany(targetEntity="Acl",mappedBy="survey")
      */
     private $acls;
     
