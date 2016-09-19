@@ -1,5 +1,24 @@
 {% extends 'FanFerretQuestionBundle:Admin:base.html.twig' %}
 
+{% form_theme form _self %}
+
+{% block date_widget %}
+<div class="input-group date" data-provide="datepicker-inline" data-date-format="yyyy-mm-dd">
+	<input type="text" class="form-control" name="form[{{name|escape('html_attr')}}]" id="{{id|escape('html_attr')}}" required="{{required ? 'required' : ''}}" value="{{value|escape('html_attr')}}">
+	<div class="input-group-addon">
+		<span class="glyphicon glyphicon-th"></span>
+	</div>
+</div>
+{% endblock %}
+
+{% block head %}
+{{parent()}}
+<link rel="stylesheet" type="text/css" href="{{asset('bundles/fanferretquestion/css/bootstrap-datepicker3.standalone.min.css')|escape('html_attr')}}">
+<script type="text/javascript">
+	require(['bootstrap-datepicker.min'],function () {	});
+</script>
+{% endblock %}
+
 {% block content %}
 <h1>Digital Comment Card Delivery</h1>
 {% if session %}
@@ -29,7 +48,7 @@
 	</div>
 	<div class="row">
 		<label for="{{form.checkout.vars.id|escape('html_attr')}}" class="col-md-4">Checkout Date</label>
-		<div class="col-md-8">{{form_widget(form.checkout,{'attr': {'class': 'form-control'}})}}</div>
+		<div class="col-md-8">{{form_widget(form.checkout)}}</div>
 	</div>
 	<div class="row">
 		<div class="col-md-4"></div>
