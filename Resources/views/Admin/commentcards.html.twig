@@ -80,7 +80,9 @@
 
 {% block nav %}
 <div class="col-md-8">
+	{% if delivery %}
 	<a class="btn btn-primary" href="{{path(route_delivery,args)|escape('html_attr')}}">Schedule a Delivery</a>
+	{% endif %}
 </div>
 {{parent()}}
 {% endblock %}

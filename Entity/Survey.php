@@ -49,6 +49,11 @@ class Survey
      * @ORM\Column(type="string",length=128)
      */
     private $language;
+
+    /**
+     * @ORM\OneToMany(targetEntity="User",mappedBy="survey")
+     */
+    private $acls;
     
     /**
      * Constructor
@@ -234,5 +239,39 @@ class Survey
     public function getLanguage()
     {
         return $this->language;
+    }
+
+    /**
+     * Add acl
+     *
+     * @param \FanFerret\QuestionBundle\Entity\User $acl
+     *
+     * @return Survey
+     */
+    public function addAcl(\FanFerret\QuestionBundle\Entity\User $acl)
+    {
+        $this->acls[] = $acl;
+
+        return $this;
+    }
+
+    /**
+     * Remove acl
+     *
+     * @param \FanFerret\QuestionBundle\Entity\User $acl
+     */
+    public function removeAcl(\FanFerret\QuestionBundle\Entity\User $acl)
+    {
+        $this->acls->removeElement($acl);
+    }
+
+    /**
+     * Get acls
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getAcls()
+    {
+        return $this->acls;
     }
 }

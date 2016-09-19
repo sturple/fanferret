@@ -59,6 +59,7 @@
 
 {% block nav %}
 <div class="col-md-8">
+	{% if comment_cards %}
 	{% set args = {'slug' : survey.slug} %}
 	{% if survey.slugGroup != null %}
 	{% set route = 'fgms_question_admin_comment_cards_group' %}
@@ -67,6 +68,7 @@
 	{% set route = 'fgms_question_admin_comment_cards' %}
 	{% endif %}
 	<a class="btn btn-primary" href="{{path(route,args)|escape('html_attr')}}">View All Comment Cards</a>
+	{% endif %}
 </div>
 {{parent()}}
 {% endblock %}

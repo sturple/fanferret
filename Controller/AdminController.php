@@ -4,6 +4,53 @@ namespace FanFerret\QuestionBundle\Controller;
 
 class AdminController extends \Symfony\Bundle\FrameworkBundle\Controller\Controller
 {
+    protected function getUser()
+    {
+        $retr = parent::getUser();
+        if (!($retr instanceof \FanFerret\QuestionBundle\Entity\User)) throw new \LogicException(
+            'Expected user to be represented by User entity'
+        );
+        return $retr;
+    }
+
+    private function isAdmin()
+    {
+        $u = $this->getUser();
+        return $u->hasRole('ROLE_ADMIN');
+    }
+
+    private function doesAclApply(\FanFerret\QuestionBundle\Entity\Acl $acl, \FanFerret\QuestionBundle\Entity\Survey $survey)
+    {
+        $s = $acl->getSurvey();
+        if (is_null($s)) return false;
+        return $s->getId() === $survey->getId();
+    }
+
+    private function getApplicableAcls(\FanFerret\QuestionBundle\Entity\Survey $survey)
+    {
+        foreach ($this->getUser()->getAcls() as $acl) {
+            if ($this->doesAclApply($acl,$survey)) yield $acl;
+        }
+    }
+
+    private function deliveryCheck(\FanFerret\QuestionBundle\Entity\Survey $survey)
+    {
+        if ($this->isAdmin()) return true;
+        foreach ($this->getApplicableAcls($survey) as $acl) {
+            return true;
+        }
+        return false;
+    }
+
+    private function commentCardsCheck(\FanFerret\QuestionBundle\Entity\Survey $survey)
+    {
+        if ($this->isAdmin()) return true;
+        foreach ($this->getApplicableAcls($survey) as $acl) {
+            if ($acl->getRole() === 'ROLE_ADMIN') return true;
+        }
+        return false;
+    }
+
     private function getForm()
     {
         return $this->createFormBuilder()
@@ -32,6 +79,7 @@ class AdminController extends \Symfony\Bundle\FrameworkBundle\Controller\Control
 
     private function deliveryActionImpl(\Symfony\Component\HttpFoundation\Request $request, \FanFerret\QuestionBundle\Entity\Survey $survey)
     {
+        if (!$this->deliveryCheck($survey)) throw $this->createAccessDeniedException();
         $form = $this->getForm();
         $form->handleRequest($request);
         $session = null;
@@ -48,7 +96,8 @@ class AdminController extends \Symfony\Bundle\FrameworkBundle\Controller\Control
         return $this->render('FanFerretQuestionBundle:Admin:delivery.html.twig',[
             'form' => $form->createView(),
             'session' => $session,
-            'survey' => $survey
+            'survey' => $survey,
+            'comment_cards' => $this->commentCardsCheck($survey)
         ]);
     }
 
@@ -80,6 +129,7 @@ class AdminController extends \Symfony\Bundle\FrameworkBundle\Controller\Control
 
     private function commentCardsActionImpl(\FanFerret\QuestionBundle\Entity\Survey $survey, $page, $perpage)
     {
+        if (!$this->commentCardsCheck($survey)) throw $this->createAccessDeniedException();
         $page = intval($page);
         if ($page <= 0) throw $this->createNotFoundException(
             'Expected strictly positive page number'
@@ -103,7 +153,8 @@ class AdminController extends \Symfony\Bundle\FrameworkBundle\Controller\Control
             'count' => $results,
             'pages' => $pages,
             'sessions' => $sessions,
-            'survey' => $survey
+            'survey' => $survey,
+            'delivery' => $this->deliveryCheck($survey)
         ]);
     }
 

@@ -20,7 +20,7 @@
 			<div class="fanferret-admin-nav row">
 				{% block nav %}
 				<div class="col-md-4">
-					<a class="btn btn-primary" href="javascript:void(0);">Logout</a>
+					<a class="btn btn-primary" href="{{path('fos_user_security_logout')|escape('html_attr')}}">Logout</a>
 				</div>
 				{% endblock %}
 			</div>
