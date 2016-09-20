@@ -28,6 +28,16 @@ class Acl
     private $survey;
 
     /**
+     * @ORM\ManyToOne(targetEntity="Property",inversedBy="acls")
+     */
+    private $property;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="Group",inversedBy="acls")
+     */
+    private $group;
+
+    /**
      * @ORM\Column(type="string",length=128)
      */
     private $role;
@@ -112,5 +122,53 @@ class Acl
     public function getSurvey()
     {
         return $this->survey;
+    }
+
+    /**
+     * Set property
+     *
+     * @param \FanFerret\QuestionBundle\Entity\Property $property
+     *
+     * @return Acl
+     */
+    public function setProperty(\FanFerret\QuestionBundle\Entity\Property $property = null)
+    {
+        $this->property = $property;
+
+        return $this;
+    }
+
+    /**
+     * Get property
+     *
+     * @return \FanFerret\QuestionBundle\Entity\Property
+     */
+    public function getProperty()
+    {
+        return $this->property;
+    }
+
+    /**
+     * Set group
+     *
+     * @param \FanFerret\QuestionBundle\Entity\Group $group
+     *
+     * @return Acl
+     */
+    public function setGroup(\FanFerret\QuestionBundle\Entity\Group $group = null)
+    {
+        $this->group = $group;
+
+        return $this;
+    }
+
+    /**
+     * Get group
+     *
+     * @return \FanFerret\QuestionBundle\Entity\Group
+     */
+    public function getGroup()
+    {
+        return $this->group;
     }
 }

@@ -22,8 +22,22 @@ class AdminController extends \Symfony\Bundle\FrameworkBundle\Controller\Control
     private function doesAclApply(\FanFerret\QuestionBundle\Entity\Acl $acl, \FanFerret\QuestionBundle\Entity\Survey $survey)
     {
         $s = $acl->getSurvey();
-        if (is_null($s)) return false;
-        return $s->getId() === $survey->getId();
+        if (!is_null($s)) {
+            return $s->getId() === $survey->getId();
+        }
+        $property = $survey->getProperty();
+        if (is_null($property)) return false;
+        $p = $acl->getProperty();
+        if (!is_null($p)) {
+            return $p->getId() === $property->getId();
+        }
+        $group = $property->getGroup();
+        if (is_null($group)) return false;
+        $g = $acl->getGroup();
+        if (!is_null($g)) {
+            return $g->getId() === $group->getId();
+        }
+        return false;
     }
 
     private function getApplicableAcls(\FanFerret\QuestionBundle\Entity\Survey $survey)
@@ -101,30 +115,33 @@ class AdminController extends \Symfony\Bundle\FrameworkBundle\Controller\Control
         ]);
     }
 
-    private function getSurveyBySlug($slug, $sluggroup = null)
+    private function getSurveyBySlug($group, $property, $survey)
     {
+        $slug = [$property,$survey];
+        if (!is_null($group)) array_unshift($slug,$group);
         $doctrine = $this->getDoctrine();
         $repo = $doctrine->getRepository(\FanFerret\QuestionBundle\Entity\Survey::class);
-        $survey = $repo->getBySlug($slug,$sluggroup);
-        if (is_null($survey)) throw $this->createNotFoundException(
+        $retr = $repo->getBySlug($slug);
+        if (is_null($retr)) throw $this->createNotFoundException(
             sprintf(
                 'Could not find Survey entity %s',
-                $this->formatSlug($slug,$sluggroup)
+                $this->formatSlug($group,$property,$survey)
             )
         );
-        return $survey;
+        return $retr;
     }
 
-    private function formatSlug($slug, $sluggroup = null)
+    private function formatSlug($group, $property, $survey)
     {
-        if (is_null($sluggroup)) return $slug;
-        return sprintf('%s/%s',$sluggroup,$slug);
+        $retr = sprintf('%s/%s',$property,$survey);
+        if (!is_null($group)) $retr = sprintf('%s/%s',$group,$retr);
+        return $retr;
     }
 
-    public function deliveryAction(\Symfony\Component\HttpFoundation\Request $request, $slug, $sluggroup = null)
+    public function deliveryAction(\Symfony\Component\HttpFoundation\Request $request, $group, $property, $survey)
     {
-        $survey = $this->getSurveyBySlug($slug,$sluggroup);
-        return $this->deliveryActionImpl($request,$survey);
+        $entity = $this->getSurveyBySlug($group,$property,$survey);
+        return $this->deliveryActionImpl($request,$entity);
     }
 
     private function commentCardsActionImpl(\FanFerret\QuestionBundle\Entity\Survey $survey, $page, $perpage)
@@ -158,9 +175,9 @@ class AdminController extends \Symfony\Bundle\FrameworkBundle\Controller\Control
         ]);
     }
 
-    public function commentCardsAction($page, $perpage, $slug, $sluggroup = null)
+    public function commentCardsAction($page, $perpage, $group, $property, $survey)
     {
-        $survey = $this->getSurveyBySlug($slug,$sluggroup);
-        return $this->commentCardsActionImpl($survey,$page,$perpage);
+        $entity = $this->getSurveyBySlug($group,$property,$survey);
+        return $this->commentCardsActionImpl($entity,$page,$perpage);
     }
 }

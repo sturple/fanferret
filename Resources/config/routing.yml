@@ -8,14 +8,14 @@ fgms_question_notification_seen:
     path: /notification/{token}/
     defaults: { _controller: FanFerretQuestionBundle:Notification:seen }
 fgms_question_admin_delivery:
-    path: /admin/{slug}/delivery
-    defaults: { _controller: FanFerretQuestionBundle:Admin:delivery, sluggroup: null }
+    path: /admin/{property}/{survey}/delivery
+    defaults: { _controller: FanFerretQuestionBundle:Admin:delivery, group: null }
 fgms_question_admin_delivery_group:
-    path: /admin/{sluggroup}/{slug}/delivery
+    path: /admin/{group}/{property}/{survey}/delivery
     defaults: { _controller: FanFerretQuestionBundle:Admin:delivery }
 fgms_question_admin_comment_cards:
-    path: /admin/{slug}/comment-cards/{page}/{perpage}
-    defaults: { _controller: FanFerretQuestionBundle:Admin:commentCards, sluggroup: null, page: 1, perpage: 50 }
+    path: /admin/{property}/{survey}/comment-cards/{page}/{perpage}
+    defaults: { _controller: FanFerretQuestionBundle:Admin:commentCards, group: null, page: 1, perpage: 50 }
 fgms_question_admin_comment_cards_group:
-    path: /admin/{sluggroup}/{slug}/comment-cards/{page}/{perpage}
+    path: /admin/{group}/{property}/{survey}/comment-cards/{page}/{perpage}
     defaults: { _controller: FanFerretQuestionBundle:Admin:commentCards, page: 1, perpage: 50 }

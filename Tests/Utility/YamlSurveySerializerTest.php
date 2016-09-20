@@ -44,7 +44,6 @@ questionGroups:
         $this->assertTrue(is_array($arr));
         $s = $arr[0];
         $this->assertTrue($s instanceof \FanFerret\QuestionBundle\Entity\Survey);
-        $this->assertNull($s->getSlugGroup());
         $this->assertNull($s->getId());
         $this->assertSame('en-CA',$s->getLanguage());
         $this->assertSame(0,count(get_object_vars($s->getParams())));

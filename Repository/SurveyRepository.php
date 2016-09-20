@@ -14,29 +14,34 @@ class SurveyRepository extends \Doctrine\ORM\EntityRepository
      * Attempts to retrieve the Survey which has
      * a particular slug.
      *
-     * @param string $slug
-     * @param string|null $sluggroup
-     *  Set to null if there is no group.
+     * @param array $slug
      *
      * @return Survey|null
      */
-    public function getBySlug($slug, $sluggroup = null)
+    public function getBySlug(array $slug)
     {
+        $c = count($slug);
+        if (($c < 2) || ($c > 3)) throw new \InvalidArgumentException(
+            'Expected $slug to be at least 2 and at most 3 elements'
+        );
         $qb = $this->createQueryBuilder('s');
-        $slug_expr = $qb->expr()->eq('s.slug',':slug');
-        $qb->setParameter('slug',$slug);
-        if (is_null($sluggroup)) {
-            $sluggroup_expr = $qb->expr()->isNull('s.slugGroup');
+        $i = ($c === 3) ? 1 : 0;
+        $qb->leftJoin('s.property','p')
+            ->leftJoin('p.group','g')
+            ->andWhere($qb->expr()->eq('p.slug',':pslug'))
+            ->andWhere($qb->expr()->eq('s.slug',':sslug'))
+            ->setParameter('pslug',$slug[$i])
+            ->setParameter('sslug',$slug[$i + 1]);
+        if ($c === 3) {
+            $qb->andWhere($qb->expr()->eq('g.slug',':gslug'))
+                ->setParameter('gslug',$slug[0]);
         } else {
-            $sluggroup_expr = $qb->expr()->eq('s.slugGroup',':slugGroup');
-            $qb->setParameter('slugGroup',$sluggroup);
+            $qb->andWhere($qb->expr()->isNull('g.slug'));
         }
-        $qb->andWhere($slug_expr)
-            ->andWhere($sluggroup_expr);
         $q = $qb->getQuery();
         $arr = $q->getResult();
         if (count($arr) === 0) return null;
-        if (count($arr) !== 1) throw new \RuntimeException('Expected slug & group to uniquely identify Survey entity');
+        if (count($arr) !== 1) throw new \RuntimeException('Expected slug to uniquely identify Survey entity');
         return $arr[0];
     }
 }

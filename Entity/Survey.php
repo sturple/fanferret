@@ -23,11 +23,6 @@ class Survey
      * @ORM\Column(type="string",length=255)
      */
     private $slug;
-
-    /**
-     * @ORM\Column(type="string",length=255,nullable=true)
-     */
-    private $slugGroup;
     
     /**
      * @ORM\OneToMany(targetEntity="QuestionGroup",mappedBy="survey",cascade="all")
@@ -54,6 +49,11 @@ class Survey
      * @ORM\OneToMany(targetEntity="Acl",mappedBy="survey")
      */
     private $acls;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="Property",inversedBy="surveys")
+     */
+    private $property;
     
     /**
      * Constructor
@@ -194,30 +194,6 @@ class Survey
     }
 
     /**
-     * Set slugGroup
-     *
-     * @param string $slugGroup
-     *
-     * @return Survey
-     */
-    public function setSlugGroup($slugGroup)
-    {
-        $this->slugGroup = $slugGroup;
-
-        return $this;
-    }
-
-    /**
-     * Get slugGroup
-     *
-     * @return string
-     */
-    public function getSlugGroup()
-    {
-        return $this->slugGroup;
-    }
-
-    /**
      * Set language
      *
      * @param string $language
@@ -273,5 +249,29 @@ class Survey
     public function getAcls()
     {
         return $this->acls;
+    }
+
+    /**
+     * Set property
+     *
+     * @param \FanFerret\QuestionBundle\Entity\Property $property
+     *
+     * @return Survey
+     */
+    public function setProperty(\FanFerret\QuestionBundle\Entity\Property $property = null)
+    {
+        $this->property = $property;
+
+        return $this;
+    }
+
+    /**
+     * Get property
+     *
+     * @return \FanFerret\QuestionBundle\Entity\Property
+     */
+    public function getProperty()
+    {
+        return $this->property;
     }
 }

@@ -172,7 +172,6 @@ class YamlSurveySerializer implements SurveySerializer
     {
         $s = new \FanFerret\QuestionBundle\Entity\Survey();
         $s->setSlug($this->getString($obj,'slug'));
-        $s->setSlugGroup($this->getOptionalString($obj,'slugGroup'));
         $s->setParams($this->getObject($obj,'params'));
         $s->setLanguage($this->getString($obj,'language'));
         foreach ($this->getQuestionGroups($this->getArray($obj,'questionGroups')) as $qg) {

@@ -1,10 +1,10 @@
 {% extends 'FanFerretQuestionBundle:Admin:base.html.twig' %}
 
-{% set args = {'slug': survey.slug, 'perpage': per_page} %}
-{% if survey.slugGroup != null %}
+{% set args = {'survey': survey.slug, 'property': survey.property.slug, 'perpage': per_page} %}
+{% if survey.property.group != null %}
 {% set route = 'fgms_question_admin_comment_cards_group' %}
 {% set route_delivery = 'fgms_question_admin_delivery_group' %}
-{% set args = args|merge({'sluggroup': survey.slugGroup}) %}
+{% set args = args|merge({'group': survey.property.group.slug}) %}
 {% else %}
 {% set route = 'fgms_question_admin_comment_cards' %}
 {% set route_delivery = 'fgms_question_admin_delivery' %}
