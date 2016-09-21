@@ -24,8 +24,8 @@ abstract class Question implements QuestionInterface
      */
     public function __construct(\FanFerret\QuestionBundle\Entity\Question $question, \FanFerret\QuestionBundle\Internationalization\TranslatorInterface $translator)
     {
-        $this->q=$question;
-        $this->t=$translator;
+        $this->q = $question;
+        $this->t = $translator;
     }
 
     public function getEntity()
