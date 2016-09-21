@@ -47,6 +47,7 @@ h1, h2 {
 }
 
 .fanferret-rating-explanations {
+	font-size: 11px;
 	overflow: hidden;
 }
 
@@ -54,6 +55,10 @@ h1, h2 {
 	float: left;
 	max-width: 75px;
 	width: 33%;
+}
+
+.fanferret-rating-explanation .fa {
+	font-size: 16px;
 }
 
 .fanferret-rating-explanation:nth-child(2) {
