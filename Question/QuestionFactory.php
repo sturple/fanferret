@@ -47,6 +47,7 @@ class QuestionFactory implements QuestionFactoryInterface
             $question,
             $this->twig
         );
+        if ($type === 'html') return new HtmlQuestion($question);
         throw new \InvalidArgumentException(
             sprintf(
                 'Unrecognized question type "%s"',
