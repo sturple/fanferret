@@ -23,22 +23,30 @@ define(['jquery','survey/question/base','survey/radio'],function ($, base, radio
 			var is_negative = val === negative;
 			return is_negative === explain_negative;
 		};
+		var key = group.getToken() + '_' + name;
+		var explain_key = key + '_explain';
 		var update = function () {
 			if (explain) {
 				if (is_explain()) explain_div.slideDown();
 				else explain_div.slideUp();
-				explain_hidden.val(explain.val().trim());
+				var ex = explain.val().trim();
+				explain_hidden.val(ex);
+				storage.setItem(explain_key,ex);
 			}
-			hidden.val((radios.getValue() === 'true') ? 'true' : '');
+			var val = radios.getValue();
+			hidden.val((val === 'true') ? 'true' : '');
+			storage.setItem(key,val);
 			group.update();
 		};
 		this.addValid(function () {
 			return get_value() !== null;
 		});
+		radios.setValue(storage.getItem(key));
 		if (root.hasClass('fanferret-polar-explain')) {
 			explain_div = root.find('.fanferret-polar-explain-input');
 			explain = root.find('textarea');
 			explain_hidden = document.find('#form_' + name + '_explain');
+			explain.val(storage.getItem(explain_key));
 			explain.on('input change',update);
 		}
 		var change = radios.change;
