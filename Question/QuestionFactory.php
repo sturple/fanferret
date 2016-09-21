@@ -18,23 +18,23 @@ class QuestionFactory implements QuestionFactoryInterface
     public function create(\FanFerret\QuestionBundle\Entity\Question $question)
     {
         $type = $question->getType();
-        if ($type === 'open') return new \FanFerret\QuestionBundle\Question\OpenQuestion(
+        if ($type === 'open') return new OpenQuestion(
             $question,
             $this->translator,
             $this->twig,
             $this->tokens
         );
-        if ($type === 'polar') return new \FanFerret\QuestionBundle\Question\PolarQuestion(
+        if ($type === 'polar') return new PolarQuestion(
             $question,
             $this->translator,
             $this->twig
         );
-        if ($type === 'checklist') return new \FanFerret\QuestionBundle\Question\ChecklistQuestion(
+        if ($type === 'checklist') return new ChecklistQuestion(
             $question,
             $this->translator,
             $this->twig
         );
-        if ($type === 'rating') return new \FanFerret\QuestionBundle\Question\RatingQuestion(
+        if ($type === 'rating') return new RatingQuestion(
             $question,
             $this->translator,
             $this->twig
