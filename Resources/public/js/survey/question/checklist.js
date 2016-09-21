@@ -8,11 +8,16 @@ define(['jquery','survey/question/base'],function ($, base) {
 		var other_hidden = null;
 		var other_div = null;
 		var radios = div.find('input[name="' + name + '_group"]');
+		var key = group.getToken() + '_' + name;
+		var other_key = key + '_other';
 		var update = function () {
 			var selected = radios.filter(':checked').val();
+			storage.setItem(key,selected);
 			if (selected === 'other') {
 				hidden.val(null);
-				other_hidden.val(other.val());
+				var o = other.val();
+				other_hidden.val(o);
+				storage.setItem(other_key,o);
 				other_div.slideDown();
 			} else {
 				hidden.val(selected);
@@ -23,10 +28,19 @@ define(['jquery','survey/question/base'],function ($, base) {
 			}
 			group.update();
 		};
+		radios.prop('checked',false);
+		var old = storage.getItem(key);
+		for (var i = 0; i < radios.length; ++i) {
+			var e = $(radios[i]);
+			if (e.attr('value') !== old) continue;
+			e.prop('checked',true);
+			break;
+		}
 		if (div.hasClass('fanferret-other')) {
 			other = div.find('input[type="text"]');
 			other_div = div.find('.fanferret-checklist-option-other-text');
 			other_hidden = document.find('#form_' + name + '_other');
+			other.val(storage.getItem(other_key));
 			other.on('input change',update);
 		}
 		update();
