@@ -19,3 +19,6 @@ fgms_question_admin_comment_cards:
 fgms_question_admin_comment_cards_group:
     path: /admin/{group}/{property}/{survey}/comment-cards/{page}/{perpage}
     defaults: { _controller: FanFerretQuestionBundle:Admin:commentCards, page: 1, perpage: 50 }
+fgms_question_admin:
+    path: /admin/{page}/{perpage}
+    defaults: { _controller: FanFerretQuestionBundle:Admin:list, page: 1, perpage: 50 }

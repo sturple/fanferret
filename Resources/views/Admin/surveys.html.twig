@@ -1,0 +1,32 @@
+{% extends 'FanFerretQuestionBundle:Admin:base.html.twig' %}
+
+{% block content %}
+<h1>Your Surveys</h1>
+<div class="fanferret-result-count">{{count}} results</div>
+{% block pagination %}
+{% include 'FanFerretQuestionBundle:Admin:pagination.html.twig' with {'route': 'fgms_question_admin', 'args': {'perpage': per_page}, 'page': page, 'pages': pages} %}
+{% endblock %}
+<section class="fanferret-surveys">
+	{% for survey in surveys %}
+	<div class="row fanferret-survey">
+		<div class="col-md-6">
+			{% set args = {'property': survey.survey.property.slug, 'survey': survey.survey.slug} %}
+			{% set route_suffix = '' %}
+			{% if survey.survey.property.group %}
+			{% set route_suffix = '_group' %}
+			{% set args = args|merge({'group': survey.survey.property.group.slug}) %}
+			<span class="fanferret-survey-group-name">{{survey.survey.property.group.name}}</span>
+			{% endif %}
+			<span class="fanferret-survey-property-name">{{survey.survey.property.name}}</span>
+			<span class="fanferret-survey-name">{{survey.survey.name}}</span>
+		</div>
+		<div class="col-md-3">
+			<a class="btn btn-primary" href="{{path('fgms_question_admin_delivery' ~ route_suffix,args)|escape('html_attr')}}">Schedule a Delivery</a>
+		</div>
+		<div class="col-md-3">
+			<a class="btn btn-primary" href="{{path('fgms_question_admin_comment_cards' ~ route_suffix,args)|escape('html_attr')}}">View All Comment Cards</a>
+		</div>
+	</div>
+	{% endfor %}
+</section>
+{% endblock %}

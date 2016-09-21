@@ -44,4 +44,119 @@ class SurveyRepository extends \Doctrine\ORM\EntityRepository
         if (count($arr) !== 1) throw new \RuntimeException('Expected slug to uniquely identify Survey entity');
         return $arr[0];
     }
+
+    private function getByUserAll(\FanFerret\QuestionBundle\Utility\Page $page = null)
+    {
+        $qb = $this->createQueryBuilder('s');
+        if (!is_null($page)) $page->addToQueryBuilder($qb);
+        //  TODO: Order by?
+        $q = $qb->getQuery();
+        return $q->getResult();
+    }
+
+    private function getByUserNativeQueryText()
+    {
+        return 'SELECT
+            `survey`.*
+        FROM
+            `acl`
+            INNER JOIN `group` ON `acl`.`group_id` = `group`.`id`
+            INNER JOIN `property` ON `property`.`group_id` = `group`.`id`
+            INNER JOIN `survey` ON `survey`.`property_id` = `property`.`id`
+        WHERE
+            `acl`.`user_id` = ?
+        UNION
+        SELECT
+            `survey`.*
+        FROM
+            `acl`
+            INNER JOIN `property` ON `acl`.`property_id` = `property`.`id`
+            INNER JOIN `survey` ON `survey`.`property_id` = `property`.`id`
+        WHERE
+            `acl`.`user_id` = ?
+        UNION
+        SELECT
+            `survey`.*
+        FROM
+            `acl`
+            INNER JOIN `survey` ON `acl`.`survey_id` = `survey`.`id`
+        WHERE
+            `acl`.`user_id` = ?';
+    }
+
+    private function addByUserNativeQueryParameters(\Doctrine\ORM\AbstractQuery $query, \FanFerret\QuestionBundle\Entity\User $user)
+    {
+        $id = $user->getId();
+        return $query->setParameter(1,$id)
+            ->setParameter(2,$id)
+            ->setParameter(3,$id);
+    }
+
+    private function getByUserImpl(\FanFerret\QuestionBundle\Entity\User $user, \FanFerret\QuestionBundle\Utility\Page $page = null)
+    {
+        $rsm = new \Doctrine\ORM\Query\ResultSetMapping();
+        $rsm->addEntityResult(\FanFerret\QuestionBundle\Entity\Survey::class,'s')
+            ->addFieldResult('s','id','id')
+            ->addFieldResult('s','slug','slug')
+            ->addFieldResult('s','params','params')
+            ->addFieldResult('s','language','language')
+            ->addMetaResult('s','property_id','property_id')
+            ->addFieldResult('s','name','name');
+        $sql = $this->getByUserNativeQueryText();
+        if (!is_null($page)) {
+            $sql .= ' LIMIT ?,?';
+        }
+        $em = $this->getEntityManager();
+        $query = $em->createNativeQuery($sql,$rsm);
+        $this->addByUserNativeQueryParameters($query,$user);
+        if (!is_null($page)) {
+            $query->setParameter(4,$page->getOffset())
+                ->setParameter(5,$page->getResultsPerPage());
+        }
+        //  TODO: Order by?
+        return $query->getResult();
+    }
+
+    private function getCountByUserAll()
+    {
+        $qb = $this->createQueryBuilder('s');
+        $qb->select($qb->expr()->count('s.id'));
+        $q = $qb->getQuery();
+        return $q->getSingleScalarResult();
+    }
+
+    private function getCountByUserImpl(\FanFerret\QuestionBundle\Entity\User $user)
+    {
+        $rsm = new \Doctrine\ORM\Query\ResultSetMapping();
+        $rsm->addScalarResult('c','c');
+        $sql = sprintf(
+            'SELECT COUNT(`id`) AS `c` FROM (%s) `u`',
+            $this->getByUserNativeQueryText()
+        );
+        $em = $this->getEntityManager();
+        $query = $em->createNativeQuery($sql,$rsm);
+        $this->addByUserNativeQueryParameters($query,$user);
+        return $query->getSingleScalarResult();
+    }
+
+    /**
+     * Attempts to retrieve all Survey entities on which
+     * the User entity has permissions.
+     *
+     * @param User $user
+     * @param Page|null $page
+     *
+     * @return array
+     */
+    public function getByUser(\FanFerret\QuestionBundle\Entity\User $user, \FanFerret\QuestionBundle\Utility\Page $page = null)
+    {
+        if ($user->hasRole('ROLE_ADMIN')) return $this->getByUserAll($page);
+        return $this->getByUserImpl($user,$page);
+    }
+
+    public function getCountByUser(\FanFerret\QuestionBundle\Entity\User $user)
+    {
+        if ($user->hasRole('ROLE_ADMIN')) return $this->getCountByUserAll();
+        return $this->getCountByUserImpl($user);
+    }
 }

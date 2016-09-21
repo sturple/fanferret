@@ -1,0 +1,9 @@
+<div class="fanferret-pagination">
+	{% if page != 1 %}
+	<a href="{{path(route,args|merge({'page': page - 1}))|escape('html_attr')}}"><i class="fa fa-caret-left"></i></a>
+	{% endif %}
+	Page {{page}} of {{pages}}
+	{% if page != pages %}
+	<a href="{{path(route,args|merge({'page': page + 1}))|escape('html_attr')}}"><i class="fa fa-caret-right"></i></a>
+	{% endif %}
+</div>

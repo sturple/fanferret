@@ -19,10 +19,11 @@
 			{% block content %}{% endblock %}
 			<div class="fanferret-admin-nav row">
 				{% block nav %}
+				<div class="col-md-8"></div>
+				{% endblock %}
 				<div class="col-md-4">
 					<a class="btn btn-primary" href="{{path('fos_user_security_logout')|escape('html_attr')}}">Logout</a>
 				</div>
-				{% endblock %}
 			</div>
 		</div>
 		{% endblock %}

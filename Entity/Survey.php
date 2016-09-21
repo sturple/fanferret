@@ -54,6 +54,11 @@ class Survey
      * @ORM\ManyToOne(targetEntity="Property",inversedBy="surveys")
      */
     private $property;
+
+    /**
+     * @ORM\Column(type="string",length=255)
+     */
+    private $name;
     
     /**
      * Constructor
@@ -273,5 +278,29 @@ class Survey
     public function getProperty()
     {
         return $this->property;
+    }
+
+    /**
+     * Set name
+     *
+     * @param string $name
+     *
+     * @return Survey
+     */
+    public function setName($name)
+    {
+        $this->name = $name;
+
+        return $this;
+    }
+
+    /**
+     * Get name
+     *
+     * @return string
+     */
+    public function getName()
+    {
+        return $this->name;
     }
 }

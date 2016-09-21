@@ -147,28 +147,17 @@ class AdminController extends \Symfony\Bundle\FrameworkBundle\Controller\Control
     private function commentCardsActionImpl(\FanFerret\QuestionBundle\Entity\Survey $survey, $page, $perpage)
     {
         if (!$this->commentCardsCheck($survey)) throw $this->createAccessDeniedException();
-        $page = intval($page);
-        if ($page <= 0) throw $this->createNotFoundException(
-            'Expected strictly positive page number'
-        );
-        //  Make it zero relative
-        --$page;
-        //  TODO: Cap this?
-        $perpage = intval($perpage);
-        if ($perpage <= 0) throw $this->createNotFoundException(
-            'Expected strictly positive number of results per page'
-        );
+        //  TODO: Cap number of results per page?
+        $page = new \FanFerret\QuestionBundle\Utility\Page(intval($page),intval($perpage));
         $doctrine = $this->getDoctrine();
         $repo = $doctrine->getRepository(\FanFerret\QuestionBundle\Entity\SurveySession::class);
-        $sessions = $repo->getPage($survey,$page,$perpage);
+        $sessions = $repo->getPage($survey,$page);
         $results = count($survey->getSurveySessions());
-        $pages = intval($results / $perpage);
-        if (($results === 0) || (($results % $perpage) !== 0)) ++$pages;
         return $this->render('FanFerretQuestionBundle:Admin:commentcards.html.twig',[
-            'page' => $page,
-            'per_page' => $perpage,
+            'page' => $page->getPageNumber(),
+            'per_page' => $page->getResultsPerPage(),
             'count' => $results,
-            'pages' => $pages,
+            'pages' => $page->getNumberOfPages($results),
             'sessions' => $sessions,
             'survey' => $survey,
             'delivery' => $this->deliveryCheck($survey)
@@ -179,5 +168,29 @@ class AdminController extends \Symfony\Bundle\FrameworkBundle\Controller\Control
     {
         $entity = $this->getSurveyBySlug($group,$property,$survey);
         return $this->commentCardsActionImpl($entity,$page,$perpage);
+    }
+
+    public function listAction($page, $perpage)
+    {
+        $page = new \FanFerret\QuestionBundle\Utility\Page(intval($page),intval($perpage));
+        $doctrine = $this->getDoctrine();
+        $repo = $doctrine->getRepository(\FanFerret\QuestionBundle\Entity\Survey::class);
+        $user = $this->getUser();
+        $surveys = $repo->getByUser($user,$page);
+        $surveys = array_map(function (\FanFerret\QuestionBundle\Entity\Survey $survey) {
+            return (object)[
+                'survey' => $survey,
+                'delivery' => $this->deliveryCheck($survey),
+                'comment_cards' => $this->commentCardsCheck($survey)
+            ];
+        },$surveys);
+        $results = $repo->getCountByUser($user);
+        return $this->render('FanFerretQuestionBundle:Admin:surveys.html.twig',[
+            'surveys' => $surveys,
+            'page' => $page->getPageNumber(),
+            'per_page' => $page->getResultsPerPage(),
+            'pages' => $page->getNumberOfPages($results),
+            'count' => $results
+        ]);
     }
 }
