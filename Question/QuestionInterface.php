@@ -39,8 +39,9 @@ interface QuestionInterface
      *  An associative array of data from the submitted
      *  form.
      *
-     * @return
-     *  A QuestionAnswer entity.
+     * @return QuestionAnswer|null
+     *  A QuestionAnswer entity or null if the question
+     *  does not generate an answer.
      */
     public function getAnswer(array $data);
 

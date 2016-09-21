@@ -7,7 +7,9 @@ namespace FanFerret\QuestionBundle\Question;
  */
 abstract class Question implements QuestionInterface
 {
-    use \FanFerret\QuestionBundle\Utility\HasObject;
+    use \FanFerret\QuestionBundle\Utility\HasObject {
+        \FanFerret\QuestionBundle\Utility\HasObject::getTranslator as getTranslatorBase;
+    }
 
     private $q;
     private $t;
@@ -22,7 +24,7 @@ abstract class Question implements QuestionInterface
      *  A TranslatorInterface object which the newly-created
      *  object my use to obtain localized strings.
      */
-    public function __construct(\FanFerret\QuestionBundle\Entity\Question $question, \FanFerret\QuestionBundle\Internationalization\TranslatorInterface $translator)
+    public function __construct(\FanFerret\QuestionBundle\Entity\Question $question, \FanFerret\QuestionBundle\Internationalization\TranslatorInterface $translator = null)
     {
         $this->q = $question;
         $this->t = $translator;
@@ -51,6 +53,7 @@ abstract class Question implements QuestionInterface
 
     private function getTranslator()
     {
+        if (is_null($this->t)) return $this->getTranslatorBase();
         return $this->t;
     }
 

@@ -39,6 +39,10 @@ class QuestionFactory implements QuestionFactoryInterface
             $this->translator,
             $this->twig
         );
+        if ($type === 'title') return new TitleQuestion(
+            $question,
+            $this->twig
+        );
         throw new \InvalidArgumentException(
             sprintf(
                 'Unrecognized question type "%s"',

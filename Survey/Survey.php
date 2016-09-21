@@ -117,6 +117,7 @@ class Survey implements SurveyInterface
         $qs = [];
         foreach ($this->traverseQuestions() as $q) {
             $ans = $q->getAnswer($data);
+            if (is_null($ans)) continue;
             $entity = $q->getEntity();
             $entity->addQuestionAnswer($ans);
             $session->addQuestionAnswer($ans);
