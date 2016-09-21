@@ -43,6 +43,10 @@ class QuestionFactory implements QuestionFactoryInterface
             $question,
             $this->twig
         );
+        if ($type === 'template') return new TemplateQuestion(
+            $question,
+            $this->twig
+        );
         throw new \InvalidArgumentException(
             sprintf(
                 'Unrecognized question type "%s"',
