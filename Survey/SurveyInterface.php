@@ -41,13 +41,15 @@ interface SurveyInterface
     /**
      * Renders the survey.
      *
+     * @param $session
+     *  The current SurveySession entity.
      * @param $fv
      *  A FormView object created from the form builder
      *  this survey populated.
      *
      * @return Renderable
      */
-    public function render(\Symfony\Component\Form\FormView $fv);
+    public function render(\FanFerret\QuestionBundle\Entity\SurveySession $session, \Symfony\Component\Form\FormView $fv);
 
     /**
      * Renders the survey's finish screen.

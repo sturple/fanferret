@@ -26,6 +26,9 @@ define(['jquery'],function ($) {
 			},true);
 		};
 		this.update = survey.update;
+		this.getToken = function () {
+			return survey.getToken();
+		};
 		survey.update();
 	};
 });

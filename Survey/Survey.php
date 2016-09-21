@@ -164,7 +164,7 @@ class Survey implements SurveyInterface
         return $retr;
     }
 
-    public function render(\Symfony\Component\Form\FormView $fv)
+    public function render(\FanFerret\QuestionBundle\Entity\SurveySession $session, \Symfony\Component\Form\FormView $fv)
     {
         $gs = array_map(function ($group) {
             $ctx = [
@@ -182,7 +182,8 @@ class Survey implements SurveyInterface
             'groups' => $gs,
             'form' => $fv,
             'survey' => $this->survey,
-            'styles' => $this->getStyles()
+            'styles' => $this->getStyles(),
+            'session' => $session
         ];
         return new \FanFerret\QuestionBundle\Utility\Renderable(
             $this->getSurveyTemplate(),

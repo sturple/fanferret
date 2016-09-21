@@ -1,5 +1,5 @@
 define(['jquery','survey/question/base','survey/radio'],function ($, base, radio) {
-	return function (name, group, document) {
+	return function (name, group, storage, document) {
 		base.call(this,name,group,document);
 		document = $(document);
 		var root = document.find('#' + name);

@@ -1,5 +1,5 @@
 define(['jquery','survey/question/base','survey/condition','survey/radio'],function ($, base, condition, radio) {
-	return function (name, threshold, operator, group, document) {
+	return function (name, threshold, operator, group, storage, document) {
 		base.call(this,name,group,document);
 		document = $(document);
 		var hidden = document.find('#form_' + name);

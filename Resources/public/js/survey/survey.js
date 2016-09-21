@@ -1,5 +1,9 @@
 var fanFerret = (function () {
 	var retr = {};
+	var token = $('script').last().attr('data-token');
+	retr.getToken = function () {
+		return token;
+	};
 	var functions = [];
 	var registered = 0;
 	var submitted = 0;
@@ -95,7 +99,7 @@ var fanFerret = (function () {
 		require([dependency],function (question) {
 			handle(function () {
 				var g = retr.currentGroup();
-				args.push(g,document);
+				args.push(g,localStorage,document);
 				var q = new (function () {	question.apply(this,args);	})();
 				g.addQuestion(q);
 			});

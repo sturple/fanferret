@@ -1,5 +1,5 @@
 define(['jquery','survey/question/base'],function ($, base) {
-	return function (name, group, document) {
+	return function (name, group, storage, document) {
 		base.call(this,name,group,document);
 		document = $(document);
 		var div = document.find('#' + name);
