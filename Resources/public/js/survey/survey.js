@@ -4,6 +4,7 @@ var fanFerret = (function () {
 	retr.getToken = function () {
 		return token;
 	};
+	var active_key = token + '_active';
 	var functions = [];
 	var registered = 0;
 	var submitted = 0;
@@ -65,11 +66,18 @@ var fanFerret = (function () {
 			var g = groups[i];
 			valid = g.valid();
 		});
+		localStorage.setItem(active_key,active);
 	};
+	var old_active = localStorage.getItem(active_key);
+	if (old_active !== null) old_active = parseInt(old_active);
 	retr.addGroup = function (group) {
 		groups.push(group);
 		if (groups.length === 1) group.active();
 		update_buttons();
+		if (old_active === null) return;
+		if (groups.length !== (old_active + 1)) return;
+		active = old_active;
+		set_active();
 	};
 	retr.currentGroup = function () {
 		return groups[groups.length - 1];
