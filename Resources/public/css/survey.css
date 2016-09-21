@@ -61,6 +61,14 @@ h1, h2 {
 	font-size: 16px;
 }
 
+.hidden-md.hidden-lg.fanferret-rating-explanations .fanferret-rating-explanation {
+	display: block;
+	font-size: 14px;
+	max-width: unset;
+	text-align: left;
+	width: 100%;
+}
+
 .fanferret-rating-explanation:nth-child(2) {
 	text-align: center;
 }
