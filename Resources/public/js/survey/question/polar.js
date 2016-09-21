@@ -33,9 +33,7 @@ define(['jquery','survey/question/base','survey/radio'],function ($, base, radio
 			group.update();
 		};
 		this.addValid(function () {
-			if (get_value() === null) return false;
-			if (is_explain() && (explain.val().trim() === '')) return false;
-			return true;
+			return get_value() !== null;
 		});
 		if (root.hasClass('fanferret-polar-explain')) {
 			explain_div = root.find('.fanferret-polar-explain-input');

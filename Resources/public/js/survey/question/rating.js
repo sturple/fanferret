@@ -47,9 +47,7 @@ define(['jquery','survey/question/base','survey/condition','survey/radio'],funct
 		};
 		if (explain) explain.on('input change',update);
 		this.addValid(function () {
-			if (get_value() === null) return false;
-			if (is_explain() && !get_explain()) return false;
-			return true;
+			return get_value() !== null;
 		});
 	};
 });
