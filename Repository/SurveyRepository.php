@@ -48,6 +48,11 @@ class SurveyRepository extends \Doctrine\ORM\EntityRepository
     private function getByUserAll(\FanFerret\QuestionBundle\Utility\Page $page = null)
     {
         $qb = $this->createQueryBuilder('s');
+        //  Joins necessary for proper ordering
+        $qb->leftJoin('s.property','p')
+            ->leftJoin('p.group','g')
+            ->addSelect('TRIM(CONCAT(CONCAT(g.name,\' \'),CONCAT(CONCAT(p.name,\' \'),s.name))) AS HIDDEN orderBy')
+            ->orderBy('orderBy','ASC');
         if (!is_null($page)) $page->addToQueryBuilder($qb);
         //  TODO: Order by?
         $q = $qb->getQuery();
@@ -57,7 +62,9 @@ class SurveyRepository extends \Doctrine\ORM\EntityRepository
     private function getByUserNativeQueryText()
     {
         return 'SELECT
-            `survey`.*
+            `survey`.*,
+            `property`.`name` AS `pname`,
+            `group`.`name` AS `gname`
         FROM
             `acl`
             INNER JOIN `group` ON `acl`.`group_id` = `group`.`id`
@@ -67,19 +74,26 @@ class SurveyRepository extends \Doctrine\ORM\EntityRepository
             `acl`.`user_id` = ?
         UNION
         SELECT
-            `survey`.*
+            `survey`.*,
+            `property`.`name` AS `pname`,
+            `group`.`name` AS `gname`
         FROM
             `acl`
             INNER JOIN `property` ON `acl`.`property_id` = `property`.`id`
             INNER JOIN `survey` ON `survey`.`property_id` = `property`.`id`
+            LEFT JOIN `group` ON `property`.`group_id` = `group`.`id`
         WHERE
             `acl`.`user_id` = ?
         UNION
         SELECT
-            `survey`.*
+            `survey`.*,
+            `property`.`name` AS `pname`,
+            `group`.`name` AS `gname`
         FROM
             `acl`
             INNER JOIN `survey` ON `acl`.`survey_id` = `survey`.`id`
+            INNER JOIN `property` ON `survey`.`property_id` = `property`.`id`
+            LEFT JOIN `group` ON `property`.`group_id` = `group`.`id`
         WHERE
             `acl`.`user_id` = ?';
     }
@@ -103,6 +117,10 @@ class SurveyRepository extends \Doctrine\ORM\EntityRepository
             ->addMetaResult('s','property_id','property_id')
             ->addFieldResult('s','name','name');
         $sql = $this->getByUserNativeQueryText();
+        $sql = sprintf(
+            'SELECT *, CONCAT_WS(\' \',`gname`,`pname`,`name`) AS `orderBy` FROM (%s) `u` ORDER BY `orderBy`',
+            $sql
+        );
         if (!is_null($page)) {
             $sql .= ' LIMIT ?,?';
         }
