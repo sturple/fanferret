@@ -29,6 +29,7 @@ class YamlQuestionSerializerTest extends \PHPUnit_Framework_TestCase
 'slug: thepalmsturksandcaicos
 params: {}
 language: en-CA
+name: The Palms
 questionGroups:
     -   order: 0
         params: {}
@@ -48,6 +49,7 @@ questionGroups:
         $this->assertSame('en-CA',$s->getLanguage());
         $this->assertSame(0,count(get_object_vars($s->getParams())));
         $this->assertSame(0,count($s->getSurveySessions()));
+        $this->assertSame('The Palms',$s->getName());
         $qgs = $s->getQuestionGroups();
         $this->assertSame(1,count($qgs));
         $qg = $qgs[0];
