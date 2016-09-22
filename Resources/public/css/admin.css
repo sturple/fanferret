@@ -132,7 +132,7 @@ form label:after {
 	vertical-align: middle;
 }
 
-.fanferret-survey-property-name:after, fanferret-survey-group-name:after {
+.fanferret-survey-property-name:after, .fanferret-survey-group-name:after {
 	content: "-";
 	margin-left: 5px;
 	margin-right: 5px;
