@@ -21,10 +21,14 @@
 			<span class="fanferret-survey-name">{{survey.survey.name}}</span>
 		</div>
 		<div class="col-md-3">
+			{% if survey.delivery %}
 			<a class="btn btn-primary" href="{{path('fgms_question_admin_delivery' ~ route_suffix,args)|escape('html_attr')}}">Schedule a Delivery</a>
+			{% endif %}
 		</div>
 		<div class="col-md-3">
+			{% if survey.comment_cards %}
 			<a class="btn btn-primary" href="{{path('fgms_question_admin_comment_cards' ~ route_suffix,args)|escape('html_attr')}}">View All Comment Cards</a>
+			{% endif %}
 		</div>
 	</div>
 	{% endfor %}
