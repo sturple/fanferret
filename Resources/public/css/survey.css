@@ -46,12 +46,10 @@ h1, h2 {
 	padding-left: 0;
 }
 
-.fanferret-checklist-option > div {
-	display: inline-block;
-}
-
 .fanferret-checklist-option > .fanferret-checklist-option-other-text {
 	display: block;
+	margin-left: -20px;
+	margin-top: 5px;
 }
 
 .fanferret-rating-explanations {
@@ -92,7 +90,7 @@ h1, h2 {
 	width: 20%;
 }
 
-.fanferret-rating-rating > a, .fanferret-polar-option > a, .fanferret-checklist-option > a {
+.fanferret-rating-rating > a, .fanferret-polar-option > a {
 	border-radius: 15px;
 	color: white;
 	display: block;
@@ -105,35 +103,15 @@ h1, h2 {
 	width: 30px;
 }
 
-.fanferret-checklist-option-label {
-	display: inline-block;
-	height: 30px;
-}
-
-.fanferret-checklist-option > a {
-	display: inline-block;
-	margin-right: 5px;
-	vertical-align: middle;
-}
-
-.fanferret-checklist-option {
-	margin-bottom: 5px;
-	line-height: 30px;
-}
-
-.fanferret-checklist-option-other-text {
-	margin-top: 5px;
-}
-
-.fanferret-rating-rating > a, .fanferret-polar-option > a, .fanferret-checklist-option > a,
+.fanferret-rating-rating > a, .fanferret-polar-option > a,
 #survey-carousel > ol.carousel-indicators > li {
 	background: #337AB7;
 	border: 1px #2e6da4 solid;
 }
 
-.fanferret-rating-rating > a:hover, .fanferret-rating-rating > a:active, .fanferret-rating-rating > a.selected,
-.fanferret-polar-option > a:hover, .fanferret-polar-option > a:active, .fanferret-polar-option > a.selected,
-.fanferret-checklist-option > a:hover, .fanferret-checklist-option > a:active, .fanferret-checklist-option > a.selected,
+.fanferret-rating-rating > a:hover, .fanferret-polar-option > a:hover,
+.fanferret-rating-rating > a:active, .fanferret-rating-rating > a.selected,
+.fanferret-polar-option > a:active, .fanferret-polar-option > a.selected,
 #survey-carousel > ol.carousel-indicators > li.active {
 	background: #286090;
 	border-color: #204d74;

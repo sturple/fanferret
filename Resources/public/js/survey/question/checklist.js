@@ -1,4 +1,4 @@
-define(['jquery','survey/question/base','survey/radio'],function ($, base, radio) {
+define(['jquery','survey/question/base'],function ($, base) {
 	return function (name, group, storage, document) {
 		base.call(this,name,group,document);
 		document = $(document);
@@ -7,11 +7,11 @@ define(['jquery','survey/question/base','survey/radio'],function ($, base, radio
 		var other = null;
 		var other_hidden = null;
 		var other_div = null;
-		var radios = new radio(div.find('a'));
+		var radios = div.find('input[name="' + name + '_group"]');
 		var key = group.getToken() + '_' + name;
 		var other_key = key + '_other';
 		var update = function () {
-			var selected = radios.getValue();
+			var selected = radios.filter(':checked').val();
 			storage.setItem(key,selected);
 			if (selected === 'other') {
 				hidden.val(null);
@@ -28,7 +28,14 @@ define(['jquery','survey/question/base','survey/radio'],function ($, base, radio
 			}
 			group.update();
 		};
-		radios.setValue(storage.getItem(key));
+		radios.prop('checked',false);
+		var old = storage.getItem(key);
+		for (var i = 0; i < radios.length; ++i) {
+			var e = $(radios[i]);
+			if (e.attr('value') !== old) continue;
+			e.prop('checked',true);
+			break;
+		}
 		if (div.hasClass('fanferret-other')) {
 			other = div.find('input[type="text"]');
 			other_div = div.find('.fanferret-checklist-option-other-text');
@@ -37,13 +44,9 @@ define(['jquery','survey/question/base','survey/radio'],function ($, base, radio
 			other.on('input change',update);
 		}
 		update();
-		var change = radios.change;
-		radios.change = function () {
-			change();
-			update();
-		};
+		div.find('input[type="radio"]').change(update);
 		this.addValid(function () {
-			var val = radios.getValue();
+			var val = radios.filter(':checked').val();
 			if (!val) return false;
 			if (val !== 'other') return true;
 			if (other.val().trim() === '') return false;

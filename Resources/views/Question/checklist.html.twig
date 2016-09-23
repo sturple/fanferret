@@ -3,15 +3,15 @@
 	<div class="fanferret-question-input">
 		<ul class="fanferret-checklist-options">
 			{% for option in options %}
-			<li class="fanferret-checklist-option">
-				<a href="javascript:void(0);" data-value="{{loop.index0|escape('html_attr')}}"></a>
-				<span class="fanferret-checklist-option-label">{{option}}</span>
+			<li class="fanferret-checklist-option radio radio-primary">
+				<input type="radio" name="{{name|escape('html_attr')}}_group" value="{{loop.index0|escape('html_attr')}}" id="{{name ~ loop.index0|escape('html_attr')}}">
+				<label for="{{name ~ loop.index0|escape('html_attr')}}">{{option}}</label>
 			</li>
 			{% endfor %}
 			{% if hasOther %}
-			<li class="fanferret-checklist-option fanferret-checklist-option-other">
-				<a href="javascript:void(0);" data-value="other"></a>
-				<span class="fanferret-checklist-option-label">Other</span>
+			<li class="fanferret-checklist-option fanferret-checklist-option-other radio radio-primary">
+				<input type="radio" name="{{name|escape('html_attr')}}_group" value="other" id="{{name|escape('html_attr')}}_other">
+				<label for="{{name|escape('html_attr')}}_other">Other</label>
 				<div class="fanferret-checklist-option-other-text" style="display:none;">
 					<input class="form-control" type="text">
 				</div>
