@@ -2,7 +2,7 @@
 
 {% block head %}
 	{{parent()}}
-	<script type="text/javascript" src="{{asset('bundles/fanferretquestion/js/survey/survey.js')|escape('html_attr')}}" data-token="{{session.token}}"></script>
+	<script type="text/javascript" src="{{asset('bundles/fanferretquestion/js/survey/survey.js')|escape('html_attr')}}" data-fanferret-token="{{session.token}}"></script>
 {% endblock %}
 
 {% block body %}

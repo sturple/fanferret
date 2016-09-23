@@ -1,6 +1,6 @@
 var fanFerret = (function () {
 	var retr = {};
-	var token = $('script').last().attr('data-token');
+	var token = $('head script[data-fanferret-token]').attr('data-fanferret-token');
 	retr.getToken = function () {
 		return token;
 	};
