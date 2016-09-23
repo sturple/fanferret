@@ -32,6 +32,10 @@ h1, h2 {
 	text-align: center;
 }
 
+.fanferret-title > * {
+	text-align: left;
+}
+
 #survey_carousel .carousel > .carousel-inner > .carousel-item {
 	min-height: 300px;
 }
