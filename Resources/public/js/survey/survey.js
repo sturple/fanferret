@@ -17,6 +17,8 @@ var fanFerret = (function () {
 			functions.forEach(function (func) {
 				func();
 			});
+			$('.fanferret-spinner').fadeOut();
+			$('#survey-carousel').addClass('slide');
 		};
 	};
 	retr.wait = function (func) {

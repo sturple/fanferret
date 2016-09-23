@@ -9,6 +9,9 @@
 	{{form_start(form)}}
 	{{form_end(form)}}
 	{{parent()}}
+	<div class="fanferret-spinner">
+		<img src="{{asset('bundles/fanferretquestion/images/spinner.gif')|escape('html_attr')}}">
+	</div>
 {% endblock %}
 
 {% block content %}
@@ -18,7 +21,7 @@
 	{% if survey.params.title is defined %}
 	<h1>{{survey.params.title}}</h1>
 	{% endif %}
-	<div id="survey-carousel" class="carousel slide" data-ride="carousel" data-interval="false" data-keyboard="false">
+	<div id="survey-carousel" class="carousel" data-ride="carousel" data-interval="false" data-keyboard="false">
 		{% if groups|length > 1 %}
 		<ol class="carousel-indicators">
 			{% for group in survey.questionGroups %}
