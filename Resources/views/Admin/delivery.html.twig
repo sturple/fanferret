@@ -58,7 +58,7 @@
 {% endblock %}
 
 {% block nav %}
-<div class="col-md-8">
+<div class="col-md-4">
 	{% if comment_cards %}
 	{% set args = {'survey': survey.slug, 'property': survey.property.slug} %}
 	{% if survey.property.group != null %}
@@ -69,5 +69,8 @@
 	{% endif %}
 	<a class="btn btn-primary" href="{{path(route,args)|escape('html_attr')}}">View All Comment Cards</a>
 	{% endif %}
+</div>
+<div class="col-md-4">
+	<a class="btn btn-primary" href="{{path('fgms_question_admin')|escape('html_attr')}}">View All Surveys</a>
 </div>
 {% endblock %}

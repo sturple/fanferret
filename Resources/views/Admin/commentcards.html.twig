@@ -65,9 +65,12 @@
 {% endblock %}
 
 {% block nav %}
-<div class="col-md-8">
+<div class="col-md-4">
 	{% if delivery %}
 	<a class="btn btn-primary" href="{{path(route_delivery,args)|escape('html_attr')}}">Schedule a Delivery</a>
 	{% endif %}
+</div>
+<div class="col-md-4">
+	<a class="btn btn-primary" href="{{path('fgms_question_admin')|escape('html_attr')}}">View All Surveys</a>
 </div>
 {% endblock %}
