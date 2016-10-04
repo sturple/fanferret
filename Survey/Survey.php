@@ -147,6 +147,21 @@ class Survey implements SurveyInterface
         return $this->getTemplate('FanFerretQuestionBundle:Survey:default.html.twig');
     }
 
+    private function getStylesheets()
+    {
+        $retr = $this->getOptionalStringArray('stylesheets');
+        if (is_null($retr)) return [];
+        return $retr;
+    }
+
+    private function getBaseContext()
+    {
+        return [
+            'survey' => $this->survey,
+            'stylesheets' => $this->getStylesheets()
+        ];
+    }
+
     public function render(\FanFerret\QuestionBundle\Entity\SurveySession $session, \Symfony\Component\Form\FormView $fv)
     {
         $gs = array_map(function ($group) {
@@ -161,12 +176,11 @@ class Survey implements SurveyInterface
                 $this->twig
             ); 
         },$this->groups);
-        $ctx = [
+        $ctx = array_merge($this->getBaseContext(),[
             'groups' => $gs,
             'form' => $fv,
-            'survey' => $this->survey,
             'session' => $session
-        ];
+        ]);
         return new \FanFerret\QuestionBundle\Utility\Renderable(
             $this->getSurveyTemplate(),
             $ctx,
@@ -192,11 +206,10 @@ class Survey implements SurveyInterface
         foreach ($this->rules as $r) {
             $rs = array_merge($r->getConditionalFinish($qs),$rs);
         }
-        $ctx = [
+        $ctx = array_merge($this->getBaseContext(),[
             'conditional' => $rs,
-            'survey' => $this->survey,
             'session' => $session
-        ];
+        ]);
         return new \FanFerret\QuestionBundle\Utility\Renderable(
             'FanFerretQuestionBundle:Survey:finish.html.twig',
             $ctx,

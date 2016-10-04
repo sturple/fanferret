@@ -152,15 +152,23 @@ trait HasObject
         return $val;
     }
 
-    protected function getStringArray($property, $obj = null)
+    protected function getOptionalStringArray($property, $obj = null)
     {
-        $val = $this->getArray($property,$obj);
+        $val = $this->getOptionalArray($property,$obj);
+        if (is_null($val)) return null;
         foreach ($val as $str) if (!is_string($str)) throw new \InvalidArgumentException(
             sprintf(
                 'Property "%s" is not string array',
                 $property
             )
         );
+        return $val;
+    }
+
+    protected function getStringArray($property, $obj = null)
+    {
+        $val = $this->getOptionalStringArray($property,$obj);
+        if (is_null($val)) $this->noProperty($property);
         return $val;
     }
 
