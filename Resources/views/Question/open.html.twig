@@ -1,7 +1,9 @@
 <section class="fanferret-open fanferret-question {% if testimonial %}fanferret-testimonial{% endif %}" id="{{name|escape('html_attr')}}">
 	<div class="fanferret-question-title">{{title}}</div>
-	<div class="fanferret-question-input">
-		<textarea class="form-control"></textarea>
+	<div class="fanferret-question-input row">
+		<div class="col-md-7">
+			<textarea class="form-control"></textarea>
+		</div>
 	</div>
 	{% if testimonial %}
 	<div class="fanferret-question-testimonial">
