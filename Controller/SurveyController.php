@@ -85,4 +85,27 @@ class SurveyController extends Controller
         $survey = $this->createSurvey($session);
         return $this->render('FanFerretQuestionBundle:Default:finish.html.twig',['finish' => $survey->renderFinish($session)]);
     }
+
+    public function stylesAction($id)
+    {
+        $id = intval($id);
+        $doctrine = $this->getDoctrine();
+        $repo = $doctrine->getRepository(\FanFerret\QuestionBundle\Entity\Survey::class);
+        $survey = $repo->findOneById($id);
+        if (is_null($survey)) throw $this->createNotFoundException(
+            sprintf(
+                'No Survey with ID %d',
+                $id
+            )
+        );
+        $survey = \FanFerret\QuestionBundle\DependencyInjection\Factory::createSurvey(
+            $survey,
+            $this->container,
+            'en-CA' //  Irrelevant for our purposes so just choose one
+        );
+        $css = $survey->renderStyles()->render();
+        return new \Symfony\Component\HttpFoundation\Response($css,200,[
+            'Content-Type' => 'text/css; charset=utf-8'
+        ]);
+    }
 }

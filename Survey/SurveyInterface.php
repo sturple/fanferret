@@ -63,6 +63,13 @@ interface SurveyInterface
     public function renderFinish(\FanFerret\QuestionBundle\Entity\SurveySession $session);
 
     /**
+     * Renders the survey's stylesheet.
+     *
+     * @return Renderable
+     */
+    public function renderStyles();
+
+    /**
      * Sends the Nth notification if appropriate.
      *
      * @param SurveySession $session
