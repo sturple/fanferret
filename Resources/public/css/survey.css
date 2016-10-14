@@ -57,6 +57,10 @@ h1, h2 {
 	overflow: hidden;
 }
 
+.fanferret-rating-explanations.hidden-md.hidden-lg {
+	padding-left: 15px;
+}
+
 .fanferret-rating-explanation {
 	float: left;
 	max-width: 75px;
@@ -166,6 +170,15 @@ textarea {
 	color: green;
 	content: "\002713";
 	margin-left: 5px;
+}
+
+.fanferret-valid {
+	background-color: #E6FFE6;
+}
+
+.fanferret-question {
+	border-radius: 10px;
+	padding: 15px;
 }
 
 .fanferret-spinner {
