@@ -12,8 +12,10 @@
 			<li class="fanferret-checklist-option fanferret-checklist-option-other radio radio-primary">
 				<input type="radio" name="{{name|escape('html_attr')}}_group" value="other" id="{{name|escape('html_attr')}}_other">
 				<label for="{{name|escape('html_attr')}}_other">Other</label>
-				<div class="fanferret-checklist-option-other-text" style="display:none;">
-					<input class="form-control" type="text">
+				<div class="fanferret-checklist-option-other-text row" style="display:none;">
+					<div class="col-md-7">
+						<input class="form-control" type="text">
+					</div>
 				</div>
 			</li>
 			{% endif %}

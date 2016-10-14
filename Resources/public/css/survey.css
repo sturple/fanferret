@@ -199,3 +199,7 @@ textarea {
 	top: 50%;
 	transform: translate(-50%,-50%);
 }
+
+.fanferret-checklist-option-other-text > div {
+	padding: 0;
+}
