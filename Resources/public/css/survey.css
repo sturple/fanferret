@@ -162,7 +162,7 @@ textarea {
 	width: auto;
 }
 
-.fanferret-valid .fanferret-question-title:after {
+.fanferret-valid .fanferret-question-title div:after {
 	color: green;
 	content: "\002713";
 	margin-left: 5px;
