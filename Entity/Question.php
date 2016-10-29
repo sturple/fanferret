@@ -50,7 +50,7 @@ class Question
     private $type;
 
     /**
-     * @ORM\ManyToOne(targetEntity="QuestionGroup",inversedBy="questions")
+     * @ORM\ManyToOne(targetEntity="Question",inversedBy="questions")
      */
     private $question;
 
