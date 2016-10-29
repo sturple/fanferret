@@ -44,9 +44,11 @@ abstract class Question implements QuestionInterface
 
     protected function getName()
     {
+        $q = $this->q;
+        while (is_null($q->getQuestionGroup())) $q = $q->getQuestion();
         return sprintf(
             '%d_%d',
-            $this->q->getQuestionGroup()->getId(),
+            $q->getQuestionGroup()->getId(),
             $this->q->getId()
         );
     }
