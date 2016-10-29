@@ -48,6 +48,17 @@ class Question
      * @ORM\Column(type="string",length=128)
      */
     private $type;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="QuestionGroup",inversedBy="questions")
+     */
+    private $question;
+
+    /**
+     * @ORM\OneToMany(targetEntity="Question",mappedBy="question",cascade="all")
+     * @ORM\OrderBy({"order"="ASC"})
+     */
+    private $questions;
 	
     /**
      * Constructor
@@ -56,6 +67,7 @@ class Question
     {
         $this->rules = new \Doctrine\Common\Collections\ArrayCollection();
         $this->questionAnswers = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->questions = new \Doctrine\Common\Collections\ArrayCollection();
     }
 
     /**
@@ -233,5 +245,63 @@ class Question
     public function getType()
     {
         return $this->type;
+    }
+
+    /**
+     * Set question
+     *
+     * @param \FanFerret\QuestionBundle\Entity\QuestionGroup $question
+     *
+     * @return Question
+     */
+    public function setQuestion(\FanFerret\QuestionBundle\Entity\QuestionGroup $question = null)
+    {
+        $this->question = $question;
+
+        return $this;
+    }
+
+    /**
+     * Get question
+     *
+     * @return \FanFerret\QuestionBundle\Entity\QuestionGroup
+     */
+    public function getQuestion()
+    {
+        return $this->question;
+    }
+
+    /**
+     * Add question
+     *
+     * @param \FanFerret\QuestionBundle\Entity\Question $question
+     *
+     * @return Question
+     */
+    public function addQuestion(\FanFerret\QuestionBundle\Entity\Question $question)
+    {
+        $this->questions[] = $question;
+
+        return $this;
+    }
+
+    /**
+     * Remove question
+     *
+     * @param \FanFerret\QuestionBundle\Entity\Question $question
+     */
+    public function removeQuestion(\FanFerret\QuestionBundle\Entity\Question $question)
+    {
+        $this->questions->removeElement($question);
+    }
+
+    /**
+     * Get questions
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getQuestions()
+    {
+        return $this->questions;
     }
 }
