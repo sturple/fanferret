@@ -53,6 +53,7 @@ abstract class Rule implements RuleInterface
         $qs = $this->entity->getQuestions();
         if (count($qs) === 0) throw new \InvalidArgumentException('No questions');
         $q = $qs[0];
+        while (is_null($q->getQuestionGroup())) $q = $q->getQuestion();
         $qg = $q->getQuestionGroup();
         return $qg->getSurvey();
     }
