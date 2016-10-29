@@ -1,6 +1,10 @@
 {% set show_explanations = true %}
+{% set parent = entity.questionGroup %}
+{% if not parent %}
+{% set parent = entity.question %}
+{% endif %}
 {% if entity.order != 0 %}
-{% set show_explanations = entity.questionGroup.questions[entity.order - 1].type != 'rating' %}
+{% set show_explanations = parent.questions[entity.order - 1].type != 'rating' %}
 {% endif %}
 {% if show_explanations %}
 <div class="hidden-md hidden-lg fanferret-rating-explanations">
