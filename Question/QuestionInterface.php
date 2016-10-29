@@ -25,25 +25,23 @@ interface QuestionInterface
     public function addToFormBuilder(\Symfony\Component\Form\FormBuilderInterface $fb);
 
     /**
-     * Gets a QuestionAnswer entity representing the
+     * Gets the QuestionAnswer entities representing the
      * answer to this question.
      *
-     * This method shall link the QuestionAnswer to
+     * This method shall link each QuestionAnswer to
      * the Question entity this object represents,
      * but shall not form the relationship the other
      * way.  This is to ensure that should the caller
      * decide not to use the returned QuestionAnswer
-     * entity the wrapped Question remains unaffected.
+     * entities the wrapped Question remains unaffected.
      *
      * @param array $data
      *  An associative array of data from the submitted
      *  form.
      *
-     * @return QuestionAnswer|null
-     *  A QuestionAnswer entity or null if the question
-     *  does not generate an answer.
+     * @return array
      */
-    public function getAnswer(array $data);
+    public function getAnswers(array $data);
 
     /**
      * Renders the HTML for the question.

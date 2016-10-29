@@ -12,8 +12,8 @@ abstract class NoAnswerQuestion extends Question
     {
     }
 
-    public function getAnswer(array $data)
+    public function getAnswers(array $data)
     {
-        return null;
+        return [];
     }
 }

@@ -71,11 +71,11 @@ class ChecklistQuestion extends Question
         return $retr;
     }
 
-    public function getAnswer(array $data)
+    public function getAnswers(array $data)
     {
-        $retr = parent::getAnswer($data);
+        $retr = $this->getAnswer();
         $retr->setValue(json_encode($this->getAnswerObject($data)));
-        return $retr;
+        return [$retr];
     }
 
     public function render()

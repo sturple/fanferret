@@ -116,14 +116,14 @@ class Survey implements SurveyInterface
         //	SurveySession
         $qs = [];
         foreach ($this->traverseQuestions() as $q) {
-            $ans = $q->getAnswer($data);
-            if (is_null($ans)) continue;
-            $entity = $q->getEntity();
-            $entity->addQuestionAnswer($ans);
-            $session->addQuestionAnswer($ans);
-            $ans->setSurveySession($session);
-            //	TODO: Testimonial handling
-            $qs[$entity->getId()] = $ans;
+            foreach ($q->getAnswers($data) as $ans) {
+                $entity = $ans->getQuestion();
+                $entity->addQuestionAnswer($ans);
+                $session->addQuestionAnswer($ans);
+                $ans->setSurveySession($session);
+                //  TODO: Testimonial handling if applicable
+                $qs[$entity->getId()] = $ans;
+            }
         }
         //	Process all rules
         foreach ($this->rules as $r) {

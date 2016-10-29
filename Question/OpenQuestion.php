@@ -32,9 +32,9 @@ class OpenQuestion extends Question
         );
     }
 
-    public function getAnswer(array $data)
+    public function getAnswers(array $data)
     {
-        $retr = parent::getAnswer($data);
+        $retr = $this->getAnswer();
         $name = $this->getName();
         $value = $data[$name];
         if (is_null($value)) $value = '';
@@ -47,7 +47,7 @@ class OpenQuestion extends Question
             $t->setToken($this->token->generate());
             $retr->setTestimonial($t);
         }
-        return $retr;
+        return [$retr];
     }
 
     public function render()

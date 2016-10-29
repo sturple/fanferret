@@ -49,14 +49,14 @@ class PolarQuestion extends Question
 		);
 	}
 
-	public function getAnswer(array $data)
+	public function getAnswers(array $data)
 	{
-		$retr = parent::getAnswer($data);
+		$retr = $this->getAnswer();
 		$name = $this->getName();
 		$val = !!$data[$name];
 		if (!$this->explain) {
 			$retr->setValue($val ? 'true' : 'false');
-			return $retr;
+			return [$retr];
 		}
 		$ans = (object)[
 			'value' => $val,
@@ -68,7 +68,7 @@ class PolarQuestion extends Question
 			$ans->explanation = $data[$name . '_explain'];
 		}
 		$retr->setValue(json_encode($ans));
-		return $retr;
+		return [$retr];
 	}
 
 	public function render()

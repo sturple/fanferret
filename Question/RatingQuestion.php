@@ -32,7 +32,7 @@ class RatingQuestion extends Question
         );
     }
 
-    public function getAnswer(array $data)
+    public function getAnswers(array $data)
     {
         $name = $this->getName();
         if (!isset($data[$name])) throw new \InvalidArgumentException('No rating');
@@ -58,13 +58,12 @@ class RatingQuestion extends Question
         );
         $explain = null;
         if (!is_null($this->explain) && $this->explain->check($i)) $explain = $data[$name . '_explain'];
-        $retr = new \FanFerret\QuestionBundle\Entity\QuestionAnswer();
-        $retr->setQuestion($this->getEntity());
+        $retr = $this->getAnswer();
         $retr->setValue(json_encode((object)[
             'rating' => $i,
             'explanation' => $explain
         ]));
-        return $retr;
+        return [$retr];
     }
 
     public function render()
