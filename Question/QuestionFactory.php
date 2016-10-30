@@ -48,6 +48,12 @@ class QuestionFactory implements QuestionFactoryInterface
             $this->twig
         );
         if ($type === 'html') return new HtmlQuestion($question);
+        if ($type === 'conditionalnested') return new ConditionalNestedQuestion(
+            $question,
+            $this,
+            $this->translator,
+            $this->twig
+        );
         throw new \InvalidArgumentException(
             sprintf(
                 'Unrecognized question type "%s"',

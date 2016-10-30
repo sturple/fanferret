@@ -1,0 +1,43 @@
+<section class="fanferret-conditional-nested fanferret-question {% if negative %}fanferret-conditional-nested-negative{% endif %}" id="{{name|escape('html_attr')}}">
+	<div class="row">
+		<div class="fanferret-question-title col-md-7">{{title}}</div>
+		<div class="fanferret-question-input col-md-5">
+			<ul class="fanferret-conditional-nested-options">
+				<li class="fanferret-conditional-nested-option">
+					<a href="javascript:void(0);" data-value="true">Yes</a>
+				</li>
+				<li class="fanferret-conditional-nested-option">
+					<a href="javascript:void(0);" data-value="false">No</a>
+				</li>
+			</ul>
+		</div>
+	</div>
+</section>
+<script type="text/javascript">
+	(function () {
+		var handle = fanFerret.register();
+		require(['survey/question/conditionalnested'],function (cn) {
+			handle(function () {
+				var g = fanFerret.currentGroup();
+				var question = new cn(
+					{{name|json_encode()|raw}},
+					g,
+					localStorage,
+					document
+				);
+				g.addQuestion(question);
+				fanFerret.pushAddQuestion(function (q) {
+					question.addQuestion(q);
+				});
+			});
+		});
+	})();
+</script>
+<section class="fanferret-conditional-nested-children" id="{{name|escape('html_attr')}}_nested">
+	{% for question in nested %}
+	{{question.render()|raw}}
+	{% endfor %}
+</section>
+<script type="text/javascript">
+	fanFerret.register()(function () {	fanFerret.popAddQuestion();	});
+</script>

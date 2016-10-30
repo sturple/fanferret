@@ -102,6 +102,7 @@ var fanFerret = (function () {
 		--active;
 		set_active();
 	};
+	var add_to = [];
 	retr.addQuestion = function (dependency) {
 		var args = Array.apply(null,arguments);
 		args.splice(0,1);
@@ -111,9 +112,16 @@ var fanFerret = (function () {
 				var g = retr.currentGroup();
 				args.push(g,localStorage,document);
 				var q = new (function () {	question.apply(this,args);	})();
-				g.addQuestion(q);
+				if (add_to.length === 0) g.addQuestion(q);
+				else add_to[add_to.length - 1](q);
 			});
 		});
+	};
+	retr.pushAddQuestion = function (func) {
+		add_to.push(func);
+	};
+	retr.popAddQuestion = function () {
+		add_to.pop();
 	};
 	retr.update = function () {
 		update_buttons();

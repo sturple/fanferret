@@ -39,7 +39,7 @@ h1, h2 {
 	min-height: 300px;
 }
 
-.fanferret-checklist-options, .fanferret-rating-ratings, .fanferret-polar-options {
+.fanferret-checklist-options, .fanferret-rating-ratings, .fanferret-polar-options, .fanferret-conditional-nested-options {
 	list-style-type: none;
 	margin-bottom: 0;
 	padding-left: 0;
@@ -86,14 +86,14 @@ h1, h2 {
 	text-align: right;
 }
 
-.fanferret-rating-rating, .fanferret-polar-option {
+.fanferret-rating-rating, .fanferret-polar-option, .fanferret-conditional-nested-option {
 	box-sizing: border-box;
 	float: left;
 	max-width: 45px;
 	width: 20%;
 }
 
-.fanferret-rating-rating > a, .fanferret-polar-option > a {
+.fanferret-rating-rating > a, .fanferret-polar-option > a, .fanferret-conditional-nested-option > a {
 	border-radius: 20px;
 	color: white;
 	display: block;
@@ -107,21 +107,22 @@ h1, h2 {
 	width: 40px;
 }
 
-.fanferret-rating-rating > a, .fanferret-polar-option > a,
+.fanferret-rating-rating > a, .fanferret-polar-option > a, .fanferret-conditional-nested-option > a,
 #survey-carousel > ol.carousel-indicators > li {
 	background: #337AB7;
 	border: 1px #2e6da4 solid;
 }
 
-.fanferret-rating-rating > a:hover, .fanferret-polar-option > a:hover,
+.fanferret-rating-rating > a:hover, .fanferret-polar-option > a:hover, .fanferret-conditional-nested-option > a:hover,
 .fanferret-rating-rating > a:active, .fanferret-rating-rating > a.selected,
 .fanferret-polar-option > a:active, .fanferret-polar-option > a.selected,
+.fanferret-conditional-nested-option > a:active, .fanferret-conditional-nested-option > a.selected,
 #survey-carousel > ol.carousel-indicators > li.active {
 	background: #286090;
 	border-color: #204d74;
 }
 
-.fanferret-rating-ratings, .fanferret-polar-options {
+.fanferret-rating-ratings, .fanferret-polar-options, .fanferret-conditional-nested-options {
 	overflow: hidden;
 }
 
