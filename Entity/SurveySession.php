@@ -111,7 +111,7 @@ class SurveySession
      */
     public function setCreated($created)
     {
-        $this->created = $created;
+        $this->created = \FanFerret\QuestionBundle\Utility\DateTime::toDoctrine($created);
 
         return $this;
     }
@@ -123,7 +123,7 @@ class SurveySession
      */
     public function getCreated()
     {
-        return $this->created;
+        return $this->created = \FanFerret\QuestionBundle\Utility\DateTime::fromDoctrine($this->created);
     }
 
     /**
@@ -135,7 +135,7 @@ class SurveySession
      */
     public function setCompleted($completed)
     {
-        $this->completed = $completed;
+        $this->completed = \FanFerret\QuestionBundle\Utility\DateTime::toDoctrine($completed);
 
         return $this;
     }
@@ -147,7 +147,7 @@ class SurveySession
      */
     public function getCompleted()
     {
-        return $this->completed;
+        return $this->completed = \FanFerret\QuestionBundle\Utility\DateTime::fromDoctrine($this->completed);
     }
 
     /**
@@ -275,7 +275,7 @@ class SurveySession
      */
     public function setCheckout($checkout)
     {
-        $this->checkout = $checkout;
+        $this->checkout = \FanFerret\QuestionBundle\Utility\DateTime::toDoctrine($checkout);
 
         return $this;
     }
@@ -287,7 +287,7 @@ class SurveySession
      */
     public function getCheckout()
     {
-        return $this->checkout;
+        return $this->checkout = \FanFerret\QuestionBundle\Utility\DateTime::fromDoctrine($this->checkout);
     }
 
     /**
@@ -299,7 +299,7 @@ class SurveySession
      */
     public function setSeen($seen)
     {
-        $this->seen = $seen;
+        $this->seen = \FanFerret\QuestionBundle\Utility\DateTime::toDoctrine($seen);
 
         return $this;
     }
@@ -311,7 +311,7 @@ class SurveySession
      */
     public function getSeen()
     {
-        return $this->seen;
+        return $this->seen = \FanFerret\QuestionBundle\Utility\DateTime::fromDoctrine($this->seen);
     }
 
     /**

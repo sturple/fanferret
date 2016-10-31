@@ -97,7 +97,7 @@ class SurveyNotification
      */
     public function setSeen($seen)
     {
-        $this->seen = $seen;
+        $this->seen = \FanFerret\QuestionBundle\Utility\DateTime::toDoctrine($seen);
 
         return $this;
     }
@@ -109,7 +109,7 @@ class SurveyNotification
      */
     public function getSeen()
     {
-        return $this->seen;
+        return $this->seen = \FanFerret\QuestionBundle\Utility\DateTime::fromDoctrine($this->seen);
     }
 
     /**
@@ -145,7 +145,7 @@ class SurveyNotification
      */
     public function setSent($sent)
     {
-        $this->sent = $sent;
+        $this->sent = \FanFerret\QuestionBundle\Utility\DateTime::toDoctrine($sent);
 
         return $this;
     }
@@ -157,7 +157,7 @@ class SurveyNotification
      */
     public function getSent()
     {
-        return $this->sent;
+        return $this->sent = \FanFerret\QuestionBundle\Utility\DateTime::fromDoctrine($this->sent);
     }
 
     /**
