@@ -39,6 +39,10 @@ class SurveySessionRepository extends \Doctrine\ORM\EntityRepository
      * If the number of notifications is zero then the
      * time will be measured since checkout.
      *
+     * If any SurveySession entity is encountered which lacks
+     * a checkout time the created time shall be considered
+     * in its place.
+     *
      * @param int $count
      * @param DateInterval|null $since
      *
@@ -70,7 +74,7 @@ class SurveySessionRepository extends \Doctrine\ORM\EntityRepository
             );
             //  Add to query
             if ($count === 0) {
-                $since_expr = $qb->expr()->lte('ss.checkout',':when');
+                $since_expr = $qb->expr()->lte('COALESCE(ss.checkout,ss.created)',':when');
                 $qb->andWhere($since_expr);
             } else {
                 $max_expr = $qb->expr()->max('sn.sent');
@@ -88,6 +92,12 @@ class SurveySessionRepository extends \Doctrine\ORM\EntityRepository
      * Attempts to retrieve a page of SurveySession entities
      * from the data store.
      *
+     * SurveySession entities shall be ordered by checkout date
+     * with later checkout dates occurring first.  Should any
+     * SurveySession entities be encountered which lack a checkout
+     * date the created date shall be considered instead for the
+     * purposes of ordering.
+     *
      * @param Survey $survey
      *  The Survey entity whose SurveySession entities shall be
      *  retrieved.
@@ -100,7 +110,8 @@ class SurveySessionRepository extends \Doctrine\ORM\EntityRepository
         $qb = $this->createQueryBuilder('ss');
         $where_expr = $qb->expr()->eq('s.id',':sid');
         $qb->innerJoin('ss.survey','s')
-            ->orderBy('ss.checkout','desc')
+            ->addSelect('COALESCE(ss.checkout,ss.created) AS HIDDEN columnOrder')
+            ->orderBy('columnOrder','DESC')
             ->andWhere($where_expr)
             ->setParameter('sid',$survey->getId());
         $page->addToQueryBuilder($qb);

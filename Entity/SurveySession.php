@@ -24,7 +24,7 @@ class SurveySession
     private $survey;
     
     /**
-     * @ORM\Column(type="string",length=128)
+     * @ORM\Column(type="string",length=128,nullable=true)
      */
     private $room;
     
@@ -54,7 +54,7 @@ class SurveySession
     private $surveyNotifications;
 
     /**
-     * @ORM\Column(type="datetime")
+     * @ORM\Column(type="datetime",nullable=true)
      */
     private $checkout;
 
@@ -64,12 +64,12 @@ class SurveySession
     private $seen;
 
     /**
-     * @ORM\Column(type="string",length=255)
+     * @ORM\Column(type="string",length=255,nullable=true)
      */
     private $firstName;
 
     /**
-     * @ORM\Column(type="string",length=255)
+     * @ORM\Column(type="string",length=255,nullable=true)
      */
     private $lastName;
 

@@ -249,10 +249,10 @@ class Survey implements SurveyInterface
         $subject = 'Survey Reminder';
         $content_type = 'text/html';
         $from = $this->getEmailArray('from');
-        $to = (object)[
-            'name' => sprintf('%s %s',$session->getFirstName(),$session->getLastName()),
-            'address' => $session->getEmail()
-        ];
+        $to = (object)['address' => $session->getEmail()];
+        $fname = $session->getFirstName();
+        $lname = $session->getLastName();
+        if (!is_null($fname) && !is_null($lname)) $to->name = sprintf('%s %s',$fname,$lname);
         $replyto = $this->getOptionalEmailArray('replyto');
         $msg = new \Swift_Message();
         $msg->setCharset('UTF-8');

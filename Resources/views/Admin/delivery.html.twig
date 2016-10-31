@@ -24,8 +24,11 @@
 {% if session %}
 <div class="fanferret-delivery-scheduled">
 	{% set fmt = 'F j, Y' %}
-	{{session.firstName}} {{session.lastName}} at <a href="mailto:{{session.email|escape('html_attr')}}">{{session.email}}</a>
-	will receive the digital comment card no earlier than {{session.checkout|date_modify('+3 days')|date(fmt)}}.
+	{% if session.firstName and session.lastName %}
+	{{session.firstName}} {{session.lastName}} at
+	{% endif %}
+	<a href="mailto:{{session.email|escape('html_attr')}}">{{session.email}}</a>
+	will receive the digital comment card no earlier than {{session.checkout|default(session.created)|date_modify('+3 days')|date(fmt)}}.
 </div>
 {% endif %}
 {{form_start(form)}}

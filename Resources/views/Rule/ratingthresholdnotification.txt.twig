@@ -1,5 +1,5 @@
-Room # {{session.room}}
-Date {{session.completed|date('M d, Y')}}
+{% if session.room %}Room # {{session.room}}
+{% endif %}Date {{session.completed|date('M d, Y')}}
 Time {{session.completed|date('H:i')}}
 Question {{question.params.title}}
 Response {{rating}} out of 5
