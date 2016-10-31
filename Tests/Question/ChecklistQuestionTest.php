@@ -13,8 +13,11 @@ class ChecklistQuestionTest extends QuestionTestCase
         );
     }
 
-    private function assertAnswer(\FanFerret\QuestionBundle\Entity\QuestionAnswer $ans, $option, $other)
+    private function assertAnswer(array $arr, $option, $other)
     {
+        $this->assertCount(1,$arr);
+        $ans = $arr[0];
+        $this->assertInstanceOf(\FanFerret\QuestionBundle\Entity\QuestionAnswer::class,$ans);
         $entity = $ans->getQuestion();
         $this->assertNotNull($entity);
         $val = $ans->getValue();
@@ -66,43 +69,43 @@ class ChecklistQuestionTest extends QuestionTestCase
         $this->create();
     }
 
-    public function testGetAnswer()
+    public function testGetAnswers()
     {
         $this->params->hasOther = false;
         $this->params->options = ['foo','bar'];
         $data = ['1_2' => '0'];
         $q = $this->create();
-        $ans = $q->getAnswer($data);
+        $ans = $q->getAnswers($data);
         $this->assertAnswer($ans,0,null);
     }
 
-    public function testGetAnswerOther()
+    public function testGetAnswersOther()
     {
         $this->params->hasOther = true;
         $this->params->options = ['foo'];
         $data = ['1_2' => null,'1_2_other' => 'baz'];
         $q = $this->create();
-        $ans = $q->getAnswer($data);
+        $ans = $q->getAnswers($data);
         $this->assertAnswer($ans,null,'baz');
     }
 
-    public function testGetAnswerOtherButNotChosen()
+    public function testGetAnswersOtherButNotChosen()
     {
         $this->params->hasOther = true;
         $this->params->options = ['foo'];
         $data = ['1_2' => '0','1_2_other' => null];
         $q = $this->create();
-        $ans = $q->getAnswer($data);
+        $ans = $q->getAnswers($data);
         $this->assertAnswer($ans,0,null);
     }
 
-    public function testGetAnswerBad()
+    public function testGetAnswersBad()
     {
         $this->params->hasOther = false;
         $this->params->options = ['foo'];
         $this->expectException(\InvalidArgumentException::class);
         $data = ['1_2' => null];
         $q = $this->create();
-        $q->getAnswer($data);
+        $q->getAnswers($data);
     }
 }
