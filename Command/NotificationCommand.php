@@ -72,15 +72,15 @@ class NotificationCommand extends \Symfony\Bundle\FrameworkBundle\Command\Contai
         $doctrine = $this->getContainer()->get('doctrine');
         $repo = $doctrine->getRepository(\FanFerret\QuestionBundle\Entity\SurveySession::class);
         $sent = 0;
-        //  First notification is sent three days
+        //  First notification is sent immediately
         //  after checkout
-        $since = new \DateInterval('P3D');
+        $since = new \DateInterval('PT0S');
         $sessions = $repo->getByNotification(0,$since);
         $sent += $this->sendNotifications($output,$sessions,1);
-        //  Second notification is sent 8 days
-        //  after first notification (ideally that's 11
+        //  Second notification is sent 7 days
+        //  after first notification (ideally that's 7
         //  days after checkout)
-        $since = new \DateInterval('P8D');
+        $since = new \DateInterval('P7D');
         $sessions = $repo->getByNotification(1,$since);
         $sent += $this->sendNotifications($output,$sessions,2);
         $this->writeln(
