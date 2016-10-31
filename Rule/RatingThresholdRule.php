@@ -27,6 +27,7 @@ abstract class RatingThresholdRule extends SingleQuestionRule
     protected function check(array $questions)
     {
         $ans = $this->getAnswer($questions);
+        if (is_null($ans)) return false;
         $obj = json_decode($ans->getValue());
         return $this->condition->check($this->getInteger('rating',$obj));
     }

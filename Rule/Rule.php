@@ -39,12 +39,7 @@ abstract class Rule implements RuleInterface
     protected function getAnswer(array $questions, \FanFerret\QuestionBundle\Entity\Question $q)
     {
         $id = $q->getId();
-        if (!isset($questions[$id])) throw new \InvalidArgumentException(
-            sprintf(
-                'No QuestionAnswer entity for Question entity with ID %d',
-                $id
-            )
-        );
+        if (!isset($questions[$id])) return null;
         return $questions[$id];
     }
 
