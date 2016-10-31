@@ -81,7 +81,7 @@ class SurveySessionRepository extends \Doctrine\ORM\EntityRepository
                 $having_max_expr = $qb->expr()->lte($max_expr,':when');
                 $qb->andHaving($having_max_expr);
             }
-            $qb->setParameter('when',$when);
+            $qb->setParameter('when',\FanFerret\QuestionBundle\Utility\DateTime::toDoctrine($when));
         }
         //  Execute query
         $q = $qb->getQuery();
