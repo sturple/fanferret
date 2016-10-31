@@ -44,8 +44,7 @@ class Survey implements SurveyInterface
     private function getRules()
     {
         $retr = [];
-        foreach ($this->traverseQuestions() as $q) {
-            $entity = $q->getEntity();
+        foreach ($this->traverseQuestionEntities() as $entity) {
             //	There's an issue here because rules can
             //	be associated with multiple questions:
             //	We might add the same rule multiple times.
@@ -94,6 +93,27 @@ class Survey implements SurveyInterface
         foreach ($this->groups as $g) {
             foreach ($g->questions as $q) {
                 yield $q;
+            }
+        }
+    }
+
+    private function traverseQuestionEntitiesImpl(\FanFerret\QuestionBundle\Entity\Question $q)
+    {
+        yield $q;
+        foreach ($q->getQuestions() as $nested) {
+            foreach ($this->traverseQuestionEntitiesImpl($nested) as $result) {
+                yield $result;
+            }
+        }
+    }
+
+    private function traverseQuestionEntities()
+    {
+        foreach ($this->groups as $g) {
+            foreach ($g->questions as $q) {
+                foreach ($this->traverseQuestionEntitiesImpl($q->getEntity()) as $result) {
+                    yield $result;
+                }
             }
         }
     }
