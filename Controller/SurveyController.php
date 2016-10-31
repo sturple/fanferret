@@ -23,13 +23,12 @@ class SurveyController extends Controller
 
     private function createSurvey(\FanFerret\QuestionBundle\Entity\SurveySession $session)
     {
-        return \FanFerret\QuestionBundle\DependencyInjection\Factory::createSurvey(
-            $session->getSurvey(),
+        return \FanFerret\QuestionBundle\DependencyInjection\Factory::createSurveyFromSurveySession(
+            $session,
             //  Not sure whether or not I'm supposed to
             //  rely on the fact that container in the base
             //  class is protected rather than private
-            $this->container,
-            $session->getLanguage()
+            $this->container
         );
     }
 

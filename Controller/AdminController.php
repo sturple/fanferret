@@ -65,6 +65,11 @@ class AdminController extends \Symfony\Bundle\FrameworkBundle\Controller\Control
         return false;
     }
 
+    private function createSurveyFromSurveySession(\FanFerret\QuestionBundle\Entity\SurveySession $session)
+    {
+        return \FanFerret\QuestionBundle\DependencyInjection\Factory::createSurveyFromSurveySession($session,$this->container);
+    }
+
     private function getForm()
     {
         return $this->createFormBuilder()
@@ -77,13 +82,19 @@ class AdminController extends \Symfony\Bundle\FrameworkBundle\Controller\Control
             ->getForm();
     }
 
+    private function createSurveySessionImpl()
+    {
+        $retr = new \FanFerret\QuestionBundle\Entity\SurveySession();
+        $tokens = $this->get('fan_ferret_question.token_generator');
+        $retr->setToken($tokens->generate());
+        $retr->setCreated(new \DateTime());
+        return $retr;
+    }
+
     private function createSurveySession(array $data)
     {
-        $session = new \FanFerret\QuestionBundle\Entity\SurveySession();
+        $session = $this->createSurveySessionImpl();
         $session->setRoom($data['room']);
-        $tokens = $this->get('fan_ferret_question.token_generator');
-        $session->setToken($tokens->generate());
-        $session->setCreated(new \DateTime());
         $session->setCheckout($data['checkout']);
         $session->setFirstName($data['first_name']);
         $session->setLastName($data['last_name']);
@@ -142,6 +153,53 @@ class AdminController extends \Symfony\Bundle\FrameworkBundle\Controller\Control
     {
         $entity = $this->getSurveyBySlug($group,$property,$survey);
         return $this->deliveryActionImpl($request,$entity);
+    }
+
+    private function getSingleButtonForm()
+    {
+        return $this->createFormBuilder()
+            ->add('email',\Symfony\Component\Form\Extension\Core\Type\TextType::class)
+            ->add('submit',\Symfony\Component\Form\Extension\Core\Type\SubmitType::class)
+            ->getForm();
+    }
+
+    private function createSingleButtonSurveySession(array $data)
+    {
+        $session = $this->createSurveySessionImpl();
+        $session->setEmail($data['email']);
+        return $session;
+    }
+
+    private function singleButtonDeliveryActionImpl(\Symfony\Component\HttpFoundation\Request $request, \FanFerret\QuestionBundle\Entity\Survey $survey)
+    {
+        if (!$this->deliveryCheck($survey)) throw $this->createAccessDeniedException();
+        $form = $this->getSingleButtonForm();
+        $form->handleRequest($request);
+        $session = null;
+        if ($form->isValid()) {
+            $session = $this->createSingleButtonSurveySession($form->getData());
+            $survey->addSurveySession($session);
+            $session->setSurvey($survey);
+            $doctrine = $this->getDoctrine();
+            $em = $doctrine->getManager();
+            $em->persist($session);
+            $notification = $this->createSurveyFromSurveySession($session)->sendNotification($session,1,true);
+            $em->persist($notification);
+            $em->flush();
+            $form = $this->getSingleButtonForm();
+        }
+        return $this->render('FanFerretQuestionBundle:Admin:singlebuttondelivery.html.twig',[
+            'form' => $form->createView(),
+            'session' => $session,
+            'survey' => $survey,
+            'comment_cards' => $this->commentCardsCheck($survey)
+        ]);
+    }
+
+    public function singleButtonDeliveryAction(\Symfony\Component\HttpFoundation\Request $request, $group, $property, $survey)
+    {
+        $entity = $this->getSurveyBySlug($group,$property,$survey);
+        return $this->singleButtonDeliveryActionImpl($request,$entity);
     }
 
     private function commentCardsActionImpl(\FanFerret\QuestionBundle\Entity\Survey $survey, $page, $perpage)

@@ -25,4 +25,11 @@ class Factory
             $swift
         );
     }
+
+    public static function createSurveyFromSurveySession(
+        \FanFerret\QuestionBundle\Entity\SurveySession $session,
+        \Symfony\Component\DependencyInjection\ContainerInterface $container
+    ) {
+        return self::createSurvey($session->getSurvey(),$container,$session->getLanguage());
+    }
 }

@@ -263,9 +263,9 @@ class Survey implements SurveyInterface
         return true;
     }
 
-    public function sendNotification(\FanFerret\QuestionBundle\Entity\SurveySession $session, $num)
+    public function sendNotification(\FanFerret\QuestionBundle\Entity\SurveySession $session, $num, $force = false)
     {
-        if (!$this->isNiceTime($session)) return null;
+        if (!$force && !$this->isNiceTime($session)) return null;
         $subject = 'Survey Reminder';
         $content_type = 'text/html';
         $from = $this->getEmailArray('from');

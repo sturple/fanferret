@@ -10,12 +10,18 @@ fgms_question_survey_styles:
 fgms_question_notification_seen:
     path: /notification/{token}/
     defaults: { _controller: FanFerretQuestionBundle:Notification:seen }
+fgms_question_admin_delivery_old:
+    path: /admin/{property}/{survey}/deliveryOld
+    defaults: { _controller: FanFerretQuestionBundle:Admin:delivery, group: null }
+fgms_question_admin_delivery_group_old:
+    path: /admin/{group}/{property}/{survey}/deliveryOld
+    defaults: { _controller: FanFerretQuestionBundle:Admin:delivery }
 fgms_question_admin_delivery:
     path: /admin/{property}/{survey}/delivery
-    defaults: { _controller: FanFerretQuestionBundle:Admin:delivery, group: null }
+    defaults: { _controller: FanFerretQuestionBundle:Admin:singleButtonDelivery, group: null }
 fgms_question_admin_delivery_group:
     path: /admin/{group}/{property}/{survey}/delivery
-    defaults: { _controller: FanFerretQuestionBundle:Admin:delivery }
+    defaults: { _controller: FanFerretQuestionBundle:Admin:singleButtonDelivery }
 fgms_question_admin_comment_cards:
     path: /admin/{property}/{survey}/comment-cards/{page}/{perpage}
     defaults: { _controller: FanFerretQuestionBundle:Admin:commentCards, group: null, page: 1, perpage: 50 }

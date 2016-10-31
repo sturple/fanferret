@@ -78,6 +78,12 @@ interface SurveyInterface
      * @param int $num
      *  The number N of the notification to send.  For
      *  example the first notification has an N of 1.
+     * @param bool $force
+     *  If \em true the notification shall always be
+     *  sent and this method shall not return null, if
+     *  \em false the Survey object implementation may
+     *  apply internal logic and decide not to send the
+     *  notification.  Defaults to \em false.
      *
      * @return SurveyNotification|null
      *  If a notification was sent a SurveyNotification
@@ -86,5 +92,5 @@ interface SurveyInterface
      *  expected to be associated with the Survey associated
      *  with this object.
      */
-    public function sendNotification(\FanFerret\QuestionBundle\Entity\SurveySession $session, $num);
+    public function sendNotification(\FanFerret\QuestionBundle\Entity\SurveySession $session, $num, $force = false);
 }
