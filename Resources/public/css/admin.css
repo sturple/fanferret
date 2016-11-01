@@ -87,17 +87,20 @@ h1 {
 	text-align: center;
 }
 
-.fanferret-delivery-scheduled {
-	font-weight: bold;
+.fanferret-delivery-scheduled, .fanferret-email-import {
 	margin-bottom: 20px;
 }
 
-.fanferret-delivery-scheduled a {
+.fanferret-delivery-scheduled {
+	font-weight: bold;
+}
+
+.fanferret-delivery-scheduled a, .fanferret-email-import a {
 	color: inherit;
 	text-decoration: none;
 }
 
-form, .fanferret-delivery-scheduled {
+form, .fanferret-delivery-scheduled, .fanferret-email-import {
 	background: #FFB570;
 	padding: 20px;
 	text-align: center;
@@ -112,10 +115,37 @@ form > .row:first-child {
 }
 
 form label {
-	padding-top: 5px;
 	text-align: right;
 }
 
 form label:after {
 	content: ":";
+}
+
+input[type="file"] {
+	color: white;
+}
+
+.fanferret-email-import label {
+	text-align: left;
+}
+
+.fanferret-email-import label:after {
+	content: "";
+}
+
+.fanferret-email-import .col-md-4 {
+	text-align: right;
+}
+
+.fanferret-email-import h2 {
+	font-size: 16px;
+	font-weight: bold;
+	margin-bottom: 0;
+	margin-top: 0;
+}
+
+.fanferret-email-import form {
+	margin-top: 20px;
+	padding: 0;
 }

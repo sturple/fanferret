@@ -88,6 +88,16 @@ class SurveySessionRepository extends \Doctrine\ORM\EntityRepository
         return $q->getResult();
     }
 
+    private function getBySurveyQueryBuilder(\FanFerret\QuestionBundle\Entity\Survey $survey)
+    {
+        $qb = $this->createQueryBuilder('ss');
+        $where_expr = $qb->expr()->eq('s.id',':sid');
+        $qb->innerJoin('ss.survey','s')
+            ->andWhere($where_expr)
+            ->setParameter('sid',$survey->getId());
+        return $qb;
+    }
+
     /**
      * Attempts to retrieve a page of SurveySession entities
      * from the data store.
@@ -107,15 +117,43 @@ class SurveySessionRepository extends \Doctrine\ORM\EntityRepository
      */
     public function getPage(\FanFerret\QuestionBundle\Entity\Survey $survey, \FanFerret\QuestionBundle\Utility\Page $page)
     {
-        $qb = $this->createQueryBuilder('ss');
-        $where_expr = $qb->expr()->eq('s.id',':sid');
-        $qb->innerJoin('ss.survey','s')
-            ->addSelect('COALESCE(ss.checkout,ss.created) AS HIDDEN columnOrder')
-            ->orderBy('columnOrder','DESC')
-            ->andWhere($where_expr)
-            ->setParameter('sid',$survey->getId());
+        $qb = $this->getBySurveyQueryBuilder($survey);
+        $qb->addSelect('COALESCE(ss.checkout,ss.created) AS HIDDEN columnOrder')
+            ->orderBy('columnOrder','DESC');
         $page->addToQueryBuilder($qb);
         $q = $qb->getQuery();
         return $q->getResult();
+    }
+
+    /**
+     * Attempts to determine which emails do not have an associated
+     * SurveySession entity over a certain time period.
+     *
+     * @param Survey $survey
+     * @param array $emails
+     * @param DateTime|null $since
+     *
+     * @return array
+     *  A collection of all the emails from \em emails which are not
+     *  associated with a SurveySession entity over the time period
+     *  beginning with \em since and ending at the present time.
+     */
+    public function getMissingEmails(\FanFerret\QuestionBundle\Entity\Survey $survey, array $emails, \DateTime $since = null)
+    {
+        $qb = $this->getBySurveyQueryBuilder($survey);
+        $in_expr = $qb->expr()->in('ss.email',':emails');
+        $qb->andWhere($in_expr)
+            ->setParameter('emails',$emails);
+        if (!is_null($since)) {
+            $since_expr = $qb->expr()->gte('COALESCE(ss.checkout,ss.created)',':when');
+            $qb->andWhere($since_expr)
+                ->setParameter('when',\FanFerret\QuestionBundle\Utility\DateTime::toDoctrine($since));
+        }
+        $q = $qb->getQuery();
+        $sessions = $q->getResult();
+        $set = [];
+        foreach ($emails as $email) $set[$email] = true;
+        foreach ($sessions as $session) unset($set[$session->getEmail()]);
+        return array_keys($set);
     }
 }

@@ -31,3 +31,9 @@ fgms_question_admin_comment_cards_group:
 fgms_question_admin:
     path: /admin/{page}/{perpage}
     defaults: { _controller: FanFerretQuestionBundle:Admin:list, page: 1, perpage: 50 }
+fgms_question_admin_missing_emails:
+    path: /admin/{property}/{survey}/import
+    defaults: { _controller: FanFerretQuestionBundle:Admin:missingEmails, group: null }
+fgms_question_admin_missing_emails_group:
+    path: /admin/{group}/{property}/{survey}/import
+    defaults: { _controller: FanFerretQuestionBundle:Admin:missingEmails }

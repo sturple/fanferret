@@ -65,9 +65,25 @@ class AdminController extends \Symfony\Bundle\FrameworkBundle\Controller\Control
         return false;
     }
 
+    private function createSurvey(\FanFerret\QuestionBundle\Entity\Survey $survey)
+    {
+        return \FanFerret\QuestionBundle\DependencyInjection\Factory::createSurvey($survey,$this->container);
+    }
+
     private function createSurveyFromSurveySession(\FanFerret\QuestionBundle\Entity\SurveySession $session)
     {
         return \FanFerret\QuestionBundle\DependencyInjection\Factory::createSurveyFromSurveySession($session,$this->container);
+    }
+
+    private function getSurveySessionRepository()
+    {
+        $doctrine = $this->getDoctrine();
+        return $doctrine->getRepository(\FanFerret\QuestionBundle\Entity\SurveySession::class);
+    }
+
+    private function getEntityManager() {
+        $doctrine = $this->getDoctrine();
+        return $doctrine->getManager();
     }
 
     private function getForm()
@@ -112,8 +128,7 @@ class AdminController extends \Symfony\Bundle\FrameworkBundle\Controller\Control
             $session = $this->createSurveySession($form->getData());
             $survey->addSurveySession($session);
             $session->setSurvey($survey);
-            $doctrine = $this->getDoctrine();
-            $em = $doctrine->getManager();
+            $em = $this->getEntityManager();
             $em->persist($session);
             $em->flush();
             $form = $this->getForm();
@@ -180,8 +195,7 @@ class AdminController extends \Symfony\Bundle\FrameworkBundle\Controller\Control
             $session = $this->createSingleButtonSurveySession($form->getData());
             $survey->addSurveySession($session);
             $session->setSurvey($survey);
-            $doctrine = $this->getDoctrine();
-            $em = $doctrine->getManager();
+            $em = $this->getEntityManager();
             $em->persist($session);
             $notification = $this->createSurveyFromSurveySession($session)->sendNotification($session,1,true);
             $em->persist($notification);
@@ -207,8 +221,7 @@ class AdminController extends \Symfony\Bundle\FrameworkBundle\Controller\Control
         if (!$this->commentCardsCheck($survey)) throw $this->createAccessDeniedException();
         //  TODO: Cap number of results per page?
         $page = new \FanFerret\QuestionBundle\Utility\Page(intval($page),intval($perpage));
-        $doctrine = $this->getDoctrine();
-        $repo = $doctrine->getRepository(\FanFerret\QuestionBundle\Entity\SurveySession::class);
+        $repo = $this->getSurveySessionRepository();
         $sessions = $repo->getPage($survey,$page);
         $results = count($survey->getSurveySessions());
         return $this->render('FanFerretQuestionBundle:Admin:commentcards.html.twig',[
@@ -250,5 +263,100 @@ class AdminController extends \Symfony\Bundle\FrameworkBundle\Controller\Control
             'pages' => $page->getNumberOfPages($results),
             'count' => $results
         ]);
+    }
+
+    private function getMissingEmailsForm()
+    {
+        return $this->createFormBuilder()
+            ->add('file',\Symfony\Component\Form\Extension\Core\Type\FileType::class)
+            ->add('submit',\Symfony\Component\Form\Extension\Core\Type\SubmitType::class)
+            ->getForm();
+    }
+
+    private function getReportEmailExtractor(\FanFerret\QuestionBundle\Entity\Survey $survey)
+    {
+        //  TODO: Customize per survey?
+        return new \FanFerret\QuestionBundle\Interop\CsvReportEmailExtractor(1,0,'Y-m-d H:i',new \DateTimeZone('America/Vancouver'));
+    }
+
+    private function missingEmailsCreateSurveySessions(\Symfony\Component\HttpFoundation\Request $request, \FanFerret\QuestionBundle\Entity\Survey $survey)
+    {
+        //  No emails to create SurveySession entities for
+        if (!$request->request->has('emails')) return;
+        $emails = $request->request->get('emails');
+        if (!is_array($emails)) {
+            //  TODO: Handle this
+            die('Not array');
+        }
+        $all_string = array_reduce($emails,function ($carry, $item) {
+            return is_string($item) ? $carry : false;
+        },true);
+        if (!$all_string) {
+            //  TODO: Handle this
+            die('Not all strings');
+        }
+        $em = $this->getEntityManager();
+        $survey_obj = $this->createSurvey($survey);
+        $sessions = array_map(function ($email) use ($em, $survey, $survey_obj) {
+            $session = $this->createSurveySessionImpl()
+                ->setEmail($email)
+                ->setSurvey($survey);
+            $survey->addSurveySession($session);
+            $notification = $survey_obj->sendNotification($session,1,true);
+            $em->persist($session);
+            $em->persist($notification);
+            return $session;
+        },$emails);
+        $em->flush();
+        return $sessions;
+    }
+
+    private function missingEmailsGetEmails(\Symfony\Component\HttpFoundation\File\UploadedFile $file, \FanFerret\QuestionBundle\Entity\Survey $survey)
+    {
+        $extractor = $this->getReportEmailExtractor($survey);
+        $mime = $file->getClientMimeType();
+        if (!in_array($mime,$extractor->getMimeTypes(),true)) {
+            //  TODO: Handle this
+            die('Wrong mime: ' . $mime);
+        }
+        $str = @file_get_contents($file->getRealPath());
+        if ($str === false) {
+            //  TODO: Handle this
+            die('Could not read');
+        }
+        $result = $extractor->extract($mime,$str);
+        $start = $result->getStart();
+        $emails = $result->getEmails();
+        $repo = $this->getSurveySessionRepository();
+        return $repo->getMissingEmails($survey,$emails,$start);
+    }
+
+    private function missingEmailsActionImpl(\Symfony\Component\HttpFoundation\Request $request, \FanFerret\QuestionBundle\Entity\Survey $survey)
+    {
+        $form = $this->getMissingEmailsForm();
+        $form->handleRequest($request);
+        $emails = null;
+        $sessions = null;
+        //  Check to see if we're handling emails
+        if ($request->request->has('submit') && ($request->request->get('submit') === 'emails')) {
+            $sessions = $this->missingEmailsCreateSurveySessions($request,$survey);
+        //  Otherwise try and handle file upload
+        } else if ($form->isValid()) {
+            $data = $form->getData();
+            $file = $data['file'];
+            $emails = $this->missingEmailsGetEmails($file,$survey);
+            $form = $this->getMissingEmailsForm();
+        }
+        return $this->render('FanFerretQuestionBundle:Admin:import.html.twig',[
+            'form' => $form->createView(),
+            'emails' => $emails,
+            'sessions' => $sessions
+        ]);
+    }
+
+    public function missingEmailsAction(\Symfony\Component\HttpFoundation\Request $request, $group, $property, $survey)
+    {
+        $entity = $this->getSurveyBySlug($group,$property,$survey);
+        return $this->missingEmailsActionImpl($request,$entity);
     }
 }
