@@ -2,7 +2,7 @@
 
 namespace FanFerret\QuestionBundle\Controller;
 
-class AdminController extends \Symfony\Bundle\FrameworkBundle\Controller\Controller
+class AdminController extends BaseController
 {
     protected function getUser()
     {
@@ -65,27 +65,6 @@ class AdminController extends \Symfony\Bundle\FrameworkBundle\Controller\Control
         return false;
     }
 
-    private function createSurvey(\FanFerret\QuestionBundle\Entity\Survey $survey)
-    {
-        return \FanFerret\QuestionBundle\DependencyInjection\Factory::createSurvey($survey,$this->container);
-    }
-
-    private function createSurveyFromSurveySession(\FanFerret\QuestionBundle\Entity\SurveySession $session)
-    {
-        return \FanFerret\QuestionBundle\DependencyInjection\Factory::createSurveyFromSurveySession($session,$this->container);
-    }
-
-    private function getSurveySessionRepository()
-    {
-        $doctrine = $this->getDoctrine();
-        return $doctrine->getRepository(\FanFerret\QuestionBundle\Entity\SurveySession::class);
-    }
-
-    private function getEntityManager() {
-        $doctrine = $this->getDoctrine();
-        return $doctrine->getManager();
-    }
-
     private function getForm()
     {
         return $this->createFormBuilder()
@@ -145,8 +124,7 @@ class AdminController extends \Symfony\Bundle\FrameworkBundle\Controller\Control
     {
         $slug = [$property,$survey];
         if (!is_null($group)) array_unshift($slug,$group);
-        $doctrine = $this->getDoctrine();
-        $repo = $doctrine->getRepository(\FanFerret\QuestionBundle\Entity\Survey::class);
+        $repo = $this->getSurveyRepository();
         $retr = $repo->getBySlug($slug);
         if (is_null($retr)) throw $this->createNotFoundException(
             sprintf(
@@ -244,8 +222,7 @@ class AdminController extends \Symfony\Bundle\FrameworkBundle\Controller\Control
     public function listAction($page, $perpage)
     {
         $page = new \FanFerret\QuestionBundle\Utility\Page(intval($page),intval($perpage));
-        $doctrine = $this->getDoctrine();
-        $repo = $doctrine->getRepository(\FanFerret\QuestionBundle\Entity\Survey::class);
+        $repo = $this->getSurveyRepository();
         $user = $this->getUser();
         $surveys = $repo->getByUser($user,$page);
         $surveys = array_map(function (\FanFerret\QuestionBundle\Entity\Survey $survey) {

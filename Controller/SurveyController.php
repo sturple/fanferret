@@ -2,15 +2,11 @@
 
 namespace FanFerret\QuestionBundle\Controller;
 
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
-
-class SurveyController extends Controller
+class SurveyController extends BaseController
 {
     private function getSurveySession($token)
     {
-        $doctrine = $this->getDoctrine();
-        $repo = $doctrine->getRepository(\FanFerret\QuestionBundle\Entity\SurveySession::class);
+        $repo = $this->getSurveySessionRepository();
         $session = $repo->getByToken($token);
         if (is_null($session)) throw $this->createNotFoundException(
             sprintf(
@@ -19,17 +15,6 @@ class SurveyController extends Controller
             )
         );
         return $session;
-    }
-
-    private function createSurvey(\FanFerret\QuestionBundle\Entity\SurveySession $session)
-    {
-        return \FanFerret\QuestionBundle\DependencyInjection\Factory::createSurveyFromSurveySession(
-            $session,
-            //  Not sure whether or not I'm supposed to
-            //  rely on the fact that container in the base
-            //  class is protected rather than private
-            $this->container
-        );
     }
 
     public function surveyAction(\Symfony\Component\HttpFoundation\Request $request, $token)
@@ -45,8 +30,7 @@ class SurveyController extends Controller
             )
         );
         //  Mark the survey as seen
-        $doctrine = $this->getDoctrine();
-        $em = $doctrine->getManager();
+        $em = $this->getEntityManager();
         if (!$session->getSeen()) {
             $session->setSeen(new \DateTime());
             $em->persist($session);
@@ -88,8 +72,7 @@ class SurveyController extends Controller
     public function stylesAction($id)
     {
         $id = intval($id);
-        $doctrine = $this->getDoctrine();
-        $repo = $doctrine->getRepository(\FanFerret\QuestionBundle\Entity\Survey::class);
+        $repo = $this->getSurveyRepository();
         $survey = $repo->findOneById($id);
         if (is_null($survey)) throw $this->createNotFoundException(
             sprintf(
