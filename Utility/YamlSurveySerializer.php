@@ -137,6 +137,13 @@ class YamlSurveySerializer implements SurveySerializer
         $q->setOrder($order);
         $q->setParams($this->getObject($obj,'params'));
         $q->setType($this->getString($obj,'type'));
+        $questions = $this->getOptionalArray($obj,'questions');
+        if (!is_null($questions)) {
+            foreach ($this->getQuestions($questions) as $question) {
+                $q->addQuestion($question);
+                $question->setQuestion($q);
+            }
+        }
         foreach ($this->getRules($this->getArray($obj,'rules')) as $r) {
             $r->addQuestion($q);
             $q->addRule($r);

@@ -37,6 +37,9 @@ questionGroups:
             -   order: 0
                 params: {}
                 type: rating
+                questions:
+                    -   params: {}
+                        type: open
                 rules:
                     -   params: {}
                         type: notification
@@ -66,6 +69,7 @@ questionGroups:
         $this->assertSame(0,count(get_object_vars($q->getParams())));
         $this->assertSame(0,count($q->getQuestionAnswers()));
         $this->assertSame('rating',$q->getType());
+        $this->assertNull($q->getQuestion());
         $rs = $q->getRules();
         $this->assertSame(1,count($rs));
         $r = $rs[0];
@@ -75,5 +79,15 @@ questionGroups:
         $this->assertSame($q,$rqs[0]);
         $this->assertSame(0,count(get_object_vars($r->getParams())));
         $this->assertSame('notification',$r->getType());
+        $qs = $q->getQuestions();
+        $this->assertCount(1,$qs);
+        $qn = $qs[0];
+        $this->assertNull($qn->getId());
+        $this->assertSame(0,$qn->getOrder());
+        $this->assertNull($qn->getQuestionGroup());
+        $this->assertSame($q,$qn->getQuestion());
+        $this->assertCount(0,get_object_vars($qn->getParams()));
+        $this->assertCount(0,$qn->getQuestionAnswers());
+        $this->assertSame('open',$qn->getType());
     }
 }
