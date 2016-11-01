@@ -65,6 +65,13 @@ class AdminController extends BaseController
         return false;
     }
 
+    private function importCheck(\FanFerret\QuestionBundle\Entity\Survey $survey)
+    {
+        //  Some check as comment cards: Must have admin
+        //  privileges
+        return $this->commentCardsCheck($survey);
+    }
+
     private function getForm()
     {
         return $this->createFormBuilder()
@@ -309,6 +316,7 @@ class AdminController extends BaseController
 
     private function missingEmailsActionImpl(\Symfony\Component\HttpFoundation\Request $request, \FanFerret\QuestionBundle\Entity\Survey $survey)
     {
+        if (!$this->importCheck($survey)) throw $this->createAccessDeniedException();
         $form = $this->getMissingEmailsForm();
         $form->handleRequest($request);
         $emails = null;
