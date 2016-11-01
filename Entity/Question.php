@@ -250,11 +250,11 @@ class Question
     /**
      * Set question
      *
-     * @param \FanFerret\QuestionBundle\Entity\QuestionGroup $question
+     * @param \FanFerret\QuestionBundle\Entity\Question $question
      *
      * @return Question
      */
-    public function setQuestion(\FanFerret\QuestionBundle\Entity\QuestionGroup $question = null)
+    public function setQuestion(\FanFerret\QuestionBundle\Entity\Question $question = null)
     {
         $this->question = $question;
 
@@ -264,7 +264,7 @@ class Question
     /**
      * Get question
      *
-     * @return \FanFerret\QuestionBundle\Entity\QuestionGroup
+     * @return \FanFerret\QuestionBundle\Entity\Question
      */
     public function getQuestion()
     {
