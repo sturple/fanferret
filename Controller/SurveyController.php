@@ -80,11 +80,7 @@ class SurveyController extends BaseController
                 $id
             )
         );
-        $survey = \FanFerret\QuestionBundle\DependencyInjection\Factory::createSurvey(
-            $survey,
-            $this->container,
-            'en-CA' //  Irrelevant for our purposes so just choose one
-        );
+        $survey = $this->createSurvey($survey);
         $css = $survey->renderStyles()->render();
         return new \Symfony\Component\HttpFoundation\Response($css,200,[
             'Content-Type' => 'text/css; charset=utf-8'
