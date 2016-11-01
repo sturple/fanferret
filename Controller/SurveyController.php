@@ -36,7 +36,7 @@ class SurveyController extends BaseController
             $em->persist($session);
             $em->flush();
         }
-        $survey = $this->createSurvey($session);
+        $survey = $this->createSurveyFromSurveySession($session);
         //  Create form
         $fb = $this->createFormBuilder();
         $survey->addToFormBuilder($fb);
@@ -65,7 +65,7 @@ class SurveyController extends BaseController
                 $token
             )
         );
-        $survey = $this->createSurvey($session);
+        $survey = $this->createSurveyFromSurveySession($session);
         return $this->render('FanFerretQuestionBundle:Default:finish.html.twig',['finish' => $survey->renderFinish($session)]);
     }
 
