@@ -22,14 +22,7 @@
 {% block content %}
 <h1>Digital Comment Card Delivery</h1>
 {% if session %}
-<div class="fanferret-delivery-scheduled">
-	{% set fmt = 'F j, Y' %}
-	{% if session.firstName and session.lastName %}
-	{{session.firstName}} {{session.lastName}} at
-	{% endif %}
-	<a href="mailto:{{session.email|escape('html_attr')}}">{{session.email}}</a>
-	will receive the digital comment card no earlier than {{session.checkout|default(session.created)|date_modify('+3 days')|date(fmt)}}.
-</div>
+{% include 'FanFerretQuestionBundle:Admin:surveysessioncreated.html.twig' with {'sessions': [session]} %}
 {% endif %}
 {{form_start(form)}}
 	{{form_errors(form)}}

@@ -1,0 +1,9 @@
+{% if sessions|length > 0 %}
+<div class="fanferret-delivery-scheduled">
+	A digital comment card has been sent to
+	{% set fmt = 'F j, Y' %}
+	{% for session in sessions %}{% if loop.index0 != 0 %},{% endif %}
+	{% if session.firstName and session.lastName %}{{session.firstName}} {{session.lastName}} at{% endif %}
+	<a href="mailto:{{session.email|escape('html_attr')}}">{{session.email}}</a>{% endfor %}.
+</div>
+{% endif %}
