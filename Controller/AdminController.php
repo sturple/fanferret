@@ -261,17 +261,11 @@ class AdminController extends BaseController
         //  No emails to create SurveySession entities for
         if (!$request->request->has('emails')) return;
         $emails = $request->request->get('emails');
-        if (!is_array($emails)) {
-            //  TODO: Handle this
-            die('Not array');
-        }
+        if (!is_array($emails)) throw $this->createBadRequestException('Not array');
         $all_string = array_reduce($emails,function ($carry, $item) {
             return is_string($item) ? $carry : false;
         },true);
-        if (!$all_string) {
-            //  TODO: Handle this
-            die('Not all strings');
-        }
+        if (!$all_string) throw $this->createBadRequestException('Not all strings');
         $em = $this->getEntityManager();
         $survey_obj = $this->createSurvey($survey);
         $sessions = array_map(function ($email) use ($em, $survey, $survey_obj) {
@@ -292,15 +286,20 @@ class AdminController extends BaseController
     {
         $extractor = $this->getReportEmailExtractor($survey);
         $mime = $file->getClientMimeType();
-        if (!in_array($mime,$extractor->getMimeTypes(),true)) {
-            //  TODO: Handle this
-            die('Wrong mime: ' . $mime);
-        }
-        $str = @file_get_contents($file->getRealPath());
-        if ($str === false) {
-            //  TODO: Handle this
-            die('Could not read');
-        }
+        if (!in_array($mime,$extractor->getMimeTypes(),true)) throw $this->createBadRequestException(
+            sprintf(
+                'Unsupported MIME type "%s"',
+                $mime
+            )
+        );
+        $path = $file->getRealPath();
+        $str = @file_get_contents($path);
+        if ($str === false) throw $this->createInternalServerErrorException(
+            sprintf(
+                'Could not read file %s',
+                $path
+            )
+        );
         $result = $extractor->extract($mime,$str);
         $start = $result->getStart();
         $emails = $result->getEmails();

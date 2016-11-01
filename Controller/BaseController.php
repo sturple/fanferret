@@ -30,4 +30,14 @@ abstract class BaseController extends \Symfony\Bundle\FrameworkBundle\Controller
         $doctrine = $this->getDoctrine();
         return $doctrine->getRepository(\FanFerret\QuestionBundle\Entity\Survey::class);
     }
+
+    protected function createBadRequestException($message = 'Bad Request', $previous = null)
+    {
+        return \Symfony\Component\HttpKernel\Exception\BadRequestHttpException($message,$previous);
+    }
+
+    protected function createInternalServerErrorException($message = 'Internal Server Error', $previous = null)
+    {
+        return \Symfony\Component\HttpKernel\Exception\HttpException(500,$message,$previous);
+    }
 }
