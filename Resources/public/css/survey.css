@@ -1,206 +1,157 @@
+
 @charset "UTF-8";
-
 body {
-	background: #D3EBF7;
-	height: 100%;
-	height: 100vh;
-	width: 100%;
-	width: 100vw;
+  height: 100%;
+  height: 100vh;
+  width: 100%;
+  width: 100vw;
 }
-
 .container {
-	background: white;
-	padding-bottom: 50px;
-	padding-left: 50px;
-	padding-right: 50px;
-	padding-top: 50px;
+  background: #fff;
 }
-
 .container > img {
-	display: block;
-	margin-left: auto;
-	margin-right: auto;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
 }
-
+h1,
+h2 {
+  text-align: center;
+}
 h1 {
-	font-size: 48px;
-	text-transform: uppercase;
+  font-size: 48px;
+  text-transform: uppercase;
 }
-
-h1, h2 {
-	text-align: center;
-}
-
 .fanferret-title > * {
-	text-align: left;
+  text-align: left;
 }
-
-#survey_carousel .carousel > .carousel-inner > .carousel-item {
-	min-height: 300px;
+.fanferret-checklist-options,
+.fanferret-rating-ratings,
+.fanferret-polar-options,
+.fanferret-conditional-nested-options {
+  list-style-type: none;
+  margin-bottom: 0;
+  padding-left: 0;
 }
-
-.fanferret-checklist-options, .fanferret-rating-ratings, .fanferret-polar-options, .fanferret-conditional-nested-options {
-	list-style-type: none;
-	margin-bottom: 0;
-	padding-left: 0;
-}
-
 .fanferret-checklist-option > .fanferret-checklist-option-other-text {
-	display: block;
-	margin-left: -20px;
-	margin-top: 5px;
+  display: block;
+  margin-left: -20px;
+  margin-top: 5px;
 }
-
 .fanferret-rating-explanations {
-	font-size: 11px;
-	overflow: hidden;
+  font-size: 11px;
+  overflow: hidden;
 }
-
 .fanferret-rating-explanations.hidden-md.hidden-lg {
-	padding-left: 15px;
+  padding-left: 15px;
 }
-
 .fanferret-rating-explanation {
-	float: left;
-	max-width: 75px;
-	width: 33%;
+  float: left;
+  max-width: 75px;
+  width: 33%;
 }
-
 .fanferret-rating-explanation .fa {
-	font-size: 16px;
+  font-size: 16px;
 }
-
-.hidden-md.hidden-lg.fanferret-rating-explanations .fanferret-rating-explanation {
-	display: block;
-	font-size: 14px;
-	max-width: unset;
-	text-align: left;
-	width: 100%;
-}
-
 .fanferret-rating-explanation:nth-child(2) {
-	text-align: center;
+  text-align: center;
 }
-
 .fanferret-rating-explanation:nth-child(3) {
-	text-align: right;
+  text-align: right;
 }
-
-.fanferret-rating-rating, .fanferret-polar-option, .fanferret-conditional-nested-option {
-	box-sizing: border-box;
-	float: left;
-	max-width: 45px;
-	width: 20%;
+.hidden-md.hidden-lg.fanferret-rating-explanations .fanferret-rating-explanation {
+  display: block;
+  font-size: 14px;
+  max-width: unset;
+  text-align: left;
+  width: 100%;
 }
-
-.fanferret-rating-rating > a, .fanferret-polar-option > a, .fanferret-conditional-nested-option > a {
-	border-radius: 20px;
-	color: white;
-	display: block;
-	font-size: 18px;
-	height: 40px;
-	line-height: 40px;
-	margin-left: auto;
-	margin-right: auto;
-	text-align: center;
-	text-decoration: none;
-	width: 40px;
+.fanferret-rating-rating,
+.fanferret-polar-option,
+.fanferret-conditional-nested-option {
+  box-sizing: border-box;
+  float: left;
+  max-width: 45px;
+  width: 20%;
 }
-
-.fanferret-rating-rating > a, .fanferret-polar-option > a, .fanferret-conditional-nested-option > a,
-#survey-carousel > ol.carousel-indicators > li {
-	background: #337AB7;
-	border: 1px #2e6da4 solid;
+.fanferret-rating-rating > a,
+.fanferret-polar-option > a,
+.fanferret-conditional-nested-option > a {
+  border-radius: 20px;
+  display: block;
+  font-size: 18px;
+  height: 40px;
+  line-height: 40px;
+  width: 40px;
+  margin-left: auto;
+  margin-right: auto;
+  text-align: center;
+  text-decoration: none;
 }
-
-.fanferret-rating-rating > a:hover, .fanferret-polar-option > a:hover, .fanferret-conditional-nested-option > a:hover,
-.fanferret-rating-rating > a:active, .fanferret-rating-rating > a.selected,
-.fanferret-polar-option > a:active, .fanferret-polar-option > a.selected,
-.fanferret-conditional-nested-option > a:active, .fanferret-conditional-nested-option > a.selected,
-#survey-carousel > ol.carousel-indicators > li.active {
-	background: #286090;
-	border-color: #204d74;
+#survey-carousel .carousel .carousel-inner > .carousel-item {
+  min-height: 300px;
 }
-
-.fanferret-rating-ratings, .fanferret-polar-options, .fanferret-conditional-nested-options {
-	overflow: hidden;
+#survey-carousel .carousel-indicators {
+  margin-left: 0;
+  margin-right: 0;
+  position: static;
+  width: auto;
 }
-
+.fanferret-rating-ratings,
+.fanferret-polar-options,
+.fanferret-conditional-nested-options {
+  overflow: hidden;
+}
 .fanferret-question-title {
-	font-weight: bold;
-	margin-bottom: 0;
-	margin-top: 0;
+  font-weight: bold;
+  margin-bottom: 0;
+  margin-top: 0;
 }
-
 section {
-	margin-top: 10px;
+  margin-top: 10px;
 }
-
 section:first-child {
-	margin-top: 0;
+  margin-top: 0;
 }
-
-.fanferret-rating-explain-input > textarea, .fanferret-polar-explain-input > textarea {
-	display: block;
+.fanferret-rating-explain-input > textarea,
+.fanferret-polar-explain-input > textarea {
+  display: block;
 }
-
 .fanferret-survey-buttons {
-	margin-top: 10px;
+  margin-top: 10px;
 }
-
-button[disabled], .fanferret-survey-buttons button[disabled]:hover,
+button[disabled],
+.fanferret-survey-buttons button[disabled]:hover,
 #survey-carousel > ol.carousel-indicators > li.fanferret-disabled {
-	background: #CCC;
-	border-color: #CCC;
-	cursor: default;
+  background: #CCC;
+  border-color: #CCC;
+  cursor: default;
 }
-
 textarea {
-	max-width: 100%;
+  max-width: 100%;
 }
-
-#survey-carousel > .carousel-indicators {
-	margin-left: 0;
-	margin-right: 0;
-	position: static;
-	width: auto;
-}
-
-.fanferret-valid .fanferret-question-title div:after {
-	color: green;
-	content: "\002713";
-	margin-left: 5px;
-}
-
-.fanferret-valid {
-	background-color: #E6FFE6;
-}
-
 .fanferret-question {
-	border-radius: 10px;
-	padding: 15px;
+  border-radius: 10px;
+  padding: 15px;
 }
-
 .fanferret-spinner {
-	background: white;
-	bottom: 0;
-	height: 100%;
-	height: 100vh;
-	left: 0;
-	position: fixed;
-	right: 0;
-	top: 0;
-	width: 100%;
-	width: 100vw;
+  background: white;
+  bottom: 0;
+  height: 100%;
+  height: 100vh;
+  left: 0;
+  position: fixed;
+  right: 0;
+  top: 0;
+  width: 100%;
+  width: 100vw;
 }
-
 .fanferret-spinner > img {
-	position: absolute;
-	left: 50%;
-	top: 50%;
-	transform: translate(-50%,-50%);
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
 }
-
 .fanferret-checklist-option-other-text > div {
-	padding: 0;
+  padding: 0;
 }

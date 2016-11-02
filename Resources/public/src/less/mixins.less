@@ -1,0 +1,110 @@
+
+
+.opacity(@opacity: 0.5) {
+	-moz-opacity: @opacity;
+	-khtml-opacity: @opacity;
+	-webkit-opacity: @opacity;
+	opacity: @opacity;
+	@opperc: @opacity * 100;
+	-ms-filter: ~"progid:DXImageTransform.Microsoft.Alpha(opacity=@{opperc})";
+	filter: ~"alpha(opacity=@{opperc})";
+}
+
+.box-shadow(@attributes: 2px 2px 4px rgba(0, 0, 0, 0.35) ){
+    webkit-box-shadow:@attributes ;-moz-box-shadow:  @attributes;box-shadow: @attributes;
+}
+
+.transition-opacity(@duration:0.2s, @ease:linear) {
+	-webkit-transition: opacity @duration @ease;
+	-moz-transition: opacity @duration @ease;
+	-o-transition: opacity @duration @ease;
+	transition: opacity @duration @ease;
+}
+
+.font-size(@sizeValue, @percent: 1) { 
+  @remValue: @sizeValue * @percent;
+  @pxValue: (@sizeValue * 10 *@percent) ;
+  font-size: ~"@{pxValue}px"; 
+  font-size: ~"@{remValue}rem";
+}
+
+.resize-padding-top(@sizeValue, @percent: 1){
+	@pxValue: (@sizeValue * @percent) ;
+	padding-top: ~"@{pxValue}px";  
+}
+.resize-padding-bottom(@sizeValue, @percent: 1){
+	@pxValue: (@sizeValue * @percent) ;
+	padding-bottom: ~"@{pxValue}px";  
+}
+.font-size-resize(@sizeValue,@percent: 0.8) {
+  @remValue: @sizeValue * @percent;
+  @pxValue: (@sizeValue * 10 *@percent) ;
+  font-size: ~"@{pxValue}px"; 
+  font-size: ~"@{remValue}rem";
+}
+.transition(@duration:0.2s, @ease:ease-out) {
+	-webkit-transition: all @duration @ease;
+	-moz-transition: all @duration @ease;
+	-o-transition: all @duration @ease;
+	transition: all @duration @ease;
+}
+.transform-scale(@scalex:1.1,@scaley:1.1){	
+	transform: scale(@scalex, @scaley);
+	-webkit-transform: scale(@scalex, @scaley);
+	-moz-transform: scale(@scalex, @scaley);
+	-o-transform: scale(@scalex, @scaley);
+	-ms-transform: scale(@scalex, @scaley);
+}
+
+
+.radius(@radius: 0){
+     border-radius: @radius; -moz-border-radius: @radius; border-radius: @radius;
+}
+.transition-color(@color-time: .3s, @color-easing: linear,@background-time: .3s, @background-easing: linear){
+	-o-transition: color @color-time @color-easing, background @background-time @background-easing;	
+	-webkit-transition: color @color-time @color-easing,background @background-time @background-easing; 
+	-moz-transition: color @color-time @color-easing, background @background-time @background-easing;
+	transition: color @color-time @color-easing, background @background-time @background-easing;
+    
+}
+
+.background(@image:none, @color:#ffffff, @position:center top, @size:auto, @repeat:no-repeat, @attachment: scroll ){
+	background-image: @image;
+	background-color: @color;
+	background-position: @position;
+	background-size: @size;
+	background-repeat: @repeat;
+	background-attachment: @attachment;
+}
+
+.a(@color, @text-decoration:none, @color-hover, @text-decoration-hover:none) {
+	a:not(.btn){
+		 &, &:visited, &:focus {
+			color: @color;
+			text-decoration: @text-decoration;			
+			.transition(0.25s);
+			border-bottom: none;
+		}
+		&:hover, &:active {
+			color: @color-hover;
+			text-decoration: @text-decoration-hover;			
+			.transition(0.75s);
+			border-bottom: none;			
+		}
+	}
+}
+
+.btn-template(@color,@background){
+  color: @color !important; 
+	background-color: @background;  *background-color: @background;   background-image: none;  
+	background-repeat: repeat-x;  
+	border-color: transparent;
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#26387f', endColorstr='#26387f', GradientType=0);
+	filter: progid:DXImageTransform.Microsoft.gradient(enabled=false);
+  
+}
+.btn-template-hover( @color,@background ){	
+    background-color: @background ;	*background-color: @background;  border-color: transparent; .transition-color(); text-decoration: none !important;
+		color: @color !important;
+		border-color: transparent;
+}
