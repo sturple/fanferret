@@ -79,6 +79,7 @@ var fanFerret = (function () {
 		if (old_active === null) return;
 		if (groups.length !== (old_active + 1)) return;
 		active = old_active;
+		
 		set_active();
 	};
 	retr.currentGroup = function () {
@@ -87,6 +88,7 @@ var fanFerret = (function () {
 	var set_active = function () {
 		$('#survey-carousel').carousel(active);
 		groups[active].active();
+		$('html, body').animate({scrollTop: $("#survey-carousel").offset().top}, 1000);
 		update_buttons();
 	};
 	retr.next = function () {

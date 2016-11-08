@@ -300,6 +300,7 @@ class AdminController extends BaseController
             )
         );
         $path = $file->getRealPath();
+       
         $str = @file_get_contents($path);
         if ($str === false) throw $this->createInternalServerErrorException(
             sprintf(

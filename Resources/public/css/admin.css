@@ -1,1 +1,284 @@
 
+@charset "UTF-8";
+body,
+html {
+  margin: 0, padding:0;
+}
+body {
+  background-image: none;
+  background-color: #e15500 /* #FF8410;*/;
+  background-position: center top;
+  background-size: auto;
+  background-repeat: repeat;
+  background-attachment: scroll;
+  margin-bottom: 30px;
+}
+.container {
+  position: relative;
+  background-color: #fff;
+  padding: 15px;
+  margin-top: 15px;
+}
+.container.login-status-info {
+  padding: 0 18px 0 0;
+  margin: 0 auto -22.5px;
+  font-size: 0.85em;
+  color: #fff;
+  webkit-box-shadow: none;
+  -moz-box-shadow: none;
+  box-shadow: none;
+  background-color: transparent;
+  text-align: right;
+}
+.container.copyright-text {
+  background-color: transparent;
+  padding: 0 0 0 18px;
+  font-size: 0.85em;
+  color: #fff;
+  webkit-box-shadow: none;
+  -moz-box-shadow: none;
+  box-shadow: none;
+  margin-top: 7.5px;
+}
+@media screen and (min-width: 768px) {
+  .container {
+    padding: 45px 45px 60px;
+    margin-top: 30px;
+    -moz-border-radius: 8px;
+    border-radius: 8px;
+    webkit-box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.15);
+    -moz-box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.15);
+    box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.15);
+  }
+}
+h1,
+.h1 {
+  margin: 30px 0 30px;
+  padding-top: 0;
+  text-align: center;
+  font-size: 3em;
+}
+.admin-header {
+  text-align: center;
+}
+.admin-header .subtitle {
+  font-size: 1.6em;
+  margin-top: -15px;
+}
+.admin-header .subtitle:before {
+  content: "Card Name: ";
+}
+.admin-header .property {
+  display: block;
+  font-style: italic;
+  margin: 0 0 30px;
+  font-size: 1.2em;
+}
+.fanferret-logo {
+  display: block;
+  margin-top: 15px;
+  margin-left: auto;
+  margin-right: auto;
+  width: 80%;
+  max-width: 385px;
+}
+@media screen and (min-width: 480px) {
+  .fanferret-logo {
+    margin-top: 30px;
+  }
+}
+@media screen and (min-width: 993px) {
+  .fanferret-logo {
+    width: 100%;
+  }
+}
+.bottom-nav-container {
+  margin-top: 30px;
+  text-align: right;
+}
+.fanferret-admin-nav {
+  margin-top: 30px;
+  text-align: right;
+}
+@media screen and (min-width: 993px) {
+  .fanferret-admin-nav {
+    text-align: left;
+    position: absolute;
+    width: 100%;
+    left: 0;
+    top: 18px;
+    margin-top: 0;
+  }
+  .fanferret-admin-nav .btn {
+    min-width: 150px;
+  }
+  .fanferret-admin-nav .btn-logout {
+    float: right;
+    margin-right: 18px;
+  }
+  .fanferret-admin-nav .btn-survey-actions {
+    margin-left: 18px;
+  }
+}
+.btn-primary,
+button[type="submit"] {
+  color: #fff !important;
+  background-color: #0f4bb5;
+  *background-color: #0f4bb5;
+  background-image: none;
+  background-repeat: repeat-x;
+  border-color: transparent;
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#26387f', endColorstr='#26387f', GradientType=0);
+  filter: progid:DXImageTransform.Microsoft.gradient(enabled=false);
+  padding: 8px 15px;
+  text-align: center;
+  margin-right: 4px;
+  font-size: 0.96em;
+}
+.btn-primary:hover,
+button[type="submit"]:hover,
+.btn-primary:active,
+button[type="submit"]:active,
+.btn-primary.active,
+button[type="submit"].active,
+.btn-primary:focus,
+button[type="submit"]:focus {
+  background-color: #108BFF;
+  *background-color: #108BFF;
+  -o-transition: color 0.3s linear, background 0.3s linear;
+  -webkit-transition: color 0.3s linear, background 0.3s linear;
+  -moz-transition: color 0.3s linear, background 0.3s linear;
+  transition: color 0.3s linear, background 0.3s linear;
+  text-decoration: none !important;
+  color: #fff !important;
+  border-color: transparent;
+}
+@media screen and (min-width: 480px) {
+  .btn-primary,
+  button[type="submit"] {
+    padding: 12px 30px;
+  }
+}
+.survey-table-container {
+  margin: 15px auto 90px;
+}
+table td,
+table th,
+.table > thead:first-child > tr:first-child > th {
+  padding: 7px;
+  border-bottom: 0px;
+}
+/*	Necessary to override Bootstrap styles */
+.table thead tr th {
+  vertical-align: middle;
+  border-width: 1px;
+}
+.table tbody tr:first-child td {
+  border-top: 0;
+}
+.table td {
+  padding: 12px 8px !important;
+  vertical-align: middle !important;
+}
+table th {
+  text-align: left;
+}
+.fanferret-result-count,
+.fanferret-pagination {
+  text-align: center;
+}
+.fanferret-pagination > a {
+  color: inherit;
+  text-decoration: none;
+}
+.fanferret-delivery-scheduled,
+.fanferret-email-import {
+  margin-bottom: 20px;
+}
+.fanferret-delivery-scheduled {
+  font-weight: bold;
+  text-align: center;
+}
+.fanferret-delivery-scheduled .alert {
+  padding: 30px;
+}
+form.form-inline {
+  text-align: center;
+}
+form.form-inline label {
+  font-size: 2em;
+  top: 3px;
+}
+form.form-inline *[type="submit"] {
+  padding: 12px 30px;
+  font-size: 1.1em;
+}
+form label {
+  text-align: right;
+  font-weight: 300;
+  position: relative;
+}
+form label:after {
+  content: ":";
+}
+@media screen and (min-width: 768px) {
+  form {
+    margin: 45px 0 0;
+  }
+  form.form-inline .form-control {
+    margin: 0 8px;
+  }
+  form.form-inline .form-control.input-lg {
+    height: 55px;
+    font-size: 25px;
+  }
+}
+@media screen and (min-width: 993px) {
+  form.form-inline .form-control {
+    min-width: 400px;
+    margin: 0 8px;
+  }
+  form.form-inline .form-control.input-lg {
+    height: 65px;
+    font-size: 32px;
+  }
+  form *[type="submit"] {
+    padding: 12px 30px;
+    font-size: 1.2em;
+  }
+  form input[type="file"] {
+    font-size: 1.2em;
+    line-height: 2em;
+  }
+  form label {
+    top: 4px;
+    font-size: 2.4em;
+  }
+}
+.form-email-import-upload {
+  max-width: 500px;
+  margin: 0 auto;
+}
+.form-email-import-upload label {
+  text-align: left;
+  position: static;
+  font-size: 1.6em;
+}
+.form-email-import-upload *[type="submit"] {
+  text-align: right;
+  font-size: 1.2em;
+}
+.login-form {
+  max-width: 800px;
+  margin: 36px auto;
+}
+.login-form h1 {
+  text-align: left;
+}
+.login-form label {
+  font-size: 1.4em;
+  position: static;
+}
+.login-form .form-horizontal .control-label {
+  text-align: left;
+}
