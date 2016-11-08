@@ -1,0 +1,310 @@
+@import 'mixins.less';
+@charset "UTF-8";
+
+@body-background: rgba(225,85,0,1)/* #FF8410;*/;
+
+@button-background: #0f4bb5 ;
+@button-background-hover: #108BFF;
+@button-color: #fff;
+@button-color-hover: #fff;
+@label-font-size: 1.2em;
+@base-margin: 15px;
+body, html {
+	margin:0, padding:0;
+}
+body {
+	.background(none, @body-background, center top, auto, repeat, scroll );
+	margin-bottom: @base-margin * 2;
+	
+}
+.container {
+	position: relative;
+	background-color: #fff;
+	padding: @base-margin;
+	margin-top: @base-margin;	
+	&.login-status-info	{
+		padding: 0 18px 0 0;;
+		margin:0 auto -@base-margin *1.5;
+		font-size:0.85em;
+		color: #fff;
+		.box-shadow(none);
+		background-color: transparent;
+		text-align: right;
+	}
+	&.copyright-text {
+		background-color: transparent;
+		padding: 0 0 0 18px; ;
+		font-size: 0.85em;
+		color: #fff;
+		.box-shadow(none);
+		margin-top: @base-margin * .5;
+	}
+
+	@media screen and (min-width: @screen-sm-max){
+		padding: @base-margin * 3 @base-margin *3 @base-margin *4 ;
+		margin-top: @base-margin * 2;
+		.radius(8px);    
+		.box-shadow(0px 0px 20px rgba(0, 0, 0, 0.15));
+	}  		
+}
+
+
+
+h1,.h1 {
+	margin: @base-margin *2 0 @base-margin * 2;;
+	padding-top: 0;
+	text-align: center;
+	font-size: 3em;
+}
+
+.admin-header {
+	text-align: center;
+	.subtitle {
+		font-size: 1.6em;
+		
+		margin-top: -@base-margin *1;
+		&:before {
+			content: "Card Name: ";		
+			
+		}
+	
+		
+	}
+	.property{
+		display: block;
+		font-style: italic;
+		margin: 0 0 @base-margin *2;
+		font-size: 1.2em;
+		
+	}
+}
+
+.fanferret-logo {
+	display: block;
+	margin-top: @base-margin;
+	margin-left: auto;
+	margin-right: auto;
+	width: 80%;
+	max-width: 385px;
+  @media screen and (min-width: @screen-xs-max){
+      margin-top: @base-margin * 2;
+  }  
+  @media screen and (min-width: @screen-md-max){
+    width: 100%;      
+  }    
+}
+
+.bottom-nav-container {
+	margin-top: @base-margin * 2;
+	text-align: right;
+}
+
+.fanferret-admin-nav {	
+	margin-top: @base-margin *2;
+	text-align: right;
+  @media screen and (min-width: @screen-md-max){	
+		text-align: left;
+		position: absolute;
+		width: 100%;		
+		left: 0;		
+		top: 18px;
+    margin-top: 0;
+		.btn {
+			min-width: 150px;
+		}
+		.btn-logout {
+			float: right;
+			margin-right: 18px;			
+		}
+		.btn-survey-actions {
+			margin-left: 18px;
+		}
+  }	
+}
+
+
+
+.btn-primary, button[type="submit"] {
+  .btn-template(@button-color,@button-background);
+  padding: 8px 15px;
+	text-align: center;
+  margin-right: 4px;
+  font-size: @label-font-size * 0.8;
+  &:hover, &:active, &.active,&:focus {
+    .btn-template-hover(@button-color-hover, @button-background-hover);
+  }
+  @media screen and (min-width: @screen-xs-max){
+    padding: 12px 30px
+  }
+  
+}
+
+
+.survey-table-container {
+	margin: @base-margin auto @base-margin * 6;
+}
+
+table td, table th, .table > thead:first-child > tr:first-child > th {
+	padding: 7px;
+	border-bottom: 0px;
+}
+
+/*	Necessary to override Bootstrap styles */
+.table {
+	
+	 thead  tr  th {	
+		vertical-align: middle;
+		border-width: 1px;
+	
+		 
+	}
+	tbody  tr:first-child td {
+		border-top: 0;
+	}
+	td {
+		padding: 12px 8px !important;
+		vertical-align: middle !important;
+	}
+}
+
+table th {
+	text-align: left;
+}
+
+table tbody tr:nth-child(odd) {
+	
+}
+
+.fanferret-result-count, .fanferret-pagination {
+	text-align: center;
+}
+
+.fanferret-pagination > a {
+	color: inherit;
+	text-decoration: none;
+}
+
+
+.fanferret-delivery-scheduled, .fanferret-email-import {
+	margin-bottom: 20px;
+}
+
+.fanferret-delivery-scheduled {
+	font-weight: bold;
+	text-align: center;
+	.alert {
+		padding: @base-margin *2;
+	}
+}
+
+
+
+
+form { 
+	input, button, textarea, select {
+	
+	}
+	&.form-inline {
+		text-align: center;
+		.form-control {
+			
+		}
+		label {				
+			font-size: 2em;		
+			top: 3px;
+		}			
+		*[type="submit"] {
+			padding: 12px 30px;
+			font-size: 1.1em;
+		}	
+	}	
+
+  label {
+    text-align: right;
+		font-weight: 300;
+		position: relative;
+		
+    &:after {
+      content: ":";
+    }
+  }
+	@media screen and (min-width: @screen-sm-max){
+		margin: @base-margin* 3 0 0;
+    &.form-inline {
+			.form-control {
+				margin:  0 8px;
+				&.input-lg {
+					height: 55px;
+					font-size: 25px;	
+					
+				}
+			}			
+
+		}
+	}
+  @media screen and (min-width: @screen-md-max){
+    &.form-inline {
+			.form-control {
+				min-width: 400px;
+				margin: 0 8px;
+				&.input-lg {
+					height: 65px;
+					font-size: 32px;	
+					
+				}
+			}
+
+		}
+		*[type="submit"] {
+			padding: 12px 30px;
+			font-size: 1.2em;
+		}
+		input[type="file"] {
+			font-size: 1.2em;
+			line-height: 2em;
+		}
+		label {				
+			top: 4px;
+			font-size: 2.4em;				
+		}		
+  }	
+}
+
+.form-email-import-upload {
+	max-width: 500px;
+	margin: 0 auto;
+	label {
+		text-align: left;
+		position:static;
+		font-size: 1.6em;
+	}
+	*[type="submit"] {
+		text-align: right;
+		font-size: 1.2em;
+	}
+}
+
+.form-email-import-verify {
+	
+}
+
+.login-form {
+	h1 {
+		text-align: left;
+	}
+	
+	max-width: 800px;
+	margin: 36px auto;
+	label {	
+		font-size: 1.4em;
+		position: static;
+	}
+	.form-horizontal {		
+		.control-label {
+			text-align: left;
+		}
+	}
+}
+
+
+

@@ -1,41 +1,78 @@
+@import 'mixins.less';
 @charset "UTF-8";
 @button-background: #ccc;
 @button-background-hover: #ddd;
 
-
-body {
-	height: 100%;
-	height: 100vh;
-	width: 100%;
-	width: 100vw;
+body {	
+	position: relative;
+	.fanferret-survey-buttons {		
+		position: fixed;
+		width: 100%;
+		left: 0;
+		bottom: 0;
+		.container {
+			padding-left: 0;
+			padding-right:0;
+			
+		}
+		.inner-container {			
+			padding: 12px 12px 12px;
+			.box-shadow(0px -5px 16px rgba(0, 0, 0, 0.15));
+		}
+	}		
+	@media screen and (min-width: @screen-sm-max){
+		.fanferret-survey-buttons {	
+			.container {
+				padding-left: 15px;
+				padding-right: 15px;
+				background-color: transparent;
+			}
+			.inner-container {
+				.box-shadow(none);
+				padding: 24px 30px 12px;
+				.background(url('/bundles/fanferretquestion/images/shadow-footer-navigation.png'),#fff, 0 0px,100% auto,no-repeat, scroll );
+			}
+		}
+	}
 }
-
 .container {
 	background: #fff;
-  > img {
+}
+.content-wrapper {
+	padding: 15px;
+	position: relative;
+	margin-bottom: 75px;
+  img {
     display: block;
+		max-width: 100%;
     margin-left: auto;
     margin-right: auto;
-  }  
+  } 
+
+  @media screen and (min-width: @screen-sm-max){
+		padding: 30px;
+		min-height: 800px;
+		.fanferret-survey-buttons {
+			left: -7px;
+		}
+	}
 }
+	
 
 
-h1, h2 {
-	text-align: center;
-}
+
+
 
 h1 {
+	text-align: center;
 	font-size: 48px;
 	text-transform: uppercase;
 }
 
 
-
 .fanferret-title > * {
 	text-align: left;
 }
-
-
 
 .fanferret-checklist-options, 
 .fanferret-rating-ratings, 
@@ -44,6 +81,15 @@ h1 {
 	list-style-type: none;
 	margin-bottom: 0;
 	padding-left: 0;
+	
+}
+
+.fanferret-rating-ratings,.fanferret-polar-options {
+	
+	@media screen and (min-width: @screen-md-max){
+		float: right;
+	}
+	
 }
 
 .fanferret-checklist-option > .fanferret-checklist-option-other-text {
@@ -55,37 +101,35 @@ h1 {
 .fanferret-rating-explanations {
 	font-size: 11px;
 	overflow: hidden;
-  &.hidden-md.hidden-lg {
-    padding-left: 15px;
-  }
+  
 }
-
-
 
 .fanferret-rating-explanation {
+	/*
+	margin: 1em 0;
 	float: left;
-	max-width: 75px;
 	width: 33%;
+	*/
+	margin: 0.5em 0 0.5em;
+	font-size: 12px;
   .fa {
-    font-size: 16px;
+    font-size: 14px;
+		
   }
-  &:nth-child(2) {
-    text-align: center;
-  }
-  &:nth-child(3) {
-    text-align: right;
-  }
-
+	text-align: center;
+	.explanation-label {
+		visibility: hidden;
+		display: none;
+	}
+	@media screen and (min-width: @screen-xs-max){
+		.explanation-label {
+			visibility:visible;
+			display: inline;
+		}
+	}
 }
 
 
-.hidden-md.hidden-lg.fanferret-rating-explanations .fanferret-rating-explanation {
-	display: block;
-	font-size: 14px;
-	max-width: unset;
-	text-align: left;
-	width: 100%;
-}
 
 
 .fanferret-rating-rating, 
@@ -105,11 +149,7 @@ h1 {
     margin-left: auto;
     margin-right: auto;
     text-align: center;
-    text-decoration: none;
-    
-    &:hover,&:active, &.selected {
-     
-    }
+    text-decoration: none;      
   }
 }
 
@@ -127,15 +167,11 @@ h1 {
   }  
 }
 
-
-
-
 .fanferret-rating-ratings, .fanferret-polar-options, .fanferret-conditional-nested-options {
 	overflow: hidden;
 }
 
 .fanferret-question-title {
-	font-weight: bold;
 	margin-bottom: 0;
 	margin-top: 0;
 }
@@ -147,15 +183,10 @@ section {
   }
 }
 
-
-
 .fanferret-rating-explain-input > textarea, .fanferret-polar-explain-input > textarea {
 	display: block;
 }
 
-.fanferret-survey-buttons {
-	margin-top: 10px;
-}
 
 button[disabled], .fanferret-survey-buttons button[disabled]:hover,
 #survey-carousel > ol.carousel-indicators > li.fanferret-disabled {
@@ -168,16 +199,6 @@ textarea {
 	max-width: 100%;
 }
 
-
-
-
-
-
-
-.fanferret-question {
-	border-radius: 10px;
-	padding: 15px;
-}
 
 .fanferret-spinner {
 	background: white;
@@ -198,8 +219,42 @@ textarea {
   }
 }
 
-
-
 .fanferret-checklist-option-other-text > div {
 	padding: 0;
 }
+
+
+.carousel-fade {
+	.carousel-inner {
+		.item {
+			transition-property: opacity;
+			-webkit-transition-property: opacity;		
+		}
+		.item,
+		.active.left,
+		.active.right {
+			.opacity(0);
+			.transition(0.5s);
+		}		
+		.active,
+		.next.left,
+		.prev.right {
+			.opacity(1);
+			.transition(0.75s);
+		}
+
+		.next,
+		.prev,
+		.active.left,
+		.active.right {
+			left: 0;
+			transform: translate3d(0, 0, 0);
+			-webkit-transform: translate3d(0, 0, 0);
+		}
+	}
+	.carousel-control {
+			z-index: 2;
+	}
+}
+
+

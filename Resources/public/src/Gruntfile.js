@@ -23,8 +23,8 @@ module.exports = function(grunt) {
         },
         files: {
           "../css/admin.css": ["less/mixins.less","less/admin.less"] ,
-          "../css/survey.css" : ["less/mixins.less","less/survey.less"],
-          "../css/thepalmstc.css" : ["less/mixins.less","less/thepalmstc.less"]
+          "../css/survey.css" : ["less/mixins.less","less/survey.less"]
+          
         }
       }
     }
