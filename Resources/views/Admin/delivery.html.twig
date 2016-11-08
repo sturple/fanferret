@@ -20,7 +20,8 @@
 {% endblock %}
 
 {% block content %}
-<h1>Digital Comment Card Delivery</h1>
+<h1>Digital Comment Card Delivery </h1>
+
 {% if session %}
 {% include 'FanFerretQuestionBundle:Admin:surveysessioncreated.html.twig' with {'sessions': [session]} %}
 {% endif %}
@@ -54,19 +55,19 @@
 {% endblock %}
 
 {% block nav %}
-<div class="col-md-4">
-	{% if comment_cards %}
-	{% set args = {'survey': survey.slug, 'property': survey.property.slug} %}
-	{% if survey.property.group != null %}
-	{% set route = 'fgms_question_admin_comment_cards_group' %}
-	{% set args = args|merge({'group': survey.property.group.slug}) %}
-	{% else %}
-	{% set route = 'fgms_question_admin_comment_cards' %}
-	{% endif %}
-	<a class="btn btn-primary" href="{{path(route,args)|escape('html_attr')}}">View All Comment Cards</a>
-	{% endif %}
-</div>
-<div class="col-md-4">
-	<a class="btn btn-primary" href="{{path('fgms_question_admin')|escape('html_attr')}}">View All Surveys</a>
+<div class="col-md-12">
+	<div class="bottom-nav-container">
+		{% if comment_cards %}
+		{% set args = {'survey': survey.slug, 'property': survey.property.slug} %}
+		{% if survey.property.group != null %}
+		{% set route = 'fgms_question_admin_comment_cards_group' %}
+		{% set args = args|merge({'group': survey.property.group.slug}) %}
+		{% else %}
+		{% set route = 'fgms_question_admin_comment_cards' %}
+		{% endif %}
+		<a class="btn btn-primary" href="{{path(route,args)|escape('html_attr')}}">View All Comment Cards</a>
+		{% endif %}
+		<a class="btn btn-primary" href="{{path('fgms_question_admin')|escape('html_attr')}}">View All Surveys</a>
+	</div>
 </div>
 {% endblock %}

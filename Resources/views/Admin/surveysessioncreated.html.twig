@@ -1,9 +1,12 @@
 {% if sessions|length > 0 %}
 <div class="fanferret-delivery-scheduled">
-	A digital comment card has been sent to
-	{% set fmt = 'F j, Y' %}
-	{% for session in sessions %}{% if loop.index0 != 0 %},{% endif %}
-	{% if session.firstName and session.lastName %}{{session.firstName}} {{session.lastName}} at{% endif %}
-	<a href="mailto:{{session.email|escape('html_attr')}}">{{session.email}}</a>{% endfor %}.
+	<div class="alert alert-success alert-dismissible" role="alert">
+		<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>		
+		A digital comment card has been sent to
+		{% set fmt = 'F j, Y' %}
+		{% for session in sessions %}{% if loop.index0 != 0 %},{% endif %}
+		{% if session.firstName and session.lastName %}{{session.firstName}} {{session.lastName}} at{% endif %}
+		<a href="mailto:{{session.email|escape('html_attr')}}">{{session.email}}</a>{% endfor %}.
+	</div>
 </div>
 {% endif %}

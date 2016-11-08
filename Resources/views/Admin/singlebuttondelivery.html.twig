@@ -1,37 +1,28 @@
 {% extends 'FanFerretQuestionBundle:Admin:base.html.twig' %}
 
 {% block content %}
+<div class="admin-header">
 <h1>Digital Comment Card Delivery</h1>
+<div class="subtitle">{{survey.name}}</div>
+<div class="property">{{survey.property.name}}</div>
+</div>
+
 {% if session %}
 {% include 'FanFerretQuestionBundle:Admin:surveysessioncreated.html.twig' with {'sessions': [session]} %}
 {% endif %}
-{{form_start(form)}}
-	{{form_errors(form)}}
-	<div class="row">
-		<label for="{{form.email.vars.id|escape('html_attr')}}" class="col-md-4">Email</label>
-		<div class="col-md-8">{{form_widget(form.email,{'attr': {'class': 'form-control'}})}}</div>
-	</div>
-	<div class="row">
-		<div class="col-md-4"></div>
-		<div class="col-md-8">{{form_widget(form.submit,{'attr': {'class': 'form-control'}})}}</div>
-	</div>
+
+{{form_start(form, {'attr': {'class' : 'form-inline'}})}}
+	{{form_errors(form)}}	
+	<div class="form-group" >
+		<label for="{{form.email.vars.id|escape('html_attr')}}" class="">Email</label>
+		{{form_widget(form.email,{'attr': {'class': 'form-control input-lg'}})}}
+	</div>		
+	{{form_widget(form.submit,{'attr': {'class': 'btn btn-primary btn-lg'}, 'label': 'Send Card Now'})}}
+	
 {{form_end(form)}}
 {% endblock %}
 
 {% block nav %}
-<div class="col-md-4">
-	{% if comment_cards %}
-	{% set args = {'survey': survey.slug, 'property': survey.property.slug} %}
-	{% if survey.property.group != null %}
-	{% set route = 'fgms_question_admin_comment_cards_group' %}
-	{% set args = args|merge({'group': survey.property.group.slug}) %}
-	{% else %}
-	{% set route = 'fgms_question_admin_comment_cards' %}
-	{% endif %}
-	<a class="btn btn-primary" href="{{path(route,args)|escape('html_attr')}}">View All Comment Cards</a>
-	{% endif %}
-</div>
-<div class="col-md-4">
-	<a class="btn btn-primary" href="{{path('fgms_question_admin')|escape('html_attr')}}">View All Surveys</a>
-</div>
+	<span class="btn-survey-actions"><a class="btn btn-primary" href="{{path('fgms_question_admin')|escape('html_attr')}}"><i class="fa fa-hand-o-left" aria-hidden="true"></i> Back to Index</a></span>
+	{{parent()}}
 {% endblock %}

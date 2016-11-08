@@ -1,22 +1,24 @@
 {% extends 'FanFerretQuestionBundle:Admin:base.html.twig' %}
 
 {% block content %}
-<h1>Property Management Import Tool</h1>
-{% if emails is not same as(null) %}
-<div class="fanferret-email-import">
+<div class="admin-header">
+	<h1>Upload Checkout Data</h1>
+	<div class="subtitle"></div>
+	<div class="property"></div>
+
+{% if emails is not same as(null) or true%}
+<div class="fanferret-email-import-verify">
 	{% if emails|length > 0 %}
 	<h2>The following emails are available for import:</h2>
 	<form method="POST">
 		{% for email in emails|sort %}
-		<div class="row">
-			<div class="col-md-4"><input type="checkbox" value="{{email|escape('html_attr')}}" name="emails[]" checked></div>
-			<label class="col-md-8"><a href="mailto:{{email|escape('html_attr')}}">{{email}}</a></label>
+		<div class="form-control">
+			<input type="checkbox" value="{{email|escape('html_attr')}}" name="emails[]" checked>
+			<label class=""><a href="mailto:{{email|escape('html_attr')}}">{{email}}</a></label>
 		</div>
 		{% endfor %}
-		<div class="row">
-			<div class="col-md-4"></div>
-			<div class="col-md-8"><button type="submit" name="submit" class="form-control" value="emails">Submit</button></div>
-		</div>
+		<div class="form-controll"><button type="submit" name="submit" class="btn btn-primary" value="emails">Submit</button></div>
+
 	</form>
 	{% else %}
 	<h2>No emails available for import</h2>
@@ -25,16 +27,24 @@
 {% endif %}
 {% if sessions is not same as(null) %}
 {% include 'FanFerretQuestionBundle:Admin:surveysessioncreated.html.twig' with {'sessions': sessions} %}
+
 {% endif %}
-{{form_start(form)}}
-	{{form_errors(form)}}
-	<div class="row">
-		<label for="{{form.file.vars.id|escape('html_attr')}}" class="col-md-4">File</label>
-		<div class="col-md-8">{{form_widget(form.file)}}</div>
-	</div>
-	<div class="row">
-		<div class="col-md-4"></div>
-		<div class="col-md-8">{{form_widget(form.submit,{'attr': {'class': 'form-control'}})}}</div>
-	</div>
-{{form_end(form)}}
+</div>
+<div class="form-email-import-upload">
+	{{form_start(form)}}
+		{{form_errors(form)}}
+		<div class="form-group">
+			<label for="{{form.file.vars.id|escape('html_attr')}}" class="col-md-4">File</label>
+			{{form_widget(form.file)}}
+		</div>
+		<div class="form-group">		
+			{{form_widget(form.submit,{'attr': {'class': 'btn btn-primary'}})}}
+		</div>
+	{{form_end(form)}}
+</div>
+
+{% endblock %}
+{% block nav %}
+	<span class="btn-survey-actions"><a class="btn btn-primary" href="{{path('fgms_question_admin')|escape('html_attr')}}"><i class="fa fa-hand-o-left" aria-hidden="true"></i> Back to Index</a></span>
+	{{parent()}}
 {% endblock %}

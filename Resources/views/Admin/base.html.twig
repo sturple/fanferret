@@ -4,6 +4,7 @@
 		{% block head %}
 		<meta charset="UTF-8">
 		<title>{% block title %}{% endblock %}</title>
+		<meta name="viewport" content="width=device-width, height=device-height, initial-scale=1.0, user-scalable=0, minimum-scale=1.0, maximum-scale=1.0">
 		<link rel="stylesheet" type="text/css" href="{{asset('bundles/fanferretquestion/css/bootstrap.min.css')|escape('html_attr')}}">
 		<link rel="stylesheet" type="text/css" href="{{asset('bundles/fanferretquestion/css/font-awesome.min.css')|escape('html_attr')}}">
 		<link rel="stylesheet" type="text/css" href="{{asset('bundles/fanferretquestion/css/admin.css')|escape('html_attr')}}">
@@ -14,17 +15,27 @@
 	</head>
 	<body>
 		{% block body %}
+		<img class="fanferret-logo" src="{{asset('bundles/fanferretquestion/images/fanferret-logo-white.png')|escape('html_attr')}}" alt="FanFerret Logo">
+    <div class="container login-status-info">
+    {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
+      {{ 'layout.logged_in_as'|trans({'%username%': app.user.username}, 'FOSUserBundle') }}
+    {% endif %}
+    </div>		
 		<div class="container">
-			<img class="fanferret-logo" src="{{asset('bundles/fanferretquestion/images/fanferret-logo-white.png')|escape('html_attr')}}" alt="FanFerret Logo">
-			{% block content %}{% endblock %}
-			<div class="fanferret-admin-nav row">
-				{% block nav %}
-				<div class="col-md-8"></div>
-				{% endblock %}
-				<div class="col-md-4">
-					<a class="btn btn-primary" href="{{path('fos_user_security_logout')|escape('html_attr')}}">Logout</a>
-				</div>
+
+			<div class="content-wrapper">				
+				{% block content %}{% endblock %}	
 			</div>
+			<div class="fanferret-admin-nav">			
+				{% block nav %}		
+					
+					<span class="btn-logout"><a class="btn btn-primary" href="{{path('fos_user_security_logout')|escape('html_attr')}}"><i class="fa fa-sign-out" aria-hidden="true"></i> Logout</a></span>		
+				{% endblock %}
+				</div>
+			</div>			
+		</div>
+		<div class="container copyright-text" >
+			<p>Fanferret and the Fanferret logo are trademarks of Fifth Gear Marketing Systems Inc.  Copyright 2016.</p>
 		</div>
 		{% endblock %}
 	</body>
