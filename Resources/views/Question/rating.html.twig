@@ -6,37 +6,44 @@
 {% if entity.order != 0 %}
 {% set show_explanations = parent.questions[entity.order - 1].type != 'rating' %}
 {% endif %}
-{% if show_explanations %}
-<div class="hidden-md hidden-lg fanferret-rating-explanations">
-	<div class="fanferret-rating-explanation">5 = <span class="fa fa-smile-o"></span> Excellent</div>
-	<div class="fanferret-rating-explanation">3 = <span class="fa fa-meh-o"></span> Average</div>
-	<div class="fanferret-rating-explanation">1 = <span class="fa fa-frown-o"></span> Poor</div>
-</div>
-<div class="row hidden-xs hidden-sm">
-	<div class="col-md-7"></div>
-	<div class="col-md-5 fanferret-rating-explanations">
-		<div class="fanferret-rating-explanation"><span class="fa fa-smile-o"></span> Excellent</div>
-		<div class="fanferret-rating-explanation"><span class="fa fa-meh-o"></span> Average</div>
-		<div class="fanferret-rating-explanation"><span class="fa fa-frown-o"></span> Poor</div>
-	</div>
-</div>
+{% if show_explanations or true %}
 {% endif %}
 <section id="{{name|escape('html_attr')}}" class="fanferret-question fanferret-rating {% if explain %}fanferret-rating-explain{% endif %}">
 	<div class="row">
-		<div class="fanferret-question-title col-md-7">{{title}}</div>
-		<div class="fanferret-question-input col-md-5">
-			<ul class="fanferret-rating-ratings">
-				{% for i in 1..5 %}
-				<li class="fanferret-rating-rating">
-					<a href="javascript:void(0);" data-value="{{6-i|escape('html_attr')}}">{{6-i}}</a>
-				</li>
-				{% endfor %}
-			</ul>
+		<div class="col-md-5 col-lg-6">
+			<div class="fanferret-question-title">{{title}}</div>
+		</div>
+		<div class=" col-md-7 col-lg-6">
+		{#
+			<div class="fanferret-rating-explanations">
+				<div class="fanferret-rating-explanation"><span class="fa fa-smile-o"></span> Excellent</div>
+				<div class="fanferret-rating-explanation"><span class="fa fa-meh-o"></span> Average</div>
+				<div class="fanferret-rating-explanation"><span class="fa fa-frown-o"></span> Poor</div>
+			</div>
+			#}
+			<div class="fanferret-question-input">
+				<ul class="fanferret-rating-ratings">
+					{% for i in 1..5 %}
+					<li class="fanferret-rating-rating">
+						{% if i == 1 %}
+						<div class="fanferret-rating-explanation"><span class="fa fa-smile-o"></span><span class="explanation-label"> Excellent</span></div>
+						{% elseif i == 3 %}
+						<div class="fanferret-rating-explanation"><span class="fa fa-meh-o"></span><span class="explanation-label"> Average</span></div>
+						{% elseif i == 5 %}
+						<div class="fanferret-rating-explanation"><span class="fa fa-frown-o"></span><span class="explanation-label"> Poor</span></div>
+						{% else %}
+						<div class="fanferret-rating-explanation"><span class="fa"></span></div>
+						{% endif %}
+						<a href="javascript:void(0);" data-value="{{6-i|escape('html_attr')}}">{{6-i}}</a>
+					</li>
+					{% endfor %}
+				</ul>
+			</div>
 		</div>
 	</div>
 	{% if explain %}
 	<div class="fanferret-rating-explain-input row" style="display:none;">
-		<div class="col-md-7">{{prompt}} <textarea class="form-control"></textarea></div>
+		<div class=" col-lg-6"><label class="sr-only">{{prompt}}</label> <textarea class="form-control" placeholder="{{prompt}}"></textarea></div>
 	</div>
 	{% endif %}
 </section>
