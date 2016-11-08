@@ -1,5 +1,23 @@
 {% extends 'FanFerretQuestionBundle:Survey:base.html.twig' %}
 
 {% block content %}
-	Thank-you!
+<div class="container">
+	<div class="content-wrapper">
+		{% if survey.params.logo is defined %}
+		<img src="{{survey.params.logo|escape('html_attr')}}" alt="{{survey.params.title}}">
+		{% endif %}
+		{% if survey.params.title is defined %}
+		<h1>{{survey.params.title}}</h1>
+		{% endif %}
+		<p>
+		Thank you for your recent stay at [PROPERTY] and for taking a moment to complete our digital comment card.  
+		Your feedback is invaluable and enables us to continuously improve.
+		</p>
+		
+		<p>As a thank you, please find below a special offer that you may take advantage of during a future stay with us.</p>
+		
+ 		[SPECIAL OFFER TEXT OR COUPON GOES HERE]
+
+	</div>
+</div>
 {% endblock %}

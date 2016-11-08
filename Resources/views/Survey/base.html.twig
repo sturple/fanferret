@@ -3,6 +3,7 @@
 	<head>
 		{% block head %}
 		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, height=device-height, initial-scale=1.0, user-scalable=0, minimum-scale=1.0, maximum-scale=1.0">
 		<title>{% block title %}{% endblock %}</title>
 		<link rel="stylesheet" type="text/css" href="{{asset('bundles/fanferretquestion/css/bootstrap.min.css')|escape('html_attr')}}">
 		<link rel="stylesheet" type="text/css" href="{{asset('bundles/fanferretquestion/css/survey.css')|escape('html_attr')}}">
@@ -19,9 +20,8 @@
 	</head>
 	<body>
 		{% block body %}
-		<div class="container">
-			{% block content %}{% endblock %}
-		</div>
+		{% block content %}{% endblock %}
+
 		{% endblock %}
 	</body>
 </html>

@@ -15,32 +15,47 @@
 {% endblock %}
 
 {% block content %}
-	{% if survey.params.logo is defined %}
-	<img src="{{survey.params.logo|escape('html_attr')}}">
-	{% endif %}
-	{% if survey.params.title is defined %}
-	<h1>{{survey.params.title}}</h1>
-	{% endif %}
-	<div id="survey-carousel" class="carousel" data-ride="carousel" data-interval="false" data-keyboard="false">
-		{% if groups|length > 1 %}
-		<ol class="carousel-indicators">
-			{% for group in survey.questionGroups %}
-			<li data-target="#survey-carousel" data-slide-to="{{loop.index0|escape('html_attr')}}" class="{% if loop.index0 == 0 %}active{% else %}fanferret-disabled{% endif %}" {% if group.params.title is defined %}title="{{group.params.title|escape('html_attr')}}"{% endif %}></li>
-			{% endfor %}
-		</ol>
+<div class="container">
+	<div class="content-wrapper">
+		{% if survey.params.logo is defined %}
+		<img src="{{survey.params.logo|escape('html_attr')}}" alt="{{survey.params.title}}">
 		{% endif %}
-		<div class="carousel-inner" role="listbox">
-			{% for group in groups %}
-			<div class="carousel-item item {% if loop.index0 == 0 %}active{% endif %}" data-index="{{loop.index0|escape('html_attr')}}">
-				{{group.render()|raw}}
+		{% if survey.params.title is defined %}
+		<h1>{{survey.params.title}}</h1>
+		{% endif %}
+		<div id="survey-carousel" class="carousel carousel-fade" data-ride="carousel" data-interval="false" data-keyboard="false">
+			{% if groups|length > 1 %}
+			<ol class="carousel-indicators">
+				{% for group in survey.questionGroups %}
+				<li data-target="#survey-carousel" data-slide-to="{{loop.index0|escape('html_attr')}}" class="{% if loop.index0 == 0 %}active{% else %}fanferret-disabled{% endif %}" {% if group.params.title is defined %}title="{{group.params.title|escape('html_attr')}}"{% endif %}></li>
+				{% endfor %}
+			</ol>
+			{% endif %}
+			<div class="carousel-inner" role="listbox">				
+				{% for group in groups %}					
+				<div class="carousel-item item {% if loop.index0 == 0 %}active{% endif %}" data-index="{{loop.index0|escape('html_attr')}}">
+					{{group.render()|raw}}
+				</div>
+				{% endfor %}
 			</div>
-			{% endfor %}
 		</div>
 	</div>
-	<div class="fanferret-survey-buttons">
-		{% if groups|length > 1 %}
-		<button class="btn btn-primary btn-md fanferret-survey-button-previous" disabled>Previous</button>
-		{% endif %}
-		<button class="btn btn-primary btn-md fanferret-survey-button-next" disabled>Next</button>
+</div>	
+<div class="fanferret-survey-buttons">
+	<div class="container">
+		<div class="inner-container">
+			<div class="row">
+				<div class="col-md-4">
+					{% if groups|length > 1 %}
+					<button class="btn btn-primary  fanferret-survey-button-previous" disabled>Previous</button>
+					{% endif %}
+					<button class="btn btn-primary  fanferret-survey-button-next" disabled>Next</button>				
+				</div>
+				<div class="col-md-8" style="text-align: right;position:relative; top: 4px;">
+					<span class="fanferret-group-title-indicator" ></span>
+				</div>
+			</div>
+		</div>
 	</div>
+</div>
 {% endblock %}
