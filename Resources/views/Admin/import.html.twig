@@ -3,21 +3,26 @@
 {% block content %}
 <div class="admin-header">
 	<h1>Upload Checkout Data</h1>
-	<div class="subtitle"></div>
-	<div class="property"></div>
-
-{% if emails is not same as(null) or true%}
+	<div class="subtitle">{{survey.name}}</div>
+	<div class="property">{{survey.property.name}}</div>	
+	<p>CSV format upload is 1st column Date, 2nd Column as email with date format of 'Y-m-d H:i' with the first row being a heading row.</p>
+</div>
+{% if emails is not same as(null) %}
 <div class="fanferret-email-import-verify">
 	{% if emails|length > 0 %}
 	<h2>The following emails are available for import:</h2>
 	<form method="POST">
 		{% for email in emails|sort %}
-		<div class="form-control">
-			<input type="checkbox" value="{{email|escape('html_attr')}}" name="emails[]" checked>
-			<label class=""><a href="mailto:{{email|escape('html_attr')}}">{{email}}</a></label>
+		<div class="checkbox">			
+			<label >
+				<input type="checkbox" value="{{email|escape('html_attr')}}" name="emails[]" checked />
+				{{email}}
+			</label>
 		</div>
 		{% endfor %}
-		<div class="form-controll"><button type="submit" name="submit" class="btn btn-primary" value="emails">Submit</button></div>
+		<div style="margin-top: 15px;">
+			<button type="submit" name="submit" class="btn btn-primary" value="emails">Add Emails</button>
+		</div>
 
 	</form>
 	{% else %}
@@ -29,7 +34,8 @@
 {% include 'FanFerretQuestionBundle:Admin:surveysessioncreated.html.twig' with {'sessions': sessions} %}
 
 {% endif %}
-</div>
+
+{% if emails == false %}
 <div class="form-email-import-upload">
 	{{form_start(form)}}
 		{{form_errors(form)}}
@@ -42,6 +48,7 @@
 		</div>
 	{{form_end(form)}}
 </div>
+{% endif %}
 
 {% endblock %}
 {% block nav %}

@@ -1,7 +1,7 @@
 @import 'mixins.less';
 @charset "UTF-8";
 
-@body-background: rgba(225,85,0,1)/* #FF8410;*/;
+@body-background: #FF8410;
 
 @button-background: #0f4bb5 ;
 @button-background-hover: #108BFF;
@@ -215,7 +215,7 @@ form {
 		}			
 		*[type="submit"] {
 			padding: 12px 30px;
-			font-size: 1.1em;
+			font-size: 2em;
 		}	
 	}	
 
@@ -257,7 +257,7 @@ form {
 		}
 		*[type="submit"] {
 			padding: 12px 30px;
-			font-size: 1.2em;
+			font-size: 2em;
 		}
 		input[type="file"] {
 			font-size: 1.2em;
@@ -284,8 +284,17 @@ form {
 	}
 }
 
-.form-email-import-verify {
-	
+.fanferret-email-import-verify {
+	form {
+		margin: 0;
+		label {
+			font-size: 1.2em;
+			&:after {
+				content: '';
+			}
+		}		
+	}
+
 }
 
 .login-form {

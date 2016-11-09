@@ -6,7 +6,7 @@ html {
 }
 body {
   background-image: none;
-  background-color: #e15500 /* #FF8410;*/;
+  background-color: #FF8410;
   background-position: center top;
   background-size: auto;
   background-repeat: repeat;
@@ -211,7 +211,7 @@ form.form-inline label {
 }
 form.form-inline *[type="submit"] {
   padding: 12px 30px;
-  font-size: 1.1em;
+  font-size: 2em;
 }
 form label {
   text-align: right;
@@ -244,7 +244,7 @@ form label:after {
   }
   form *[type="submit"] {
     padding: 12px 30px;
-    font-size: 1.2em;
+    font-size: 2em;
   }
   form input[type="file"] {
     font-size: 1.2em;
@@ -267,6 +267,15 @@ form label:after {
 .form-email-import-upload *[type="submit"] {
   text-align: right;
   font-size: 1.2em;
+}
+.fanferret-email-import-verify form {
+  margin: 0;
+}
+.fanferret-email-import-verify form label {
+  font-size: 1.2em;
+}
+.fanferret-email-import-verify form label:after {
+  content: '';
 }
 .login-form {
   max-width: 800px;

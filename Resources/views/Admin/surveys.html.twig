@@ -10,8 +10,11 @@
 			<tr>
 				<th style="width:40%">Property</th>
 				<th style="width:60%">Comment Card Name</th>
+				
 				<th></th>
 				<th></th>
+				<th></th>
+							
 			</tr>
 		</thead>
 		<tbody>
@@ -37,14 +40,19 @@
 					<a class="btn btn-primary" href="{{path('fgms_question_admin_delivery' ~ route_suffix,args)|escape('html_attr')}}"><i class="fa fa-paper-plane" aria-hidden="true"></i> Send A Card</a>
 					{% endif %}
 				</td>
+				{# checking if has authentication to view options #}
+				
 				<td>
+					{% if survey.comment_cards %}
 					<a class="btn btn-primary" href="{{path('fgms_question_admin_missing_emails' ~ route_suffix ,args)|escape('html_attr')}}"><i class="fa fa-upload" aria-hidden="true"></i> Upload Checkout Data</a>
-				</td>
-				<td>
+					{% endif %}
+				</td>				
+				<td>	
 					{% if survey.comment_cards %}
 					<a class="btn btn-primary" href="{{path('fgms_question_admin_comment_cards' ~ route_suffix,args)|escape('html_attr')}}"><i class="fa fa-eye" aria-hidden="true"></i> Status Report</a>	
 					{% endif %}
 				</td>
+				
 			</tr>
 			{% endfor %}
 		</tbody>
