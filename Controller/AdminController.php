@@ -232,11 +232,13 @@ class AdminController extends BaseController
         $repo = $this->getSurveyRepository();
         $user = $this->getUser();
         $surveys = $repo->getByUser($user,$page);
+       
         $surveys = array_map(function (\FanFerret\QuestionBundle\Entity\Survey $survey) {
             return (object)[
                 'survey' => $survey,
                 'delivery' => $this->deliveryCheck($survey),
                 'comment_cards' => $this->commentCardsCheck($survey)
+                
             ];
         },$surveys);
         $results = $repo->getCountByUser($user);
@@ -335,7 +337,9 @@ class AdminController extends BaseController
         return $this->render('FanFerretQuestionBundle:Admin:import.html.twig',[
             'form' => $form->createView(),
             'emails' => $emails,
-            'sessions' => $sessions
+            'sessions' => $sessions,
+            'survey' => $survey
+          
         ]);
     }
 
