@@ -1,9 +1,10 @@
 {
-    "name": "sturple/fanferret-questionbundle",
-    "description": "Question Bundle",
+    "name": "sturple/fanferret",
+    "version" : "0.0.1",
+    "description": "Fanferret Digitial Comments  Bundle",
     "type": "symfony-bundle",
     "keywords": ["survey", "hotel", "symfony"],
-    "homepage": "https://github.com/sturple/fanferret-questionbundle",
+    "homepage": "https://github.com/sturple/fanferret",
     "license": "MIT",
     "authors": [
         {
@@ -14,11 +15,8 @@
     "require": {
         "league/csv": "^8.0"
     },
-    "minimum-stability": "dev",
     "target-dir": "FanFerret/Bundle/QuestionBundle",
     "autoload" : {
         "psr-0" : {"FanFerret\\Bundle\\QuestionBundle" : ""}
     }
-
-
 }

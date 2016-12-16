@@ -1,50 +1,3 @@
-# FanFerret Question Bundle
-
-## Installation
-
-** Install With Composer **
-
-```json
-{
-   "require": {
-       "sturpe/fanferret": "~0.0"
-   }
-}
-
-```
-
-and then execute
-
-```json
-$ composer update
-```
-
-## Configuration
-
-**Add to ```app/AppKernal.php``` file**
-
-```php
-
-class AppKernel extends Kernel
-{
-    public function registerBundles()
-    {
-        $bundles = [
-            ...
-             new FanFerret\QuestionBundle\FanFerretQuestionBundle();
-        ]
-    }
-}            
-
-```
-
-## Survey Creation 
-
-### survey-{name}.yml
-
-```yml
-
-
 slug: survey-name
 slugGroup: survey-group-name
 language: en-CA
@@ -206,8 +159,3 @@ questionGroups:
             params:
                 title: Please share any additional comments or suggestions
                 testimonial: false
-
-
-```
-
-
