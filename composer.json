@@ -1,6 +1,6 @@
 {
     "name": "sturple/fanferret",
-    "version" : "0.0.1",
+    "version" : "0.0.2",
     "description": "Fanferret Digitial Comments  Bundle",
     "type": "symfony-bundle",
     "keywords": ["survey", "hotel", "symfony"],
@@ -15,8 +15,8 @@
     "require": {
         "league/csv": "^8.0"
     },
-    "target-dir": "FanFerret/Bundle/QuestionBundle",
+    "target-dir": "FanFerret/QuestionBundle",
     "autoload" : {
-        "psr-0" : {"FanFerret\\Bundle\\QuestionBundle" : ""}
+        "psr-0" : {"FanFerret\\QuestionBundle" : ""}
     }
 }
