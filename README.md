@@ -4,10 +4,14 @@
 
 ** Install With Composer **
 
+**Note** fos urser bundle requires symfony to be 3.1.
+https://symfony.com/doc/master/bundles/FOSUserBundle/index.html
+
 ```json
 {
    "require": {
-       "sturpe/fanferret": "~0.0"
+        "sturpe/fanferret": "~0.0",
+        "friendsofsymfony/user-bundle": "~2.0@dev",
    }
 }
 
@@ -17,6 +21,13 @@ and then execute
 
 ```json
 $ composer update
+```
+
+or 
+
+```
+composer require sturple/fanferret:~0.0
+composer requrie friendsofsymfony/user-bundle "~2.0@dev"
 ```
 
 ## Configuration
@@ -31,183 +42,26 @@ class AppKernel extends Kernel
     {
         $bundles = [
             ...
-             new FanFerret\QuestionBundle\FanFerretQuestionBundle();
+             new \FanFerret\QuestionBundle\FanFerretQuestionBundle(),
+             new \Fos\UserBundle\FOSUserBundle(),
         ]
     }
 }            
 
 ```
 
+## Routing
+
+**app/config/routing.yml**
+
+```yml
+fanferret:
+    resource: "@FanFerretQuestionBundle/Resources/config/routing.yml"
+    prefix: '/survey/'
+```
+
 ## Survey Creation 
 
 ### survey-{name}.yml
 
-```yml
-
-
-slug: survey-name
-slugGroup: survey-group-name
-language: en-CA
-name: "Survey Name"
-params: 
-    title: 'Title on Survey'
-    timezone: America/Vancouver
-    log: /url/to/logo.gif
-    to: info@fanferret.com
-    from:
-        name: Fanferret Admin
-        address: webmaster@fanferret.com
-questionGroups:
-    -   params:
-            title: The Source
-        questions:
-            -   type: checklist
-                params:
-                    title: "How did you hear about us?"
-                    options:
-                        -   A Previous Visit
-                        -   "Travel Agent's Suggestion"
-                        -   Referral
-                        -   Advertising
-                        -   Toll Free (800) Number
-                        -   Website
-                    hasOther: true
-    -   params:
-            title: Reception Service
-        questions:
-            -   type: rating
-                params:
-                    title: Airport Transfers
-            -   type: rating
-                params:
-                    title: Reservation Agents
-            -   type: rating
-                params:
-                    title: Bell Staff
-            -   type: rating
-                params:
-                    title: Front Desk Personnel
-            -   type: rating
-                params:
-                    title: Concierge
-            -   type: rating
-                params:
-                    title: Telephone Operators
-            -   type: rating
-                params:
-                    title: Message Service
-            -   type: rating
-                params:
-                    title: Taxi Experience During Stay
-    -   params:
-            title: Accomodations
-        questions:
-            -   type: rating
-                params:
-                    title: Suite Furnishings and Decor
-            -   type: rating
-                params:
-                    title: Cleanliness Upon Arrival
-            -   type: rating
-                params:
-                    title: Housekeeping Services
-            -   type: rating
-                params:
-                    title: Housekeeping Staff
-            -   type: rating
-                params:
-                    title: Suite Heating and Cooling System
-            -   type: rating
-                params:
-                    title: Water Temperature and Pressure
-            -   type: rating
-                params:
-                    title: Response to Maintenance Request
-            -   type: rating
-                params:
-                    title: Suite Ready Upon Arrival
-    -   params:
-            title: Room Service
-        questions:
-            -   type: conditionalnested
-                params:
-                    negative: false
-                    title: "Did you use room service during your stay?"
-                questions:
-                    -   type: rating
-                        params:
-                            title: Friendly Service in Taking your Order
-                    -   type: rating
-                        params:
-                            title: Friendly Delivering Service
-                    -   type: rating
-                        params:
-                            title: Timeliness in Delivering your Order
-                    -   type: rating
-                        params:
-                            title: Accuracy of your Order
-                    -   type: rating
-                        params:
-                            title: Food Quality and Temperature
-                    -   type: rating
-                        params:
-                            title: Prompt Removal of Tray or Cart
-    -   params:
-        title: How did we make you feel during your visit?
-    questions:
-        -   type: rating
-            params:
-                title: Welcomed
-        -   type: rating
-            params:
-                title: Recognized
-        -   type: rating
-            params:
-                title: Comfortable
-        -   type: rating
-            params:
-                title: Pampered and Cared For
-        -   type: rating
-            params:
-                title: Did the Resort meet your expectations?
-        -   type: rating
-            params:
-                title: Please rate your overall experience
-                explain:
-                    prompt: Please explain
-                    threshold: 2
-                    condition: "<="
-        -   type: rating
-            params:
-                title: Please rate value for money spent
-                explain:
-                    prompt: Please explain
-                    threshold: 3
-                    condition: "<="
-        -   type: polar
-            params:
-                title: Would you return to the Palms?
-                negative: false
-        -   type: polar
-            params:
-                title: Did you experience any problems?
-                negative: true
-                explain:
-                    mode: negative
-                    prompt: Please explain
-        -   type: rating
-            params:
-                title: Please rate the courtesy and helpfulness of our staff on an overall basis
-        -   type: open
-            params:
-                title: Any comments about members of our staff who were especially helpful to you? (please identify their department)
-                testimonial: false
-        -   type: open
-            params:
-                title: Please share any additional comments or suggestions
-                testimonial: false
-
-
-```
-
-
+**see sample-survey.yml**

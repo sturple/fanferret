@@ -1,39 +1,39 @@
-fgms_question_survey:
-    path: /survey/{token}/
+fanferret_survey:
+    path: /index/{token}/
     defaults: { _controller: FanFerretQuestionBundle:Survey:survey }
-fgms_question_survey_finish:
-    path: /survey/{token}/finish/
+fanferret_survey_finish:
+    path: /index/{token}/finish/
     defaults: { _controller: FanFerretQuestionBundle:Survey:finish }
-fgms_question_survey_styles:
-    path: /survey/styles/{id}/
+fanferret_survey_styles:
+    path: /index/styles/{id}/
     defaults: { _controller: FanFerretQuestionBundle:Survey:styles }
-fgms_question_notification_seen:
+fanferret_notification_seen:
     path: /notification/{token}/
     defaults: { _controller: FanFerretQuestionBundle:Notification:seen }
-fgms_question_admin_delivery_old:
+fanferret_admin_delivery_old:
     path: /admin/{property}/{survey}/deliveryOld
     defaults: { _controller: FanFerretQuestionBundle:Admin:delivery, group: null }
-fgms_question_admin_delivery_group_old:
+fanferret_admin_delivery_group_old:
     path: /admin/{group}/{property}/{survey}/deliveryOld
     defaults: { _controller: FanFerretQuestionBundle:Admin:delivery }
-fgms_question_admin_delivery:
+fanferret_admin_delivery:
     path: /admin/{property}/{survey}/delivery
     defaults: { _controller: FanFerretQuestionBundle:Admin:singleButtonDelivery, group: null }
-fgms_question_admin_delivery_group:
+fanferret_admin_delivery_group:
     path: /admin/{group}/{property}/{survey}/delivery
     defaults: { _controller: FanFerretQuestionBundle:Admin:singleButtonDelivery }
-fgms_question_admin_comment_cards:
+fanferret_admin_comment_cards:
     path: /admin/{property}/{survey}/comment-cards/{page}/{perpage}
     defaults: { _controller: FanFerretQuestionBundle:Admin:commentCards, group: null, page: 1, perpage: 50 }
-fgms_question_admin_comment_cards_group:
+fanferret_admin_comment_cards_group:
     path: /admin/{group}/{property}/{survey}/comment-cards/{page}/{perpage}
     defaults: { _controller: FanFerretQuestionBundle:Admin:commentCards, page: 1, perpage: 50 }
-fgms_question_admin:
+fanferret_admin:
     path: /admin/{page}/{perpage}
     defaults: { _controller: FanFerretQuestionBundle:Admin:list, page: 1, perpage: 50 }
-fgms_question_admin_missing_emails:
+fanferret_admin_missing_emails:
     path: /admin/{property}/{survey}/import
     defaults: { _controller: FanFerretQuestionBundle:Admin:missingEmails, group: null }
-fgms_question_admin_missing_emails_group:
+fanferret_admin_missing_emails_group:
     path: /admin/{group}/{property}/{survey}/import
     defaults: { _controller: FanFerretQuestionBundle:Admin:missingEmails }
