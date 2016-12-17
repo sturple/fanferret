@@ -6,7 +6,7 @@ class NotificationCommand extends \Symfony\Bundle\FrameworkBundle\Command\Contai
 {
     protected function configure()
     {
-        $this->setName('fanferretquestion:notification');
+        $this->setName('fanferret:notification');
         $this->setDescription('Sends notification emails.');
         $this->setHelp('Scans the database for SurveySession entities which have pending notifications and sends all pending notifications.');
     }

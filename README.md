@@ -27,7 +27,7 @@ or
 
 ```
 composer require sturple/fanferret:~0.0
-composer requrie friendsofsymfony/user-bundle "~2.0@dev"
+composer require friendsofsymfony/user-bundle "~2.0@dev"
 ```
 
 ## Configuration

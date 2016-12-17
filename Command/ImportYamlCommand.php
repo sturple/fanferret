@@ -6,7 +6,7 @@ class ImportYamlCommand extends \Symfony\Bundle\FrameworkBundle\Command\Containe
 {
     protected function configure()
     {
-        $this->setName('fanferretquestion:import:yaml');
+        $this->setName('fanferret:import:yaml');
         $this->setDescription('Imports a survey from a YAML file.');
         $this->setHelp('Imports a YAML file to generate a Survey entity which is then persisted via Doctrine.');
         $this->setDefinition(

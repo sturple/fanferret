@@ -11,10 +11,12 @@ params:
         name: Fanferret Admin
         address: webmaster@fanferret.com
 questionGroups:
-    -   params:
+    -   
+        params:
             title: The Source
         questions:
-            -   type: checklist
+            -   
+                type: checklist
                 params:
                     title: "How did you hear about us?"
                     options:
@@ -25,137 +27,176 @@ questionGroups:
                         -   Toll Free (800) Number
                         -   Website
                     hasOther: true
-    -   params:
+    -   
+        params:
             title: Reception Service
         questions:
-            -   type: rating
+            -   
+                type: rating
                 params:
                     title: Airport Transfers
-            -   type: rating
+            -   
+                type: rating
                 params:
                     title: Reservation Agents
-            -   type: rating
+            -   
+                type: rating
                 params:
                     title: Bell Staff
-            -   type: rating
+            -   
+                type: rating
                 params:
                     title: Front Desk Personnel
-            -   type: rating
+            -   
+                type: rating
                 params:
                     title: Concierge
-            -   type: rating
+            -   
+                type: rating
                 params:
                     title: Telephone Operators
-            -   type: rating
+            -   
+                type: rating
                 params:
                     title: Message Service
-            -   type: rating
+            -   
+                type: rating
                 params:
                     title: Taxi Experience During Stay
-    -   params:
+    -   
+        params:
             title: Accomodations
         questions:
-            -   type: rating
+            -   
+                type: rating
                 params:
                     title: Suite Furnishings and Decor
-            -   type: rating
+            -   
+                type: rating
                 params:
                     title: Cleanliness Upon Arrival
-            -   type: rating
+            -   
+                type: rating
                 params:
                     title: Housekeeping Services
-            -   type: rating
+            -   
+                type: rating
                 params:
                     title: Housekeeping Staff
-            -   type: rating
+            -   
+                type: rating
                 params:
                     title: Suite Heating and Cooling System
-            -   type: rating
+            -   
+                type: rating
                 params:
                     title: Water Temperature and Pressure
-            -   type: rating
+            -   
+                type: rating
                 params:
                     title: Response to Maintenance Request
-            -   type: rating
+            -   
+                type: rating
                 params:
                     title: Suite Ready Upon Arrival
-    -   params:
+    -   
+        params:
             title: Room Service
         questions:
-            -   type: conditionalnested
+            -   
+                type: conditionalnested
                 params:
                     negative: false
                     title: "Did you use room service during your stay?"
                 questions:
-                    -   type: rating
+                    -   
+                        type: rating
                         params:
                             title: Friendly Service in Taking your Order
-                    -   type: rating
+                    -   
+                        type: rating
                         params:
                             title: Friendly Delivering Service
-                    -   type: rating
+                    -   
+                        type: rating
                         params:
                             title: Timeliness in Delivering your Order
-                    -   type: rating
+                    -   
+                        type: rating
                         params:
                             title: Accuracy of your Order
-                    -   type: rating
+                    -   
+                        type: rating
                         params:
                             title: Food Quality and Temperature
-                    -   type: rating
+                    -   
+                        type: rating
                         params:
                             title: Prompt Removal of Tray or Cart
-    -   params:
+    -   
+        params:
         title: How did we make you feel during your visit?
     questions:
-        -   type: rating
+        -   
+            type: rating
             params:
                 title: Welcomed
-        -   type: rating
+        -   
+            type: rating
             params:
                 title: Recognized
-        -   type: rating
+        -   
+            type: rating
             params:
                 title: Comfortable
-        -   type: rating
+        -   
+            type: rating
             params:
                 title: Pampered and Cared For
-        -   type: rating
+        -   
+            type: rating
             params:
                 title: Did the Resort meet your expectations?
-        -   type: rating
+        -   
+            type: rating
             params:
                 title: Please rate your overall experience
                 explain:
                     prompt: Please explain
                     threshold: 2
                     condition: "<="
-        -   type: rating
+        -   
+            type: rating
             params:
                 title: Please rate value for money spent
                 explain:
                     prompt: Please explain
                     threshold: 3
                     condition: "<="
-        -   type: polar
+        -   
+            type: polar
             params:
                 title: Would you return to the Palms?
                 negative: false
-        -   type: polar
+        -   
+            type: polar
             params:
                 title: Did you experience any problems?
                 negative: true
                 explain:
                     mode: negative
                     prompt: Please explain
-        -   type: rating
+        -   
+            type: rating
             params:
                 title: Please rate the courtesy and helpfulness of our staff on an overall basis
-        -   type: open
+        -   
+            type: open
             params:
                 title: Any comments about members of our staff who were especially helpful to you? (please identify their department)
                 testimonial: false
-        -   type: open
+        -   
+            type: open
             params:
                 title: Please share any additional comments or suggestions
                 testimonial: false
