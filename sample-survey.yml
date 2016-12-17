@@ -136,67 +136,67 @@ questionGroups:
     -   
         params:
         title: How did we make you feel during your visit?
-    questions:
-        -   
-            type: rating
-            params:
-                title: Welcomed
-        -   
-            type: rating
-            params:
-                title: Recognized
-        -   
-            type: rating
-            params:
-                title: Comfortable
-        -   
-            type: rating
-            params:
-                title: Pampered and Cared For
-        -   
-            type: rating
-            params:
-                title: Did the Resort meet your expectations?
-        -   
-            type: rating
-            params:
-                title: Please rate your overall experience
-                explain:
-                    prompt: Please explain
-                    threshold: 2
-                    condition: "<="
-        -   
-            type: rating
-            params:
-                title: Please rate value for money spent
-                explain:
-                    prompt: Please explain
-                    threshold: 3
-                    condition: "<="
-        -   
-            type: polar
-            params:
-                title: Would you return to the Palms?
-                negative: false
-        -   
-            type: polar
-            params:
-                title: Did you experience any problems?
-                negative: true
-                explain:
-                    mode: negative
-                    prompt: Please explain
-        -   
-            type: rating
-            params:
-                title: Please rate the courtesy and helpfulness of our staff on an overall basis
-        -   
-            type: open
-            params:
-                title: Any comments about members of our staff who were especially helpful to you? (please identify their department)
-                testimonial: false
-        -   
-            type: open
-            params:
-                title: Please share any additional comments or suggestions
-                testimonial: false
+        questions:
+            -   
+                type: rating
+                params:
+                    title: Welcomed
+            -   
+                type: rating
+                params:
+                    title: Recognized
+            -   
+                type: rating
+                params:
+                    title: Comfortable
+            -   
+                type: rating
+                params:
+                    title: Pampered and Cared For
+            -   
+                type: rating
+                params:
+                    title: Did the Resort meet your expectations?
+            -   
+                type: rating
+                params:
+                    title: Please rate your overall experience
+                    explain:
+                        prompt: Please explain
+                        threshold: 2
+                        condition: "<="
+            -   
+                type: rating
+                params:
+                    title: Please rate value for money spent
+                    explain:
+                        prompt: Please explain
+                        threshold: 3
+                        condition: "<="
+            -   
+                type: polar
+                params:
+                    title: Would you return to the Palms?
+                    negative: false
+            -   
+                type: polar
+                params:
+                    title: Did you experience any problems?
+                    negative: true
+                    explain:
+                        mode: negative
+                        prompt: Please explain
+            -   
+                type: rating
+                params:
+                    title: Please rate the courtesy and helpfulness of our staff on an overall basis
+            -   
+                type: open
+                params:
+                    title: Any comments about members of our staff who were especially helpful to you? (please identify their department)
+                    testimonial: false
+            -   
+                type: open
+                params:
+                    title: Please share any additional comments or suggestions
+                    testimonial: false
