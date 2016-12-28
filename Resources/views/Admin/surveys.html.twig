@@ -37,21 +37,20 @@
 				<td>{{survey.survey.name}}</td>
 				<td>
 					{% if survey.delivery %}
-					<a class="btn btn-primary" href="{{path('fgms_question_admin_delivery' ~ route_suffix,args)|escape('html_attr')}}"><i class="fa fa-paper-plane" aria-hidden="true"></i> Send A Card</a>
+					<a class="btn btn-primary" href="{{path('fanferret_admin_delivery' ~ route_suffix,args)|escape('html_attr')}}"><i class="fa fa-paper-plane" aria-hidden="true"></i> Send A Card</a>
 					{% endif %}
 				</td>
-				{# checking if has authentication to view options #}
-				
+				{# checking if has authentication to view options #}				
 				<td>
 					{% if survey.comment_cards %}
-					<a class="btn btn-primary" href="{{path('fgms_question_admin_missing_emails' ~ route_suffix ,args)|escape('html_attr')}}"><i class="fa fa-upload" aria-hidden="true"></i> Upload Checkout Data</a>
+					<a class="btn btn-primary" href="{{path('fanferret_admin_missing_emails' ~ route_suffix ,args)|escape('html_attr')}}"><i class="fa fa-upload" aria-hidden="true"></i> Upload Checkout Data</a>
 					{% endif %}
 				</td>				
 				<td>	
 					{% if survey.comment_cards %}
-					<a class="btn btn-primary" href="{{path('fgms_question_admin_comment_cards' ~ route_suffix,args)|escape('html_attr')}}"><i class="fa fa-eye" aria-hidden="true"></i> Status Report</a>	
+					<a class="btn btn-primary" href="{{path('fanferret_admin_comment_cards' ~ route_suffix,args)|escape('html_attr')}}"><i class="fa fa-eye" aria-hidden="true"></i> Status Report</a>	
 					{% endif %}
-				</td>
+				</td>			
 				
 			</tr>
 			{% endfor %}
@@ -59,7 +58,7 @@
 	</table>
 </div>
 	{% block pagination %}
-	{% include 'FanFerretQuestionBundle:Admin:pagination.html.twig' with {'route': 'fgms_question_admin', 'args': {'perpage': per_page}, 'page': page, 'pages': pages} %}
+	{% include 'FanFerretQuestionBundle:Admin:pagination.html.twig' with {'route': 'fanferret_admin', 'args': {'perpage': per_page}, 'page': page, 'pages': pages} %}
 	{% endblock %}
 {% endblock %}
 

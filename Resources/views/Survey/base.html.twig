@@ -9,7 +9,7 @@
 		<link rel="stylesheet" type="text/css" href="{{asset('bundles/fanferretquestion/css/survey.css')|escape('html_attr')}}">
 		<link rel="stylesheet" type="text/css" href="{{asset('bundles/fanferretquestion/css/font-awesome.min.css')|escape('html_attr')}}">
 		<link rel="stylesheet" type="text/css" href="{{asset('bundles/fanferretquestion/css/awesome-bootstrap-checkbox.css')|escape('html_attr')}}">
-		<link rel="stylesheet" type="text/css" href="{{path('fgms_question_survey_styles',{'id': survey.id})|escape('html_attr')}}">
+		<link rel="stylesheet" type="text/css" href="{{path('fanferret_survey_styles',{'id': survey.id})|escape('html_attr')}}">
 		{% for stylesheet in stylesheets %}
 		<link rel="stylesheet" type="text/css" href="{{stylesheet|escape('html_attr')}}">
 		{% endfor %}

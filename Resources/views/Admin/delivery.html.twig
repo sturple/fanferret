@@ -60,14 +60,14 @@
 		{% if comment_cards %}
 		{% set args = {'survey': survey.slug, 'property': survey.property.slug} %}
 		{% if survey.property.group != null %}
-		{% set route = 'fgms_question_admin_comment_cards_group' %}
+		{% set route = 'fanferret_admin_comment_cards_group' %}
 		{% set args = args|merge({'group': survey.property.group.slug}) %}
 		{% else %}
-		{% set route = 'fgms_question_admin_comment_cards' %}
+		{% set route = 'fanferret_admin_comment_cards' %}
 		{% endif %}
 		<a class="btn btn-primary" href="{{path(route,args)|escape('html_attr')}}">View All Comment Cards</a>
 		{% endif %}
-		<a class="btn btn-primary" href="{{path('fgms_question_admin')|escape('html_attr')}}">View All Surveys</a>
+		<a class="btn btn-primary" href="{{path('fanferret_admin')|escape('html_attr')}}">View All Surveys</a>
 	</div>
 </div>
 {% endblock %}

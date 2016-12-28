@@ -2,12 +2,12 @@
 
 {% set args = {'survey': survey.slug, 'property': survey.property.slug, 'perpage': per_page} %}
 {% if survey.property.group != null %}
-{% set route = 'fgms_question_admin_comment_cards_group' %}
-{% set route_delivery = 'fgms_question_admin_delivery_group' %}
+{% set route = 'fanferret_admin_comment_cards_group' %}
+{% set route_delivery = 'fanferret_admin_delivery_group' %}
 {% set args = args|merge({'group': survey.property.group.slug}) %}
 {% else %}
-{% set route = 'fgms_question_admin_comment_cards' %}
-{% set route_delivery = 'fgms_question_admin_delivery' %}
+{% set route = 'fanferret_admin_comment_cards' %}
+{% set route_delivery = 'fanferret_admin_delivery' %}
 {% endif %}
 
 {% block content %}
@@ -86,7 +86,7 @@
 	{% endif %}
 
 	<span class="btn-survey-actions">
-	<a class="btn btn-primary" href="{{path('fgms_question_admin')|escape('html_attr')}}"><i class="fa fa-hand-o-left" aria-hidden="true"></i> Back to Index</a>
+	<a class="btn btn-primary" href="{{path('fanferret_admin')|escape('html_attr')}}"><i class="fa fa-hand-o-left" aria-hidden="true"></i> Back to Index</a>
 	
 	</span>
 	{{parent()}}
