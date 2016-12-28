@@ -48,7 +48,7 @@ class SurveyController extends BaseController
             $survey->getAnswers($session,$form->getData());
             $em->persist($session);
             $em->flush();
-            return $this->redirectToRoute('fgms_question_survey_finish',['token' => $token]);
+            return $this->redirectToRoute('fanferret_survey_finish',['token' => $token]);
         }
         //  Render
         return $this->render('FanFerretQuestionBundle:Default:form.html.twig',['survey' => $survey->render($session,$form->createView())]);

@@ -5,8 +5,10 @@ name: "Survey Name"
 params: 
     title: 'Title on Survey'
     timezone: America/Vancouver
-    log: /url/to/logo.gif
+    logo: /url/to/logo.gif
     to: info@fanferret.com
+    stylesheets:
+        - "assets/company/css/style.css"
     from:
         name: Fanferret Admin
         address: webmaster@fanferret.com
@@ -135,7 +137,7 @@ questionGroups:
                             title: Prompt Removal of Tray or Cart
     -   
         params:
-        title: How did we make you feel during your visit?
+            title: How did we make you feel during your visit?
         questions:
             -   
                 type: rating
