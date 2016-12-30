@@ -28,6 +28,7 @@ class Json {
      */
     public static function encode($value)
     {
+        if (!defined('JSON_PRESERVE_ZERO_FRACTION')) define('JSON_PRESERVE_ZERO_FRACTION',1024);
         $str=json_encode($value,JSON_PRESERVE_ZERO_FRACTION);
         self::errorCheck();
         return $str;
