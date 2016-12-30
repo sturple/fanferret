@@ -1,9 +1,11 @@
 var fanFerret = (function () {
 	var retr = {};
 	var token = $('head script[data-fanferret-token]').attr('data-fanferret-token');
+	
 	retr.getToken = function () {
 		return token;
 	};
+	
 	var active_key = token + '_active';
 	var functions = [];
 	var registered = 0;
@@ -105,10 +107,13 @@ var fanFerret = (function () {
 		set_active();
 	};
 	var add_to = [];
+	
+	
 	retr.addQuestion = function (dependency) {
 		var args = Array.apply(null,arguments);
-		args.splice(0,1);
+		args.splice(0,1);		
 		var handle = retr.register();
+		
 		require([dependency],function (question) {
 			handle(function () {
 				var g = retr.currentGroup();

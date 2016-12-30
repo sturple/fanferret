@@ -112,6 +112,13 @@ security:
 
 ```
 
+## Question Types
+
+* checklist - 
+* rating -
+* polar -
+
+
 ## Survey Creation 
 
 ### survey-{name}.yml

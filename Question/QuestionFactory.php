@@ -34,6 +34,16 @@ class QuestionFactory implements QuestionFactoryInterface
             $this->translator,
             $this->twig
         );
+        if ($type === 'checkbox') return new CheckboxQuestion(
+            $question,
+            $this->translator,
+            $this->twig
+        );
+        if ($type === 'radio') return new RadioQuestion(
+            $question,
+            $this->translator,
+            $this->twig
+        );
         if ($type === 'rating') return new RatingQuestion(
             $question,
             $this->translator,

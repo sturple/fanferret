@@ -1,0 +1,25 @@
+<section id="{{name|escape('html_attr')}}" class="fanferret-radio fanferret-question {% if hasOther %}fanferret-other{% endif %}">
+	<div class="fanferret-question-title">{{title}}</div>
+	<div class="fanferret-question-input">
+		<ul class="fanferret-radio-options">
+			{% for option in options %}
+			<li class="fanferret-radio-option radio radio-primary">
+				<input type="radio" name="{{name|escape('html_attr')}}_group" value="{{loop.index0|escape('html_attr')}}" id="{{name ~ loop.index0|escape('html_attr')}}">
+				<label for="{{name ~ loop.index0|escape('html_attr')}}">{{option}}</label>
+			</li>
+			{% endfor %}
+			{% if hasOther %}
+			<li class="fanferret-radio-option fanferret-radio-option-other radio radio-primary">
+				<input type="radio" name="{{name|escape('html_attr')}}_group" value="other" id="{{name|escape('html_attr')}}_other">
+				<label for="{{name|escape('html_attr')}}_other">Other</label>
+				<div class="fanferret-radio-option-other-text row" style="display:none;">
+					<div class="col-md-7">
+						<input class="form-control" type="text">
+					</div>
+				</div>
+			</li>
+			{% endif %}
+		</ul>
+	</div>
+</section>
+{% include 'FanFerretQuestionBundle:Question:add.html.twig' with {'name': name, 'dependency': 'radio'} %}
