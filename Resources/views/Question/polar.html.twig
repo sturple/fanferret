@@ -1,15 +1,19 @@
 <section class="fanferret-polar fanferret-question {% if negative %}fanferret-polar-negative {% endif %}{% if explain %}fanferret-polar-explain fanferret-polar-explain-{{explain|escape('html_attr')}}{% endif %}" id="{{name|escape('html_attr')}}">
 	<div class="row">
-		<div class="fanferret-question-title col-md-5 col-lg-6">{{title}}</div>
-		<div class="fanferret-question-input col-md-7 col-lg-6">
-			<ul class="fanferret-polar-options">
-				<li class="fanferret-polar-option">
-					<a href="javascript:void(0);" data-value="true">Yes</a>
-				</li>
-				<li class="fanferret-polar-option">
-					<a href="javascript:void(0);" data-value="false">No</a>
-				</li>
-			</ul>
+		<div class=" col-md-5 col-lg-6">
+			<div class="fanferret-question-title">{{title}}</div>			
+		</div>
+		<div class="col-md-7 col-lg-6">
+			<div class="fanferret-question-input">
+				<ul class="fanferret-polar-options">
+					<li class="fanferret-polar-option">
+						<a href="javascript:void(0);" data-value="true">Yes</a>
+					</li>
+					<li class="fanferret-polar-option">
+						<a href="javascript:void(0);" data-value="false">No</a>
+					</li>
+				</ul>				
+			</div>
 		</div>
 	</div>
 	{% if explain %}
