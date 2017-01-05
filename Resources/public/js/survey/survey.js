@@ -53,7 +53,7 @@ var fanFerret = (function () {
 	var update_buttons = function () {
 		prev.attr('disabled',active === 0);
 		next.attr('disabled',(groups.length !== 0) && !groups[active].valid());
-		set_next_label(is_last() ? 'Submit' : 'Next');
+		set_next_label(is_last() ? 'Submit Comment' : 'Next');
 		//	This could more elegantly be expressed as a reduce
 		//	or left fold, but jQuery doesn't have that
 		var valid = true;

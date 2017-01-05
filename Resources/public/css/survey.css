@@ -55,7 +55,7 @@ body .fanferret-survey-buttons .inner-container {
 @media screen and (min-width: 768px) {
   .content-wrapper {
     padding: 30px;
-    min-height: 800px;
+    min-height: 880px;
   }
   .content-wrapper .fanferret-survey-buttons {
     left: -7px;
@@ -167,6 +167,8 @@ section:first-child {
 }
 button[disabled],
 .fanferret-survey-buttons button[disabled]:hover,
+.btn-primary[disabled]:focus,
+.btn-primary[disabled]:hover,
 #survey-carousel > ol.carousel-indicators > li.fanferret-disabled {
   background: #CCC;
   border-color: #CCC;
