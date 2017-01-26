@@ -10,12 +10,16 @@ fanferret_survey_styles:
 fanferret_notification_seen:
     path: /notification/{token}/
     defaults: { _controller: FanFerretQuestionBundle:Notification:seen }
+fanferret_admin_card_results:
+    path: /admin/card/{token}
+    defaults: { _controller: FanFerretQuestionBundle:Admin:cardDisplay }      
 fanferret_admin_delivery_old:
     path: /admin/{property}/{survey}/deliveryOld
     defaults: { _controller: FanFerretQuestionBundle:Admin:delivery, group: null }
 fanferret_admin_delivery_group_old:
     path: /admin/{group}/{property}/{survey}/deliveryOld
     defaults: { _controller: FanFerretQuestionBundle:Admin:delivery }
+    
 fanferret_admin_delivery:
     path: /admin/{property}/{survey}/delivery
     defaults: { _controller: FanFerretQuestionBundle:Admin:singleButtonDelivery, group: null }
@@ -31,6 +35,8 @@ fanferret_admin_comment_cards_group:
 fanferret_admin:
     path: /admin/{page}/{perpage}
     defaults: { _controller: FanFerretQuestionBundle:Admin:list, page: 1, perpage: 50 }
+
+  
 fanferret_admin_missing_emails:
     path: /admin/{property}/{survey}/import
     defaults: { _controller: FanFerretQuestionBundle:Admin:missingEmails, group: null }
