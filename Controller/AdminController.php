@@ -348,4 +348,115 @@ class AdminController extends BaseController
         $entity = $this->getSurveyBySlug($group,$property,$survey);
         return $this->missingEmailsActionImpl($request,$entity);
     }
+    
+    public function cardDisplayAction($token) {
+/*
+
+SELECT
+ss.id,
+ss.survey_id,
+ss.room,
+ss.email,
+qg.order,
+qg.params,
+q.order,
+q.params,
+q.type,
+qa.value
+FROM  survey_session as ss
+INNER JOIN question_group as qg on ss.survey_id =qg.survey_id
+INNER JOIN question as q on q.question_group_id = qg.id
+INNER JOIN question_answer as qa on qa.question_id = q.id
+WHERE ss.token = '15067588a5c9bce1523a291e1722831f'
+ORDER BY qg.order, q.order ASC
+            SELECT
+            ss.id,
+            ss.surveyId,
+            ss.room,
+            ss.email,
+            qg.order,
+            qg.params,
+            q.order,
+            q.params,
+            q.type,
+            qa.value
+            FROM  FanFerretQuestionBundle:SurveySession ss
+            INNER JOIN FanFerretQuestionBundle:QuestionGroup qg WITH ss.surveyId =qg.surveyId
+            INNER JOIN FanFerretQuestionBundle:Question as q WITH q.question_group_id = qg.id
+            INNER JOIN FanFerretQuestionBundle:QuestionAnswer as qa WITH qa.question_id = q.id
+            WHERE ss.token = '{$cleantoken}'
+            ORDER BY qg.order, q.order ASC  
+
+ 
+
+
+        $data = array();
+        $session = $this->getDoctrine()
+            ->getRepository('FanFerretQuestionBundle:SurveySession')
+            ->findOneByToken($token);
+            
+            
+            
+            
+        $survey = $session->getSurvey();
+        $answers = $session->getQuestionAnswers()->toArray();
+
+        $data = [
+            'session'   => $session,
+            'survey'    => $survey,
+            'answers'   => $answers
+        ]; */
+        $sql = "
+        SELECT
+        ss.id,
+        ss.room,
+        ss.completed,
+        ss.email,
+        s.name,
+        qg.params as `qg_params`,     
+        q.params as `q_params`,
+        q.type,
+        qa.value
+        FROM  survey_session as ss
+        INNER JOIN question_group as qg on ss.survey_id =qg.survey_id
+        INNER JOIN question as q on q.question_group_id = qg.id
+        INNER JOIN question_answer as qa on qa.question_id = q.id
+        INNER JOIN survey as s on s.id = ss.survey_id
+        WHERE ss.token = :token
+        ORDER BY qg.order, q.order ASC
+        ";
+        $params = array('token'=>$token);
+
+
+        //create the prepared statement, by getting the doctrine connection
+        $stmt = $this->getDoctrine()->getEntityManager()->getConnection()->prepare($sql);
+        $stmt->execute($params);
+        //I used FETCH_COLUMN because I only needed one Column.
+        $completed = '';
+        $email = '';
+        $property = '';
+        $data =  $stmt->fetchAll(\PDO::FETCH_ASSOC);       
+        foreach ($data as $key=>$value){
+            if (!empty($value['qg_params'])){
+                $data[$key]['qg_params'] = json_decode($value['qg_params'],true);
+            }
+            if (!empty($value['q_params'])){
+                $data[$key]['q_params'] = json_decode($value['q_params'],true);
+            }            
+            if (!empty($value['value'])){
+                $data[$key]['value'] = json_decode($value['value'],true);
+            }
+            $completed = $value['completed'];
+            $email = $value['email'];
+            $property = $value['name'];
+        }
+        return $this->render('FanFerretQuestionBundle:Admin:card-display.html.twig',[
+               'token'      => $token,
+               'data'       => $data,
+               'completed'  => $completed,
+               'email'      => $email,
+               'property'   => $property
+                 
+        ]);        
+    }
 }
