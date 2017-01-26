@@ -137,6 +137,9 @@ h1 {
   text-align: center;
   text-decoration: none;
 }
+.fanferret-conditional-nested-option {
+  float: right;
+}
 #survey-carousel .carousel .carousel-inner > .carousel-item {
   min-height: 300px;
 }

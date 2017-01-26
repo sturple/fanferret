@@ -1,0 +1,70 @@
+{% extends 'FanFerretQuestionBundle:Admin:base.html.twig' %}
+
+{% block content %}
+<div style="text-align: center;">
+    <h1>Comment Card Results</h1>
+    <h3 style="margin-top: -12px;">{{property}}</h3>
+    <div >Submitted: {{completed}}</div>
+    <div>Email: {{email}}</div>    
+</div>
+
+
+{#<div class="fanferret-result-count">{{count}} results</div>#}
+<div class="table-responsive survey-table-container">
+	<table class="table">
+		<tbody>
+            {% set heading = '' %}
+            {% for answer in data %}
+                
+                {% if heading != answer.qg_params.title %}
+                    
+                    <tr><td colspan="3"><h3>{{answer.qg_params.title}}</h3></td></tr>
+                    <tr>
+                        <th>Type</th>
+                        <th style="width:40%">Queston</th>
+                        <th style="width:60%">Response</th>					
+                    </tr>                    
+                {% endif %}
+                <tr>
+                    <td>{{answer.type | title}}</td>
+                    <td>
+                        {{answer.q_params.title}}
+                        {% if answer.value.explanation  is defined %}
+                            {% if answer.value.explanation | length > 0 %}
+                            <div class="results-explination">
+                                <div ><strong>{{answer.q_params.explain.prompt}}</strong></div>
+                                <div>{{answer.value.explanation}}</div>
+                            </div>
+                            {% endif %}
+                        {% endif %}
+                    
+                    </td>
+                    <td>
+                        {% set value = answer.value | first  %}
+                        {% if answer.type == 'checkbox' %}
+                            {% set value = answer.q_params.options[answer.value|first] %}
+                        {% elseif answer.type  == 'rating' %}
+                            {% if answer.q_params.explain.threshold is defined %}
+                                {% if answer.q_params.explain.threshold <= answer.value | first %}{% set class = 'result-fail'%}{% endif %}
+                            {% endif %}                           
+                        {% elseif answer.type  == 'polar' or answer.type == 'conditionalnested' %}
+                            {% if (answer.q_params.negative == false and answer.value ) or (answer.q_params.negative and answer.value == false)%}
+                                {% set class = 'result-fail'%}
+                            {% endif %}
+                            {% if answer.value %}{% set value = 'Yes' %}{% else %}{% set value = 'No' %}{% endif %}
+                               
+                        {% endif %}
+                        <span class="{{class| default('')}}">{{value}}</span>  
+                        {#<pre>{{dump(answer.value)}}</pre> </td>#}
+                
+                </tr>
+                {% set heading = answer.qg_params.title %}
+            {% endfor %}
+			
+		</tbody>
+	</table>
+</div>
+<pre>{{dump(data)}}</pre>
+{% endblock %}
+
+

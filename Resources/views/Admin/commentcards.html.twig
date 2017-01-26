@@ -38,7 +38,8 @@
 			<th>Sent</th>
 			<th>Viewed</th>
 			<th>Card Opened</th>
-			<th>Card Completed</th>			
+			<th>Card Completed</th>
+			<th>View Results</th>
 		</tr>
 	</thead>
 	<tbody>
@@ -68,7 +69,9 @@
 			{% endif %}
 			{% endif %}
 			<td>{% if session.seen %}{{session.seen|date(fmt)}}{% endif %}</td>
-			<td>{% if session.completed %}{{session.completed|date(fmt)}}{% endif %}</td>			
+			<td>{% if session.completed %}{{session.completed|date(fmt)}}{% endif %}</td>
+			<td><a href="{{path('fanferret_admin_card_results', {'token' : session.token})}}">Results</a></td>
+			
 		</tr>
 		{% endfor %}
 	<tbody>

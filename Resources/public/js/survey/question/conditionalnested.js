@@ -19,7 +19,10 @@ define(['jquery','survey/question/base','survey/radio'],function ($, base, radio
 			impl.val(val ? 'true' : '');
 			hidden = val === negative;
 			if (hidden) nested.slideUp();
-			else nested.slideDown();
+			else {
+				nested.slideDown();
+				$('html,body').animate({scrollTop: nested.offset().top},1000);
+			}
 			group.update();
 		};
 		var change = radios.change;
