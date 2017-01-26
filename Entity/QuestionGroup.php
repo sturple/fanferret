@@ -20,6 +20,12 @@ class QuestionGroup
     private $id;
     
     /**
+     * @ORM\Column(type="integer")
+     * 
+     */
+    private $surveyId;
+    
+    /**
      * @ORM\ManyToOne(targetEntity="Survey",inversedBy="questionGroups")
      */
     private $survey;
@@ -166,4 +172,26 @@ class QuestionGroup
         if (!is_object($retr)) throw new \LogicException('$params not JSON object');
         return $retr;
     }
+   /**
+     * Get suveyId
+     *
+     * @return integer
+     */
+    public function getSurveyId()
+    {
+        return $this->surveyId;
+    }
+    
+     /**
+     * Set surveyId
+     *
+     * @param integer $surveyid
+     *
+     * @return SurveySession
+     */
+    public function setSurveyId($surveyid)
+    {
+        $this->surveyId = $surveyid;
+        return $this;    
+    }       
 }

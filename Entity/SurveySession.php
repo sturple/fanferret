@@ -19,6 +19,12 @@ class SurveySession
     private $id;
     
     /**
+     * @ORM\Column(type="integer")
+     * 
+     */
+    private $surveyId;
+    
+    /**
      * @ORM\ManyToOne(targetEntity="Survey",inversedBy="surveySessions")
      */
     private $survey;
@@ -101,7 +107,29 @@ class SurveySession
     {
         return $this->id;
     }
-
+    
+    /**
+     * Get suveyId
+     *
+     * @return integer
+     */
+    public function getSurveyId()
+    {
+        return $this->surveyId;
+    }
+    
+     /**
+     * Set surveyId
+     *
+     * @param integer $surveyid
+     *
+     * @return SurveySession
+     */
+    public function setSurveyId($surveyid)
+    {
+        $this->surveyId = $surveyid;
+        return $this;    
+    }   
     /**
      * Set created
      *
