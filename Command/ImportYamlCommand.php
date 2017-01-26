@@ -38,6 +38,6 @@ class ImportYamlCommand extends \Symfony\Bundle\FrameworkBundle\Command\Containe
         $em = $doctrine->getManager();
         $em->persist($surveys[0]);
         $em->flush();
-        $output->writeln('<green>Survey was Successfully created from file:</green>'. $filename );
+        $output->writeln('Survey was Successfully created from file:'. $filename );
     }
 }
