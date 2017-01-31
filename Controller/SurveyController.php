@@ -48,6 +48,7 @@ class SurveyController extends BaseController
             $survey->getAnswers($session,$form->getData());
             $em->persist($session);
             $em->flush();
+            $survey->sendAdminNotification($session,0,true);
             return $this->redirectToRoute('fanferret_survey_finish',['token' => $token]);
         }
         //  Render
