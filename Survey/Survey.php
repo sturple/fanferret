@@ -28,14 +28,14 @@ class Survey implements SurveyInterface
     private function getGroups()
     {
         $retr = [];
-        foreach ($this->survey->getQuestionGroups() as $qg) {
-            $qs = [];
-            foreach ($qg->getQuestions() as $q) {
-                $qs[] = $this->factory->create($q);
+        foreach ($this->survey->getQuestionGroups() as $question_group) {
+            $questions = [];
+            foreach ($question_group->getQuestions() as $q) {
+                $questions[] = $this->factory->create($q);
             }
             $retr[] = (object)[
-                'group' => $qg,
-                'questions' => $qs
+                'group' => $question_group,
+                'questions' => $questions
             ];
         }
         return $retr;
@@ -134,7 +134,7 @@ class Survey implements SurveyInterface
     {
         //	Collect answers and attach them to the
         //	SurveySession
-        $qs = [];
+        $questions = [];
         foreach ($this->traverseQuestions() as $q) {
             foreach ($q->getAnswers($data) as $ans) {
                 $entity = $ans->getQuestion();
@@ -142,12 +142,12 @@ class Survey implements SurveyInterface
                 $session->addQuestionAnswer($ans);
                 $ans->setSurveySession($session);
                 //  TODO: Testimonial handling if applicable
-                $qs[$entity->getId()] = $ans;
+                $questions[$entity->getId()] = $ans;
             }
         }
         //	Process all rules
         foreach ($this->rules as $r) {
-            $r->evaluate($qs);
+            $r->evaluate($questions);
         }
     }
 
@@ -184,7 +184,7 @@ class Survey implements SurveyInterface
 
     public function render(\FanFerret\QuestionBundle\Entity\SurveySession $session, \Symfony\Component\Form\FormView $fv)
     {
-        $gs = array_map(function ($group) {
+        $groups = array_map(function ($group) {
             $ctx = [
                 'questions' => $group->questions,
                 'group' => $group->group,
@@ -197,7 +197,7 @@ class Survey implements SurveyInterface
             ); 
         },$this->groups);
         $ctx = array_merge($this->getBaseContext(),[
-            'groups' => $gs,
+            'groups' => $groups,
             'form' => $fv,
             'session' => $session
         ]);
@@ -261,6 +261,41 @@ class Survey implements SurveyInterface
         if ($h < 9) return false;
         if ($h >= 17) return false;
         return true;
+    }
+    
+    public function sendAdminNotification(\FanFerret\QuestionBundle\Entity\SurveySession $session, $num, $force = false) {
+        if (!$force && !$this->isNiceTime($session)) return null;
+        $subject = 'Survey Completed';
+        $content_type = 'text/html';
+        $from = $this->getEmailArray('from');
+        $to = (object)['address' => 'webmaster@fifthgeardev.com'];
+        $fname = $session->getFirstName();
+        $lname = $session->getLastName();
+        if (!is_null($fname) && !is_null($lname)) $to->name = sprintf('%s %s',$fname,$lname);
+        $replyto = $this->getOptionalEmailArray('replyto');
+        $msg = new \Swift_Message();
+        $msg->setCharset('UTF-8');
+        $msg->setFrom($this->toSwiftAddressArray($from));
+        $msg->setTo($this->toSwiftAddressArray($to));
+        $msg->setReplyTo($this->toSwiftAddressArray($replyto));
+        $msg->setContentType($content_type);
+        $msg->setSubject($subject);
+        $retr = new \FanFerret\QuestionBundle\Entity\SurveyNotification();
+        $retr->setSurveySession($session);
+        $retr->setSent(new \DateTime());
+        $retr->setToken($this->tokens->generate());
+        $retr->setSubject($subject);
+        $retr->setContentType($content_type);
+        $session->addSurveyNotification($retr);
+        $body = $this->twig->render('FanFerretQuestionBundle:Notification:admin_notification.html.twig',[
+            'session' => $session,
+            'notification' => $retr
+        ]);
+        $retr->setBody($body);
+        $msg->setBody($body);
+        $rs = $this->swift->send($msg);
+        if ($rs === 0) throw new \RuntimeException('Failed to send email');
+        return $retr;        
     }
 
     public function sendNotification(\FanFerret\QuestionBundle\Entity\SurveySession $session, $num, $force = false)
