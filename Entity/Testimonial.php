@@ -38,7 +38,16 @@ class Testimonial
 	 */
 	private $text;
 	
-
+	/**
+	 * @ORM\Column(type="text",nullable=true)
+	 */
+	private $name;
+	
+	/**
+	 * @ORM\Column(type="text",nullable=true)
+	 */
+	private $region;
+	
     /**
      * Get id
      *
@@ -120,6 +129,54 @@ class Testimonial
     {
         return $this->text;
     }
+
+    /**
+     * Set name
+     *
+     * @param string $name
+     *
+     * @return Testimonial
+     */
+    public function setName($name)
+    {
+        $this->name = $name;
+
+        return $this;
+    }
+
+    /**
+     * Get name
+     *
+     * @return string
+     */
+    public function getName()
+    {
+        return $this->name;
+    }	
+	
+    /**
+     * Set region
+     *
+     * @param string $region
+     *
+     * @return Testimonial
+     */
+    public function setRegion($region)
+    {
+        $this->region = $region;
+
+        return $this;
+    }
+
+    /**
+     * Get region
+     *
+     * @return string
+     */
+    public function getRegion()
+    {
+        return $this->region;
+    }	
 
     /**
      * Set questionAnswer
