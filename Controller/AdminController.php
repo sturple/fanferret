@@ -7,44 +7,53 @@ class AdminController extends BaseController
     protected function getUser()
     {
         $retr = parent::getUser();
+        /*
         if (!($retr instanceof \FanFerret\QuestionBundle\Entity\User)) throw new \LogicException(
             'Expected user to be represented by User entity'
         );
+        */
         return $retr;
     }
 
     private function isAdmin()
     {
         $u = $this->getUser();
+        if (empty($u)){
+            return false;
+        }
         return $u->hasRole('ROLE_ADMIN');
     }
 
     private function doesAclApply(\FanFerret\QuestionBundle\Entity\Acl $acl, \FanFerret\QuestionBundle\Entity\Survey $survey)
     {
-        $s = $acl->getSurvey();
-        if (!is_null($s)) {
-            return $s->getId() === $survey->getId();
+        $acl_survey = $acl->getSurvey();
+        if (!is_null($acl_survey)) {
+            return $acl_survey->getId() === $survey->getId();
         }
         $property = $survey->getProperty();
         if (is_null($property)) return false;
-        $p = $acl->getProperty();
-        if (!is_null($p)) {
-            return $p->getId() === $property->getId();
+        $acl_property = $acl->getProperty();
+        if (!is_null($acl_property)) {
+            return $acl_property->getId() === $property->getId();
         }
         $group = $property->getGroup();
         if (is_null($group)) return false;
-        $g = $acl->getGroup();
-        if (!is_null($g)) {
-            return $g->getId() === $group->getId();
+        $acl_group = $acl->getGroup();
+        if (!is_null($acl_group)) {
+            return $acl_group->getId() === $group->getId();
         }
         return false;
     }
 
     private function getApplicableAcls(\FanFerret\QuestionBundle\Entity\Survey $survey)
     {
-        foreach ($this->getUser()->getAcls() as $acl) {
-            if ($this->doesAclApply($acl,$survey)) yield $acl;
+        $user = $this->getUser();
+        if (!empty($user)){
+            foreach ($user->getAcls() as $acl) {
+                if ($this->doesAclApply($acl,$survey)) yield $acl;
+            }            
         }
+
     }
 
     private function deliveryCheck(\FanFerret\QuestionBundle\Entity\Survey $survey)
@@ -231,6 +240,10 @@ class AdminController extends BaseController
         $page = new \FanFerret\QuestionBundle\Utility\Page(intval($page),intval($perpage));
         $repo = $this->getSurveyRepository();
         $user = $this->getUser();
+        if (!($user instanceof \FanFerret\QuestionBundle\Entity\User)){
+            $url = $this->generateUrl("fos_user_security_login");
+            return $this->redirect($url);            
+        }
         $surveys = $repo->getByUser($user,$page);
        
         $surveys = array_map(function (\FanFerret\QuestionBundle\Entity\Survey $survey) {
@@ -350,80 +363,53 @@ class AdminController extends BaseController
     }
     
     public function cardDisplayAction($token) {
-/*
-
-SELECT
-ss.id,
-ss.survey_id,
-ss.room,
-ss.email,
-qg.order,
-qg.params,
-q.order,
-q.params,
-q.type,
-qa.value
-FROM  survey_session as ss
-INNER JOIN question_group as qg on ss.survey_id =qg.survey_id
-INNER JOIN question as q on q.question_group_id = qg.id
-INNER JOIN question_answer as qa on qa.question_id = q.id
-WHERE ss.token = '15067588a5c9bce1523a291e1722831f'
-ORDER BY qg.order, q.order ASC
-            SELECT
-            ss.id,
-            ss.surveyId,
-            ss.room,
-            ss.email,
-            qg.order,
-            qg.params,
-            q.order,
-            q.params,
-            q.type,
-            qa.value
-            FROM  FanFerretQuestionBundle:SurveySession ss
-            INNER JOIN FanFerretQuestionBundle:QuestionGroup qg WITH ss.surveyId =qg.surveyId
-            INNER JOIN FanFerretQuestionBundle:Question as q WITH q.question_group_id = qg.id
-            INNER JOIN FanFerretQuestionBundle:QuestionAnswer as qa WITH qa.question_id = q.id
-            WHERE ss.token = '{$cleantoken}'
-            ORDER BY qg.order, q.order ASC  
-
- 
-
-
-        $data = array();
-        $session = $this->getDoctrine()
-            ->getRepository('FanFerretQuestionBundle:SurveySession')
-            ->findOneByToken($token);
+        $survey = $this->getDoctrine()->getRepository('FanFerretQuestionBundle:SurveySession')
+            ->findOneByToken($token)->getSurvey();
             
-            
-            
-            
-        $survey = $session->getSurvey();
-        $answers = $session->getQuestionAnswers()->toArray();
-
-        $data = [
-            'session'   => $session,
-            'survey'    => $survey,
-            'answers'   => $answers
-        ]; */
+       
+        if (!$this->deliveryCheck($survey)) throw $this->createAccessDeniedException();
         $sql = "
         SELECT
+        q.order as `q_order`,
+        qg.order as `qg_order`,
+        p.name as `property`,
+        (IF (qg.params IS NULL,(
+            SELECT ques_g.order
+            FROM question as ques
+            INNER JOIN question_group as ques_g on ques_g.id = ques.question_group_id
+            WHERE ques.id = q.question_id
+            ),qg.order)
+        ) as  `qg_order`,         
         ss.id,
         ss.room,
         ss.completed,
         ss.email,
         s.name,
-        qg.params as `qg_params`,     
+        (IF (qg.params IS NULL,(
+            SELECT ques_g.params
+            FROM question as ques
+            INNER JOIN question_group as ques_g on ques_g.id = ques.question_group_id
+            WHERE ques.id = q.question_id
+            ),qg.params)
+        ) as  `qg_params`,     
+        q.id as `q_id`,
+        q.question_id,
         q.params as `q_params`,
         q.type,
-        qa.value
+        qa.value,
+        t.approved,
+        t.text,
+        t.name as `testimonial_name`,
+        t.region as `testimonial_region`
         FROM  survey_session as ss
-        INNER JOIN question_group as qg on ss.survey_id =qg.survey_id
-        INNER JOIN question as q on q.question_group_id = qg.id
-        INNER JOIN question_answer as qa on qa.question_id = q.id
+        INNER JOIN question_answer as qa on qa.survey_session_id = ss.id
+        INNER JOIN question as q on q.id = qa.question_id
         INNER JOIN survey as s on s.id = ss.survey_id
+        INNER JOIN property as p on p.id = s.property_id
+        LEFT OUTER JOIN question_group as qg on qg.id = q.question_group_id
+        LEFT OUTER JOIN testimonial as t on t.question_answer_id = qa.id
         WHERE ss.token = :token
-        ORDER BY qg.order, q.order ASC
+        ORDER BY qg_order, q.question_id, q.order  ASC
         ";
         $params = array('token'=>$token);
 
@@ -443,19 +429,34 @@ ORDER BY qg.order, q.order ASC
             if (!empty($value['q_params'])){
                 $data[$key]['q_params'] = json_decode($value['q_params'],true);
             }            
-            if (!empty($value['value'])){
-                $data[$key]['value'] = json_decode($value['value'],true);
+            if ((!empty($value['value'])) and ($value['value'] !== false) and ($value['value'] !== true)){
+                if ($value['value'] == 'false'){
+                   $data[$key]['value'] = false; 
+                }
+                else if ($value['value'] == 'true'){
+                    $data[$key]['value'] = true; 
+                }
+                else {
+                    $array =  json_decode($value['value'],true);
+                    if (is_array($array)){
+                        $data[$key]['value'] = $array;
+                    }                    
+                }
+
             }
             $completed = $value['completed'];
             $email = $value['email'];
-            $property = $value['name'];
+            $survey_name = $value['name'];
+            $property = $value['property'];
         }
         return $this->render('FanFerretQuestionBundle:Admin:card-display.html.twig',[
                'token'      => $token,
                'data'       => $data,
                'completed'  => $completed,
                'email'      => $email,
-               'property'   => $property
+               'property'   => $property,
+               'survey_name'   => $survey_name,
+               'survey'         =>$survey
                  
         ]);        
     }
