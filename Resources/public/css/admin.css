@@ -6,12 +6,20 @@ html {
 }
 body {
   background-image: none;
-  background-color: #FF8410;
+  background-color: #113857;
   background-position: center top;
   background-size: auto;
   background-repeat: repeat;
   background-attachment: scroll;
   margin-bottom: 30px;
+}
+ul {
+  list-style: none;
+  padding-left: 0;
+}
+.result-fail {
+  font-weight: bold;
+  color: #ff0000;
 }
 .container {
   position: relative;
@@ -60,6 +68,12 @@ h1,
 }
 .admin-header {
   text-align: center;
+}
+.admin-header h2 {
+  margin-top: -12px;
+}
+.admin-header h3 {
+  margin-top: -8px;
 }
 .admin-header .subtitle {
   font-size: 1.6em;
@@ -123,8 +137,8 @@ h1,
 .btn-primary,
 button[type="submit"] {
   color: #fff !important;
-  background-color: #0f4bb5;
-  *background-color: #0f4bb5;
+  background-color: #dc7516;
+  *background-color: #dc7516;
   background-image: none;
   background-repeat: repeat-x;
   border-color: transparent;
@@ -143,8 +157,8 @@ button[type="submit"]:active,
 button[type="submit"].active,
 .btn-primary:focus,
 button[type="submit"]:focus {
-  background-color: #108BFF;
-  *background-color: #108BFF;
+  background-color: #f88010;
+  *background-color: #f88010;
   -o-transition: color 0.3s linear, background 0.3s linear;
   -webkit-transition: color 0.3s linear, background 0.3s linear;
   -moz-transition: color 0.3s linear, background 0.3s linear;
@@ -160,7 +174,21 @@ button[type="submit"]:focus {
   }
 }
 .survey-table-container {
-  margin: 15px auto 90px;
+  margin: 30px auto 90px;
+}
+.survey-table-container h3 {
+  margin-top: 42px;
+}
+.results-explination {
+  padding-top: 12px;
+}
+.results-quoted-text {
+  font-style: italic;
+  font-size: 1.1em;
+}
+.results-quoted-text:before,
+.results-quoted-text:after {
+  content: '"';
 }
 table td,
 table th,
@@ -170,7 +198,7 @@ table th,
 }
 /*	Necessary to override Bootstrap styles */
 .table thead tr th {
-  vertical-align: middle;
+  vertical-align: top;
   border-width: 1px;
 }
 .table tbody tr:first-child td {
@@ -178,7 +206,13 @@ table th,
 }
 .table td {
   padding: 12px 8px !important;
-  vertical-align: middle !important;
+  border-top: 1px dotted #ccc !important;
+}
+.table th {
+  border-color: transparent !important;
+}
+.table tr.first-row td {
+  border-top: 1px solid #666 !important;
 }
 table th {
   text-align: left;
