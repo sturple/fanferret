@@ -26,10 +26,11 @@ class OpenQuestion extends Question
             $name,
             \Symfony\Component\Form\Extension\Core\Type\HiddenType::class
         );
-        if ($this->testimonial) $fb->add(
-            $name . '_testimonial',
-            \Symfony\Component\Form\Extension\Core\Type\HiddenType::class
-        );
+        if ($this->testimonial) {
+            $fb->add($name . '_testimonial', \Symfony\Component\Form\Extension\Core\Type\HiddenType::class);
+            $fb->add($name . '_testimonial_name', \Symfony\Component\Form\Extension\Core\Type\HiddenType::class);
+            $fb->add($name . '_testimonial_region', \Symfony\Component\Form\Extension\Core\Type\HiddenType::class);            
+        }
     }
 
     public function getAnswers(array $data)
@@ -43,6 +44,12 @@ class OpenQuestion extends Question
             $t = new \FanFerret\QuestionBundle\Entity\Testimonial();
             $t->setQuestionAnswer($retr);
             $t->setApproved(false);
+            if ($data[$name . '_testimonial_name']){
+                $t->setName(addslashes(strip_tags($data[$name . '_testimonial_name'])));
+            }
+            if ($data[$name . '_testimonial_region']){
+                $t->setRegion(addslashes(strip_tags($data[$name . '_testimonial_region'])));
+            }            
             $t->setText($value);
             $t->setToken($this->token->generate());
             $retr->setTestimonial($t);
