@@ -13,13 +13,13 @@
 {% block content %}
 
 <div class="admin-header">
-	<h1>Comment Card Status Report</h1>
-	<div class="subtitle">{{survey.name}}</div>
-	<div class="property">{{survey.property.name}}</div>
+	<h1>Status Report</h1>
+	<h2>{{survey.property.name}}</h2>
+	<h3>Survey: "{{survey.name}}"</h3>
 </div>
 {#<div class="fanferret-result-count">{{count}} results</div>#}
 
-<div class="table-responsive survey-table-container">
+<div class="table-responsive survey-table-container" >
 <table class="table">
 	<thead>
 		<tr>
@@ -70,7 +70,7 @@
 			{% endif %}
 			<td>{% if session.seen %}{{session.seen|date(fmt)}}{% endif %}</td>
 			<td>{% if session.completed %}{{session.completed|date(fmt)}}{% endif %}</td>
-			<td><a href="{{path('fanferret_admin_card_results', {'token' : session.token})}}">Results</a></td>
+			<td>{% if session.completed %}<a href="{{path('fanferret_admin_card_results', {'token' : session.token})}}">Results</a>{% else %}Pending{%endif%}</td>
 			
 		</tr>
 		{% endfor %}

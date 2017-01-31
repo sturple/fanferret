@@ -3,9 +3,9 @@
 {% block content %}
 <div class="admin-header">
 	<h1>Upload Checkout Data</h1>
-	<div class="subtitle">{{survey.name}}</div>
-	<div class="property">{{survey.property.name}}</div>	
-	<p>CSV format upload is 1st column Date, 2nd Column as email with date format of 'Y-m-d H:i' with the first row being a heading row.</p>
+	<h2>{{survey.property.name}}</h2>
+	<h3>Survey: "{{survey.name}}"</h3>
+	<p style="padding-top: 12px;">CSV format upload is 1st column Date, 2nd Column as email with date format of 'Y-m-d H:i' with the first row being a heading row.</p>
 </div>
 {% if emails is not same as(null) %}
 <div class="fanferret-email-import-verify">

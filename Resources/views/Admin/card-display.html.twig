@@ -1,11 +1,13 @@
 {% extends 'FanFerretQuestionBundle:Admin:base.html.twig' %}
 
 {% block content %}
-<div style="text-align: center;">
-    <h1>Comment Card Results</h1>
-    <h3 style="margin-top: -12px;">{{property}}</h3>
-    <div >Submitted: {{completed}}</div>
-    <div>Email: {{email}}</div>    
+<div class="admin-header">
+    <h1>Guest Comment Card</h1>
+    <h2 >{{property | default('')}}</h2>
+	<h3 >Survey: "{{survey_name}}"</h3>
+	<div>Received From: {{email}}</div>  
+    <div >{{completed}}</div>
+      
 </div>
 
 
@@ -14,26 +16,27 @@
 	<table class="table">
 		<tbody>
             {% set heading = '' %}
-            {% for answer in data %}
+            {% for answer in data if answer.qg_params %}
                 
                 {% if heading != answer.qg_params.title %}
-                    
-                    <tr><td colspan="3"><h3>{{answer.qg_params.title}}</h3></td></tr>
+					
+					{% if loop.first == false %}<tr><td></td><td></td><td></td></tr>{% endif %}
+                    <tr><td colspan="3" style="border-top: 0 !important;"><h3>{{answer.qg_params.title}}</h3></td></tr>
                     <tr>
                         <th>Type</th>
-                        <th style="width:40%">Queston</th>
+                        <th style="width:40%">Question</th>
                         <th style="width:60%">Response</th>					
-                    </tr>                    
+                    </tr>
+					{% set trclass = 'first-row' %}
                 {% endif %}
-                <tr>
+                <tr class="{{trclass}} data-type="{{answer.type}}" data-title="{{answer.q_params.title}}" data-value="{{answer.value | first|json_encode()}}" data-id="{{answer.q_id}}">
                     <td>{{answer.type | title}}</td>
                     <td>
                         {{answer.q_params.title}}
                         {% if answer.value.explanation  is defined %}
                             {% if answer.value.explanation | length > 0 %}
-                            <div class="results-explination">
-                                <div ><strong>{{answer.q_params.explain.prompt}}</strong></div>
-                                <div>{{answer.value.explanation}}</div>
+                            <div class="results-explination">                                
+                                <div class="results-quoted-text">{{answer.value.explanation}}</div>
                             </div>
                             {% endif %}
                         {% endif %}
@@ -41,30 +44,73 @@
                     </td>
                     <td>
                         {% set value = answer.value | first  %}
+						{% set class = '' %}						
                         {% if answer.type == 'checkbox' %}
-                            {% set value = answer.q_params.options[answer.value|first] %}
+							{% if answer.value | first is iterable %}
+								{% set value %}
+								<ul class="custom-bullets">								
+								{% set valueli = '' %}
+								{% for o in answer.value | first %}
+									{% if o == 'other' %}
+									{% set valueli %}{{valueli}}<li>other: {{answer.value.other }}</li>{% endset %}	
+									{% else %}
+									{% set valueli %}{{valueli}}<li>{{answer.q_params.options[o] }}</li>{% endset %}
+									{% endif %}
+								{% endfor %}
+								{{valueli}}								
+								</ul>
+								{% endset %}
+							{% else %}
+								{% set value = answer.q_params.options[answer.value|first] %}
+							{% endif %}
+                            
                         {% elseif answer.type  == 'rating' %}
-                            {% if answer.q_params.explain.threshold is defined %}
-                                {% if answer.q_params.explain.threshold <= answer.value | first %}{% set class = 'result-fail'%}{% endif %}
+                            {% if answer.q_params.explain.threshold is defined %}								
+                                {% if answer.q_params.explain.threshold >= answer.value | first %}{% set class = 'result-fail'%}{% endif %}
                             {% endif %}                           
                         {% elseif answer.type  == 'polar' or answer.type == 'conditionalnested' %}
-                            {% if (answer.q_params.negative == false and answer.value ) or (answer.q_params.negative and answer.value == false)%}
+							{% if answer.value is iterable %}
+								{% set value = (answer.value | first == true)  %}
+							{% else %}
+								{% set value = answer.value %}
+							{% endif %}
+							{% set value = ((value == true) or (value == 'true')) %}
+							
+                            {% if (answer.q_params.negative and value ) or (answer.q_params.negative == false and value == false)%}
                                 {% set class = 'result-fail'%}
                             {% endif %}
-                            {% if answer.value %}{% set value = 'Yes' %}{% else %}{% set value = 'No' %}{% endif %}
-                               
+							{% set value = (value == true) ? 'Yes' : 'No' %}
+                            {# {% if answer.value == true %}{% set value = 'Yes' %}{% else %}{% set value = 'No' %}{% endif %}#}
+                         {% elseif answer.type  == 'open' %}
+							{% set value %}
+								{% if answer.value | length > 0 %}
+								<div class="result-open-data results-quoted-text" >{{answer.value}}</div>
+								{% endif %}
+								{% if answer.text %}
+									<div style="padding-top: 4px;">
+										~ {{answer.testimonial_name | default('No contact details provided')}}
+										{% if answer.testimonial_region %}{% if answer.testimonial_name %} | {% endif %}{{answer.testimonial_region}}{% endif %}
+									</div>
+									<div class="" style="padding-top: 12px; font-size: 0.8em;"><i class="fa fa-check" aria-hidden="true"></i> Approved for Testimonal</div> 
+								{% endif %}
+							{% endset %}
+						 
                         {% endif %}
-                        <span class="{{class| default('')}}">{{value}}</span>  
+                        <span class="{{class}}">{{value}}</span>  
                         {#<pre>{{dump(answer.value)}}</pre> </td>#}
                 
                 </tr>
                 {% set heading = answer.qg_params.title %}
+				{% set trclass = '' %}
             {% endfor %}
 			
 		</tbody>
 	</table>
 </div>
-<pre>{{dump(data)}}</pre>
-{% endblock %}
 
+{% endblock %}
+{% block nav %}
+	<span class="btn-survey-actions"><a class="btn btn-primary" href="{{path('fanferret_admin')|escape('html_attr')}}"><i class="fa fa-hand-o-left" aria-hidden="true"></i> Back to Index</a></span>
+	{{parent()}}
+{% endblock %}
 
