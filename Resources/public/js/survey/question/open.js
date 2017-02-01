@@ -33,6 +33,15 @@ define(['jquery','survey/question/base'],function ($, base) {
 			tval = $testimonial_region.val();		
 			testimonial_region_hidden.val(tval);			
 			storage.setItem(testimonial_key+'_region',tval);
+			// depending on value of checkbox either show or hide options.
+			if ($testimonial.prop('checked')){
+				div.find('.testimonial-options-container').fadeIn();
+				console.log('slidedown');
+			}
+			else {
+				div.find('.testimonial-options-container').fadeOut();
+				console.log('slidedup');
+			}
 		};
 		response.on('input change',update);
 		if (div.hasClass('fanferret-testimonial')) {
