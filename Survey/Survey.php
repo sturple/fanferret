@@ -263,7 +263,7 @@ class Survey implements SurveyInterface
         return true;
     }
     
-    public function sendAdminNotification(\FanFerret\QuestionBundle\Entity\SurveySession $session, $num, $force = false) {
+    public function sendAdminNotification(\FanFerret\QuestionBundle\Entity\SurveySession $session, $num, $force = false, ) {
         if (!$force && !$this->isNiceTime($session)) return null;
         $subject = 'Survey Completed';
         $content_type = 'text/html';
@@ -301,7 +301,8 @@ class Survey implements SurveyInterface
     public function sendNotification(\FanFerret\QuestionBundle\Entity\SurveySession $session, $num, $force = false)
     {
         if (!$force && !$this->isNiceTime($session)) return null;
-        $subject = 'Survey Reminder';
+        $template = ($num == 1) ? 'FanFerretQuestionBundle:Notification:notification.html.twig' : 'FanFerretQuestionBundle:Notification:notification2.html.twig'
+        $subject = ($num == 1) ? 'Survey Notification1' : 'Survey Notifcation2'; 
         $content_type = 'text/html';
         $from = $this->getEmailArray('from');
         $to = (object)['address' => $session->getEmail()];
@@ -323,7 +324,7 @@ class Survey implements SurveyInterface
         $retr->setSubject($subject);
         $retr->setContentType($content_type);
         $session->addSurveyNotification($retr);
-        $body = $this->twig->render('FanFerretQuestionBundle:Notification:notification.html.twig',[
+        $body = $this->twig->render($template,[
             'session' => $session,
             'notification' => $retr
         ]);

@@ -47,8 +47,10 @@ class NotificationCommand extends \Symfony\Bundle\FrameworkBundle\Command\Contai
         $doctrine = $this->getContainer()->get('doctrine');
         $em = $doctrine->getManager();
         $sent = 0;
+        
         foreach ($sessions as $session) {
             $survey = $this->createSurvey($session);
+            
             $entity = $survey->sendNotification($session,$num);
             if (is_null($entity)) continue;
             ++$sent;
