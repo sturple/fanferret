@@ -63,27 +63,27 @@ class SurveySessionRepository extends \Doctrine\ORM\EntityRepository
             ->andWhere($completed_expr)
             ->addGroupBy('ss.id')
             ->andHaving($having_count_expr);
+
         //  Handle date/time constraint
         if (!is_null($since)) {
             //  Sanity check
             $now = new \DateTime();
             $when = clone $now;
             $when->sub($since);
-            if ($when->getTimestamp() > $now->getTimestamp()) throw new \InvalidArgumentException(
-                '$since is negative interval'
+            if (($when->getTimestamp() > $now->getTimestamp()) ) throw new \InvalidArgumentException(
+                '$since is negative interval' 
             );
             //  Add to query
             if ($count === 0) {
-                $since_expr = $qb->expr()->lte('COALESCE(ss.checkout,ss.created)',':when');
+                $since_expr = $qb->expr()->lte('COALESCE(ss.checkout,ss.created)',"'".\FanFerret\QuestionBundle\Utility\DateTime::toDoctrine($when)->format('Y-m-d H:i:s') ."'");
                 $qb->andWhere($since_expr);
             } else {
                 $max_expr = $qb->expr()->max('sn.sent');
-                $having_max_expr = $qb->expr()->lte($max_expr,':when');
+                $having_max_expr = $qb->expr()->lte($max_expr,"'".\FanFerret\QuestionBundle\Utility\DateTime::toDoctrine($when)->format('Y-m-d H:i:s') ."'");
                 $qb->andHaving($having_max_expr);
             }
-            $qb->setParameter('when',\FanFerret\QuestionBundle\Utility\DateTime::toDoctrine($when));
+            
         }
-        //  Execute query
         $q = $qb->getQuery();
         return $q->getResult();
     }
