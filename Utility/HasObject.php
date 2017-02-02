@@ -186,6 +186,7 @@ trait HasObject
         return $val;
     }
 
+    /** Converts string as an object for emails **/
     protected function toEmail($obj)
     {
         if (is_string($obj)) return (object)[
@@ -231,15 +232,28 @@ trait HasObject
         if (is_null($emails)) $this->noProperty($property);
         return $emails;
     }
-
-    protected function toSwiftAddressArray($addrs)
+    
+    /*
+    * 
+    */
+    protected function toSwiftAddressArray($addresses)
     {
-        if (is_null($addrs)) return [];
-        if (!is_array($addrs)) $addrs = [$addrs];
+        if (is_null($addresses)) return [];
+        // convert to array if not
+        if (!is_array($addresses)) $addresses = [$addresses];
         $retr = [];
-        foreach ($addrs as $addr) {
-            if (isset($addr->name)) $retr[$addr->address] = $addr->name;
-            else $retr[] = $addr->address;
+        foreach ($addresses as $address) {
+            if (!is_object($address)) {
+                $address = $this->toEmail($address);
+            }
+            if (isset($address->name))
+            {
+                $retr[$address->address] = $address->name;
+            }
+            else
+            {
+                $retr[] = $address->address;
+            }
         }
         return $retr;
     }
