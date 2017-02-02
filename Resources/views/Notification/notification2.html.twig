@@ -10,16 +10,21 @@
         Below is a link to the card and we are hoping you can find a moment to complete it.
         Your candid feedback allows us to continually improve our property and service for future guests.</p>
         <p>
-        <a href="{{url('fanferret_survey',{'token':session.token})}}">{{session.survey.property.name}} Guest Survey</a>
+        <a href="{{url('fanferret_survey',{'token':session.token})}}">{{session.survey.property.name}} Guest Comment Card</a>
         <p>On behalf of all of us at {{session.survey.property.name}},
         thank you for choosing to stay with us during your time and we hope to see you again very soon.</p>
         <p>Warmest Regards,</p>
     	{{session.survey.params.notifications.name | default('Fanferret Team')}}<br />
 		{% if session.survey.params.notifications.jobtitle %}{{session.survey.params.notifications.jobtitle}}<br />{% endif%}
-		{% if session.survey.params.notifications.email %}<a href="mailto:{{session.survey.params.notifications.email}}" target="_blank">{{session.survey.params.notifications.email}}</a><br /><br />{% endif%}
+		{% if session.survey.params.notifications.email %}<a href="mailto:{{session.survey.params.notifications.email}}" target="_blank">{{session.survey.params.notifications.email}}</a><br />{% endif%}
 		{% if session.survey.params.notifications.phone %}{{session.survey.params.notifications.phone}}{% endif%}		
         </p>
        
-		{# TRACKING PIXEL #}<img src="{{url('fanferret_notification_seen',{'token':notification.token})}}">        
+		{# TRACKING PIXEL #}
+				<img width="1"
+				 height="1"
+				 style="visibility:hidden!important;display:block !important;height:1px !important;width:1px!important;border-width:0 !important;margin-top:0 !important;margin-bottom:0 !important;margin-right:0 !important;margin-left:0 !important;padding-top:0 !important;padding-bottom:0 !important;padding-right:0 !important;padding-left:0 !important;"
+				 alt=""
+				 src="{{url('fanferret_notification_seen',{'token':notification.token})}}" />
     </body>
 </html>

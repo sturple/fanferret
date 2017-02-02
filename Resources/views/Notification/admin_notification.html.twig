@@ -6,7 +6,7 @@
   </head>
 	<body>			
 		<p>Good news!  A guest has submitted an online Guest Comment Card. Here’s a link to review the content:</p>
-		<a href="{{url('fanferret_admin_card_results',{'token':session.token})}}">View results of survey.</a>
+		<a href="{{url('fanferret_admin_card_results',{'token':session.token})}}">{{url('fanferret_admin_card_results',{'token':session.token})}}</a>.
 		<p>To view reporting on all of the comment cards completed for {{session.survey.property.name}}, you can
 		<a href="{{url('fos_user_security_login')}}">Login here</a>.</p>
 		<p>Sincerly,</p>
