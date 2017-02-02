@@ -1,9 +1,11 @@
 <?php
 
 namespace FanFerret\QuestionBundle\Controller;
+use FanFerret\QuestionBundle\Utility;
 
 class AdminController extends BaseController
 {
+    
     protected function getUser()
     {
         $retr = parent::getUser();
@@ -17,6 +19,7 @@ class AdminController extends BaseController
 
     private function isAdmin()
     {
+        
         $u = $this->getUser();
         if (empty($u)){
             return false;
