@@ -1,9 +1,18 @@
-<!doctype html>
-<html>
-	<head></head>
-	<body>
-		<h1>Survey Notification</h1>
-		<a href="{{url('fanferret_admin_card_results',{'token':session.token})}}">View results of survey.</a>		
-	
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <meta name="viewport" content="width=device-width">
+  </head>
+	<body>			
+		<p>Good news!  A guest has submitted an online Guest Comment Card. Here’s a link to review the content:</p>
+		<a href="{{url('fanferret_admin_card_results',{'token':session.token})}}">View results of survey.</a>
+		<p>To view reporting on all of the comment cards completed for {{session.survey.property.name}}, you can
+		<a href="{{url('fos_user_security_login')}}">Login here</a>.</p>
+		<p>Sincerly,</p>
+		<p>The FanFerret Team<br />
+		<a href="mailto:help@fanferret.com" target="_blank">help@fanferret.com</a><br />
+		250.588.0182
+		</p>
 	</body>
 </html>

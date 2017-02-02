@@ -9,14 +9,19 @@
 		{% if survey.params.title is defined %}
 		<h1>{{survey.params.title}}</h1>
 		{% endif %}
+		<p>Thank you for completing our online Guest Comment Card.
+		We truly appreciated it and we will share any comments you've provided with our staff.</p>
+
+		<p>On behalf of all of us at {{survey.property.name}},
+		thank you for choosing to stay with us during your time and we hope to see you again very soon.</p>
+
+		<p>Warmest Regards,</p>
 		<p>
-		Thank you for your recent stay at [PROPERTY] and for taking a moment to complete our digital comment card.  
-		Your feedback is invaluable and enables us to continuously improve.
+    	{{survey.params.notifications.name | default('Fanferret Team')}}<br />
+		{% if survey.params.notifications.jobtitle %}{{survey.params.notifications.jobtitle}}<br />{% endif%}
+		{% if survey.params.notifications.email %}<a href="mailto:{{survey.params.notifications.email}}" target="_blank">{{survey.params.notifications.email}}</a><br /><br />{% endif%}
+		{% if survey.params.notifications.phone %}{{survey.params.notifications.phone}}{% endif%}
 		</p>
-		
-		<p>As a thank you, please find below a special offer that you may take advantage of during a future stay with us.</p>
-		
- 		[SPECIAL OFFER TEXT OR COUPON GOES HERE]
 
 	</div>
 </div>
