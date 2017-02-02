@@ -46,12 +46,18 @@ class NotificationCommand extends \Symfony\Bundle\FrameworkBundle\Command\Contai
         );
         $doctrine = $this->getContainer()->get('doctrine');
         $em = $doctrine->getManager();
-        $sent = 0;
-        
+        $sent = 0;       
         foreach ($sessions as $session) {
             $survey = $this->createSurvey($session);
-            
-            $entity = $survey->sendNotification($session,$num);
+            $this->writeln(
+                $output,
+                sprintf(
+                    'Sending Notification for  %s with session id of %d',
+                    $session->getEmail(),
+                    $session->getId()
+                )
+            );            
+            $entity = $survey->sendNotification($session,$num, true);
             if (is_null($entity)) continue;
             ++$sent;
             $em->persist($entity);
@@ -77,13 +83,13 @@ class NotificationCommand extends \Symfony\Bundle\FrameworkBundle\Command\Contai
         //  First notification is sent immediately
         //  after checkout
         $since = new \DateInterval('PT0S');
-        $sessions = $repo->getByNotification(0,$since);
+        $sessions = $repo->getByNotification(0,$since,true);
         $sent += $this->sendNotifications($output,$sessions,1);
         //  Second notification is sent 7 days
         //  after first notification (ideally that's 7
         //  days after checkout)
         $since = new \DateInterval('P7D');
-        $sessions = $repo->getByNotification(1,$since);
+        $sessions = $repo->getByNotification(1,$since,true);
         $sent += $this->sendNotifications($output,$sessions,2);
         $this->writeln(
             $output,
