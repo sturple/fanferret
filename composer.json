@@ -1,7 +1,7 @@
 {
     "name": "sturple/fanferret",
-    "version" : "0.0.5",
-    "description": "Fanferret Digitial Comments  Bundle",
+    "version" : "0.0.6",
+    "description": "Fanferret Digitial Comments.  Creates and impliments surveys.",
     "type": "symfony-bundle",
     "keywords": ["survey", "hotel", "symfony"],
     "homepage": "https://github.com/sturple/fanferret",
