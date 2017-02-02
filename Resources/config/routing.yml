@@ -1,11 +1,11 @@
 fanferret_survey:
-    path: /index/{token}/
+    path: /public/{token}/
     defaults: { _controller: FanFerretQuestionBundle:Survey:survey }
 fanferret_survey_finish:
-    path: /index/{token}/finish/
+    path: /public/{token}/finish/
     defaults: { _controller: FanFerretQuestionBundle:Survey:finish }
 fanferret_survey_styles:
-    path: /index/styles/{id}/
+    path: /public/styles/{id}/
     defaults: { _controller: FanFerretQuestionBundle:Survey:styles }
 fanferret_notification_seen:
     path: /notification/{token}/
