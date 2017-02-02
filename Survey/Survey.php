@@ -267,10 +267,9 @@ class Survey implements SurveyInterface
         if (!$force && !$this->isNiceTime($session)) return null;
         $surveyParams = $session->getSurvey()->getParams();
         $subject = (empty($surveyParams->notifications->subject->completed)) ? 'Survey Completed' : $surveyParams->notifications->subject->completed; 
-        $to  = (empty($surveyParam->notifications->to)) ? 'info@fanferret.com' : $surveyParam->notifications->to;
+        $to  = (empty($surveyParams->notifications->to)) ? 'info@fanferret.com' : $surveyParams->notifications->to;
         $content_type = 'text/html';
-        $from = $this->getEmailArray('from');
-        $to = (object)['address' => 'webmaster@fifthgeardev.com'];
+        $from = $this->getEmailArray('from');       
         $fname = $session->getFirstName();
         $lname = $session->getLastName();
         if (!is_null($fname) && !is_null($lname)) $to->name = sprintf('%s %s',$fname,$lname);
@@ -278,7 +277,8 @@ class Survey implements SurveyInterface
         $msg = new \Swift_Message();
         $msg->setCharset('UTF-8');
         $msg->setFrom($this->toSwiftAddressArray($from));
-        $msg->setTo($this->toSwiftAddressArray($to));
+        
+        $msg->setTo((object)$this->toSwiftAddressArray($to));
         $msg->setBcc('info@fanferret.com');
         $msg->setReplyTo($this->toSwiftAddressArray($replyto));
         $msg->setContentType($content_type);

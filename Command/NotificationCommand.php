@@ -52,12 +52,13 @@ class NotificationCommand extends \Symfony\Bundle\FrameworkBundle\Command\Contai
             $this->writeln(
                 $output,
                 sprintf(
-                    'Sending Notification for  %s with session id of %d',
+                    '<info>Sending Notification for  %s with session id of %d</info>',
                     $session->getEmail(),
                     $session->getId()
                 )
             );            
             $entity = $survey->sendNotification($session,$num, true);
+            // this means that if not null that it is either forced or nicetime
             if (is_null($entity)) continue;
             ++$sent;
             $em->persist($entity);

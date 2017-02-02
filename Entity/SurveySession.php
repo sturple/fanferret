@@ -55,7 +55,7 @@ class SurveySession
     private $questionAnswers;
     
     /**
-     * @ORM\OneToMany(targetEntity="SurveyNotification",mappedBy="surveySession")
+     * @ORM\OneToMany(targetEntity="SurveyNotification",mappedBy="surveySession", cascade={"persist", "remove"})
      */
     private $surveyNotifications;
 
