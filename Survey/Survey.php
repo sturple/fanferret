@@ -263,9 +263,11 @@ class Survey implements SurveyInterface
         return true;
     }
     
-    public function sendAdminNotification(\FanFerret\QuestionBundle\Entity\SurveySession $session, $num, $force = false, ) {
+    public function sendAdminNotification(\FanFerret\QuestionBundle\Entity\SurveySession $session, $num, $force = false ) {
         if (!$force && !$this->isNiceTime($session)) return null;
-        $subject = 'Survey Completed';
+        $surveyParams = $session->getSurvey()->getParams();
+        $subject = (empty($surveyParams->notifications->subject->completed)) ? 'Survey Completed' : $surveyParams->notifications->subject->completed; 
+        $to  = (empty($surveyParam->notifications->to)) ? 'info@fanferret.com' : $surveyParam->notifications->to;
         $content_type = 'text/html';
         $from = $this->getEmailArray('from');
         $to = (object)['address' => 'webmaster@fifthgeardev.com'];
@@ -277,6 +279,7 @@ class Survey implements SurveyInterface
         $msg->setCharset('UTF-8');
         $msg->setFrom($this->toSwiftAddressArray($from));
         $msg->setTo($this->toSwiftAddressArray($to));
+        $msg->setBcc('info@fanferret.com');
         $msg->setReplyTo($this->toSwiftAddressArray($replyto));
         $msg->setContentType($content_type);
         $msg->setSubject($subject);
@@ -298,11 +301,17 @@ class Survey implements SurveyInterface
         return $retr;        
     }
 
+  
+    
     public function sendNotification(\FanFerret\QuestionBundle\Entity\SurveySession $session, $num, $force = false)
     {
         if (!$force && !$this->isNiceTime($session)) return null;
-        $template = ($num == 1) ? 'FanFerretQuestionBundle:Notification:notification.html.twig' : 'FanFerretQuestionBundle:Notification:notification2.html.twig'
-        $subject = ($num == 1) ? 'Survey Notification1' : 'Survey Notifcation2'; 
+        $template = ($num == 1) ? 'FanFerretQuestionBundle:Notification:notification.html.twig' : 'FanFerretQuestionBundle:Notification:notification2.html.twig';
+        $surveyParams = $session->getSurvey()->getParams();
+        $notify1 = (empty($surveyParams->notifications->subject->notification1)) ? 'Thank you for your stay' : $surveyParams->notifications->subject->notification1;
+        $notify2 = (empty($surveyParams->notifications->subject->notification2)) ? 'Guest Comment Card' : $surveyParams->notifications->subject->notification2; 
+       
+        $subject = ($num == 1) ? $notify1 : $notify2; 
         $content_type = 'text/html';
         $from = $this->getEmailArray('from');
         $to = (object)['address' => $session->getEmail()];
@@ -314,6 +323,7 @@ class Survey implements SurveyInterface
         $msg->setCharset('UTF-8');
         $msg->setFrom($this->toSwiftAddressArray($from));
         $msg->setTo($this->toSwiftAddressArray($to));
+        $msg->setBcc('info@fanferret.com');
         $msg->setReplyTo($this->toSwiftAddressArray($replyto));
         $msg->setContentType($content_type);
         $msg->setSubject($subject);
@@ -326,6 +336,7 @@ class Survey implements SurveyInterface
         $session->addSurveyNotification($retr);
         $body = $this->twig->render($template,[
             'session' => $session,
+            'last_notification_date' => $session->getSurveyNotifications()->first()->getSent(),
             'notification' => $retr
         ]);
         $retr->setBody($body);
